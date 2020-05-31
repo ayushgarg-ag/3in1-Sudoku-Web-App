@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<div id="grid-container" class="grid-container">
+
+    {% for i in range(9) %}
+    {% for j in range(9) %}
+    <div id="0" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 4px;">
+        <input name="cell-input" type="text" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}" readonly>
+    </div>
+    <div id="1" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 1px;">
+        <input name="cell-input" type="text" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}" readonly>
+    </div>
+    <div id="2" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 2px 1px 1px;">
+        <input name="cell-input" type="text" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}" readonly>
+    </div>
+    <div id="3" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 2px;">
+        <input name="cell-input" type="text" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}" readonly>
+    </div>
+    <div id="4" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 1px;">
+        <input name="cell-input" type="text" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}" readonly>
+    </div>
+    <div id="5" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 2px 1px 1px;">
+        <input name="5"  name="1" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="6" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 2px;">
+        <input name="6" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="7" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 1px 1px 1px;">
+        <input name="7" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="8" onclick="focused(this.id)" class="grid-item" style="border-width: 4px 4px 1px 1px;">
+        <input name="8" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="9" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 1px 4px;">
+        <input name="9" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="10" onclick="focused(this.id)" class="grid-item bn test">
+        <input name="10" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="11" onclick="focused(this.id)" class="grid-item br">
+        <input name="11" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="12" onclick="focused(this.id)" class="grid-item bl">
+        <input name="12" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="13" onclick="focused(this.id)" class="grid-item">
+        <input name="13" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="14" onclick="focused(this.id)" class="grid-item br">
+        <input name="14" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="15" onclick="focused(this.id)" class="grid-item bl">
+        <input name="15"  name="1" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="16" onclick="focused(this.id)" class="grid-item">
+        <input name="16" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="17" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 1px 1px;">
+        <input name="17" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="18" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 2px 4px;">
+        <input name="18" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="19" onclick="focused(this.id)" class="grid-item bb">
+        <input name="19" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="20" onclick="focused(this.id)" class="grid-item bbr">
+        <input name="20" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="21" onclick="focused(this.id)" class="grid-item bbl">
+        <input name="21" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="22" onclick="focused(this.id)" class="grid-item bb">
+        <input name="22" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="23" onclick="focused(this.id)" class="grid-item bbr">
+        <input name="23" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="24" onclick="focused(this.id)" class="grid-item bbl">
+        <input name="24" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="25" onclick="focused(this.id)" class="grid-item bb">
+        <input name="25" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="26" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 2px 1px;">
+        <input name="26" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="27" onclick="focused(this.id)" class="grid-item" style="border-width: 2px 1px 1px 4px;">
+        <input name="27" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="28" onclick="focused(this.id)" class="grid-item bt">
+        <input name="28" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="29" onclick="focused(this.id)" class="grid-item btr">
+        <input name="29" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="30" onclick="focused(this.id)" class="grid-item btl">
+        <input name="30" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="31" onclick="focused(this.id)" class="grid-item bt">
+        <input name="31" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="32" onclick="focused(this.id)" class="grid-item btr">
+        <input name="32" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="33" onclick="focused(this.id)" class="grid-item btl">
+        <input name="33" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="34" onclick="focused(this.id)" class="grid-item bt">
+        <input name="34" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="35" onclick="focused(this.id)" class="grid-item" style="border-width: 2px 4px 1px 1px;">
+        <input name="35" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="36" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 1px 4px;">
+        <input name="36" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="37" onclick="focused(this.id)" class="grid-item">
+        <input name="37" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="38" onclick="focused(this.id)" class="grid-item br">
+        <input name="38" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="39" onclick="focused(this.id)" class="grid-item bl">
+        <input name="39" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="40" onclick="focused(this.id)" class="grid-item">
+        <input name="40" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="41" onclick="focused(this.id)" class="grid-item br">
+        <input name="41" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="42" onclick="focused(this.id)" class="grid-item bl">
+        <input name="42" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="43" onclick="focused(this.id)" class="grid-item">
+        <input name="43" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="44" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 1px 1px;">
+        <input name="44" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="45" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 2px 4px;">
+        <input name="45" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="46" onclick="focused(this.id)" class="grid-item bb">
+        <input name="46" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="47" onclick="focused(this.id)" class="grid-item bbr">
+        <input name="47" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="48" onclick="focused(this.id)" class="grid-item bbl">
+        <input name="48" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="49" onclick="focused(this.id)" class="grid-item bb">
+        <input name="49" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="50" onclick="focused(this.id)" class="grid-item bbr">
+        <input name="50" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="51" onclick="focused(this.id)" class="grid-item bbl">
+        <input name="51" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="52" onclick="focused(this.id)" class="grid-item bb">
+        <input name="52" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="53" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 2px 1px;">
+        <input name="53" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="54" onclick="focused(this.id)" class="grid-item" style="border-width: 2px 1px 1px 4px;">
+        <input name="54" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="55" onclick="focused(this.id)" class="grid-item bt">
+        <input name="55" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="56" onclick="focused(this.id)" class="grid-item btr">
+        <input name="56" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="57" onclick="focused(this.id)" class="grid-item btl">
+        <input name="57" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="58" onclick="focused(this.id)" class="grid-item bt">
+        <input name="58" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="59" onclick="focused(this.id)" class="grid-item btr">
+        <input name="59" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="60" onclick="focused(this.id)" class="grid-item btl">
+        <input name="60" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="61" onclick="focused(this.id)" class="grid-item bt">
+        <input name="61" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="62" onclick="focused(this.id)" class="grid-item" style="border-width: 2px 4px 1px 1px;">
+        <input name="62" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="63" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 1px 4px;">
+        <input name="63" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="64" onclick="focused(this.id)" class="grid-item">
+        <input name="64" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="65" onclick="focused(this.id)" class="grid-item br">
+        <input name="65" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="66" onclick="focused(this.id)" class="grid-item bl">
+        <input name="66" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="67" onclick="focused(this.id)" class="grid-item">
+        <input name="67" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="68" onclick="focused(this.id)" class="grid-item br">
+        <input name="68" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="69" onclick="focused(this.id)" class="grid-item bl">
+        <input name="69" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="70" onclick="focused(this.id)" class="grid-item">
+        <input name="70" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="71" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 1px 1px;">
+        <input name="71" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="72" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 4px;">
+        <input name="72" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="73" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 1px;">
+        <input name="73" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="74" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 2px 4px 1px;">
+        <input name="74" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="75" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 2px;">
+        <input name="75" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="76" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 1px;">
+        <input name="76" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="77" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 2px 4px 1px;">
+        <input name="77" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="78" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 2px;">
+        <input name="78" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="79" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 1px 4px 1px;">
+        <input name="79" type="text" maxlength="1" class="txt-input" min="1">
+    </div>
+    <div id="80" onclick="focused(this.id)" class="grid-item" style="border-width: 1px 4px 4px 1px;">
+        <input name="80" type="text" maxlength="1" class="txt-input" min="1">
+    
+    {% endfor %}
+    {% endfor %}
+    </div>
+
+{% endblock %}
