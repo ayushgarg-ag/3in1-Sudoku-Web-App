@@ -3,23 +3,22 @@
 <div class="content">
     <h1 style="text-align: center">Sudoku Solver</h1>
     <div id="grid-container" class="grid-container">
-        {% for i in range(9) %}
-        <!-- <div class="grid-row"> -->
-            {% for j in range(9) %}
-            <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
-                <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}">
-            </div>
-            <!-- <div class="grid-cell">
-                <input class="fadein-container" type="number" maxlength="1" name='cell-input'
-                    value="{{ solved_array[i][j] }}" readonly>
-            </div> -->
+        <div id="grid-container" class="grid-container">
+            {% for i in range(9) %}
+            <!-- <div class="grid-row"> -->
+                {% for j in range(9) %}
+                <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
+                    <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}">
+                </div>
+                {% endfor %}
+            <!-- </div> -->
             {% endfor %}
-        {% endfor %}
         </div>
-        <!-- <div class='button-container fadein-container'>
+    </div>
+    <!-- <div class='button-container fadein-container'>
             <a class="btn btn-primary btn-block" href="{{ url_for('index') }}">Back</a>
         </div> -->
-    </div>
+</div>
 </div>
 
 

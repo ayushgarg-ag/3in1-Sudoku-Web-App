@@ -1,5 +1,13 @@
+body, html {
+    margin: 0;
+    font-family: sans-serif;
+}
 body {
-    background-color: beige;
+    background-color: tan;
+}
+.content {
+    margin: 0 auto;
+    width: 400px;
 }
 .grid-container {
     display: grid;
@@ -33,30 +41,6 @@ div.center{
 input:focus {
     color: red;
 }
-.btl{
-    border-width: 2px 1px 1px 2px;
-}
-.btr{
-    border-width: 2px 2px 1px 1px;
-}
-.bt{
-    border-width: 2px 1px 1px 1px;
-}
-.bbl{
-    border-width: 1px 1px 2px 2px;
-}
-.bb{
-    border-width: 1px 1px 2px 1px;
-}
-.bbr{
-    border-width: 1px 2px 2px 1px;
-}
-.br{
-    border-width: 1px 2px 1px 1px;
-}
-.bl{
-    border-width: 1px 1px 1px 2px;
-}
 .txt-input{
     width: 30px;
     height: 30px;
@@ -66,4 +50,27 @@ input:focus {
     font-weight: bold;
     text-align: center;
 }
-
+.grid-row:nth-child(4) {
+    border-left: 3px black solid;
+}
+.grid-row:nth-child(7) {
+    border-left: 3px black solid;
+}
+.grid-row:nth-child(1) {
+    border-left: 4px black solid;
+}
+.grid-row:nth-child(9) {
+    border-right: 4px black solid;
+}
+.grid-item:nth-child(4) {
+    border-top: 3px black solid;
+}
+.grid-item:nth-child(7) {
+    border-top: 3px black solid;
+}
+.grid-item:nth-child(1) {
+    border-top: 4px black solid;
+}
+.grid-item:nth-child(9) {
+    border-bottom: 4px black solid;
+}

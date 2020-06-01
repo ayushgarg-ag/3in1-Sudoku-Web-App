@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <script>
 
             // var arr = [];
@@ -34,86 +34,7 @@
             //     }).then((res)=>console.log(res))
             // }
         </script>
-        <style>
-            body, html {
-                margin: 0;
-                font-family: sans-serif;
-            }
-            body {
-                background-color: beige;
-            }
-            .content {
-                margin: 0 auto;
-                width: 400px;
-            }
-            .grid-container {
-                display: grid;
-                justify-content: center;
-                grid-template-columns: auto auto auto auto auto auto auto auto auto;
-                padding: 10px;
-            }
-            .grid-item {
-                background-color: rgba(255, 255, 255, 0.8);
-                border: 1px solid rgba(0, 0, 0, 0.8);
-                padding: 15px;
-                font-size: 20px;
-                text-align: center;
-
-            }
-            .center:focus {
-                background-color: red;
-                font-size: 100px;
-            }
-            h1 {
-                text-align: center;
-            }
-            button {
-                text-align: center;
-            }
-            div.center{
-                margin: 20px;
-                position: relative;
-                left: 50%;
-            }
-            input:focus {
-                color: red;
-            }
-            .btl{
-                border-width: 2px 1px 1px 2px;
-            }
-            .btr{
-                border-width: 2px 2px 1px 1px;
-            }
-            .bt{
-                border-width: 2px 1px 1px 1px;
-            }
-            .bbl{
-                border-width: 1px 1px 2px 2px;
-            }
-            .bb{
-                border-width: 1px 1px 2px 1px;
-            }
-            .bbr{
-                border-width: 1px 2px 2px 1px;
-            }
-            .br{
-                border-width: 1px 2px 1px 1px;
-            }
-            .bl{
-                border-width: 1px 1px 1px 2px;
-            }
-            .txt-input{
-                width: 30px;
-                height: 30px;
-                border: 0;
-                background-color: transparent;
-                outline: none;
-                font-weight: bold;
-                text-align: center;
-            }
-
-
-        </style>
+        <style></style>
         {% block head %}{% endblock %}
     </head>
     <body>
