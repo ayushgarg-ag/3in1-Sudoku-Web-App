@@ -50,10 +50,14 @@ div.center{
 }
 input {
     font-size: 25px;
-    color:#a87b00;
+    color: transparent;
+    text-shadow: 0 0 0 #a87b00;
 }
 input:focus {
-    color: #a87b00;
+    outline: 3px #a87b00 solid;
+}
+#solve:focus {
+    outline: none;
 }
 input:invalid {
     /* border: 3px solid red; */
@@ -87,6 +91,9 @@ input:invalid {
     height: 45px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
+}
+#clear:focus, #back:focus {
+    outline: none;
 }
 #clearcenter, #backcenter {
     display: flex;

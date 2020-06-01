@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
 sudoku_grid_list = []
-# @app.route('/')
+@app.route('/')
 @app.route('/index')
 def index():
     sudoku_grid_list = []
@@ -50,4 +50,4 @@ def solution():
 #     return jsonify({"1":"1"})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=4000)
+    app.run(debug=True)

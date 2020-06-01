@@ -8,7 +8,7 @@
             {% for j in range(9) %}
             <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
                 <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1"
-                    value="{{ solved_array[i][j] }}">
+                    value="{{ solved_array[i][j] }}" readonly>
             </div>
             {% endfor %}
             {% endfor %}
