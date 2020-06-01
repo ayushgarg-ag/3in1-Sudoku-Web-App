@@ -8,14 +8,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
 sudoku_grid_list = []
-
-@app.route('/')
+# @app.route('/')
 @app.route('/index')
 def index():
+    sudoku_grid_list = []
     return render_template('index.html')
 
 @app.route("/solution", methods=['POST', 'GET'])
 def solution():
+    sudoku_grid_list = []
     if request.method == 'POST':
         for i in range(9):
             row_list = []
@@ -49,4 +50,4 @@ def solution():
 #     return jsonify({"1":"1"})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=4000)

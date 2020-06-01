@@ -5,19 +5,19 @@
     <div id="grid-container" class="grid-container">
         <div id="grid-container" class="grid-container">
             {% for i in range(9) %}
-            <!-- <div class="grid-row"> -->
-                {% for j in range(9) %}
-                <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
-                    <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1" value="{{ solved_array[i][j] }}">
-                </div>
-                {% endfor %}
-            <!-- </div> -->
+            {% for j in range(9) %}
+            <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
+                <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1"
+                    value="{{ solved_array[i][j] }}">
+            </div>
+            {% endfor %}
             {% endfor %}
         </div>
     </div>
-    <!-- <div class='button-container fadein-container'>
-            <a class="btn btn-primary btn-block" href="{{ url_for('index') }}">Back</a>
-        </div> -->
+    <div id="backcenter">
+            <button id = "back" onclick="location.href='/index'">Back</button>
+    </div>
+
 </div>
 </div>
 

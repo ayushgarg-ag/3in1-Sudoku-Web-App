@@ -1,27 +1,33 @@
 body, html {
     margin: 0;
+    padding: 0;
     font-family: sans-serif;
 }
 body {
     background-color: tan;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
 }
 .content {
     margin: 0 auto;
-    width: 400px;
+    padding: 0;
 }
 .grid-container {
     display: grid;
+    margin: 0;
+    position: relative;
+    left: 0%;
     justify-content: center;
+    padding: 1px;
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
-    padding: 10px;
 }
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 15px;
+    border: 1px solid tan;
+    padding: 7px;
     font-size: 20px;
     text-align: center;
-
 }
 .center:focus {
     background-color: red;
@@ -29,6 +35,10 @@ body {
 }
 h1 {
     text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 45px;
+    margin: 10px;
 }
 button {
     text-align: center;
@@ -38,8 +48,49 @@ div.center{
     position: relative;
     left: 50%;
 }
+input {
+    font-size: 25px;
+    color:#a87b00;
+}
 input:focus {
-    color: red;
+    color: #a87b00;
+}
+input:invalid {
+    /* border: 3px solid red; */
+    background-color: red;
+}
+
+#solvecenter {
+    display: flex;
+    justify-content: center;
+}
+#solve {
+    background-color: (255, 255, 255, 0.5);
+    color: #a87b00;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+#clear, #back {
+    background-color: (255, 255, 255, 0.5);
+    color: #a87b00;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+#clearcenter, #backcenter {
+    display: flex;
+    justify-content: center;
 }
 .txt-input{
     width: 30px;
@@ -50,27 +101,29 @@ input:focus {
     font-weight: bold;
     text-align: center;
 }
-.grid-row:nth-child(4) {
-    border-left: 3px black solid;
+/* Column Borders */
+.grid-container .grid-item:nth-child(n):nth-last-child(9n){
+    border-left: 5px tan solid;
 }
-.grid-row:nth-child(7) {
-    border-left: 3px black solid;
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+6){
+    border-left: 4px tan solid;
 }
-.grid-row:nth-child(1) {
-    border-left: 4px black solid;
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+3){
+    border-left: 4px tan solid;
 }
-.grid-row:nth-child(9) {
-    border-right: 4px black solid;
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+1){
+    border-right: 5px tan solid;
 }
-.grid-item:nth-child(4) {
-    border-top: 3px black solid;
+/* Row Borders */
+.grid-container .grid-item:nth-child(n):nth-last-child(n+73){
+    border-top: 5px tan solid;
 }
-.grid-item:nth-child(7) {
-    border-top: 3px black solid;
+.grid-container .grid-item:nth-child(n+28):nth-last-child(n+46){
+    border-top: 4px tan solid;
 }
-.grid-item:nth-child(1) {
-    border-top: 4px black solid;
+.grid-container .grid-item:nth-child(n+55):nth-last-child(n+19){
+    border-top: 4px tan solid;
 }
-.grid-item:nth-child(9) {
-    border-bottom: 4px black solid;
+.grid-container .grid-item:nth-child(n+73):nth-last-child(n){
+    border-bottom: 5px tan solid;
 }
