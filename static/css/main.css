@@ -25,9 +25,12 @@ body {
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid tan;
-    padding: 7px;
+    padding: 0;
     font-size: 20px;
     text-align: center;
+    margin: 0;
+    height: 45px;
+    width: 45px;
 }
 .center:focus {
     background-color: red;
@@ -100,8 +103,9 @@ input:invalid {
     justify-content: center;
 }
 .txt-input{
-    width: 30px;
-    height: 30px;
+    height: 45px;
+    width: 45px; 
+    padding: 0;
     border: 0;
     background-color: transparent;
     outline: none;
@@ -133,4 +137,7 @@ input:invalid {
 }
 .grid-container .grid-item:nth-child(n+73):nth-last-child(n){
     border-bottom: 5px tan solid;
+}
+input::selection {
+    background: transparent;
 }
