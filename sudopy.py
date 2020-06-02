@@ -220,22 +220,7 @@ class Sudoku:
 #     count = count + 1
 
 # s2 = Sudoku(list2)
-# s = Sudoku(list_hard)
-# print(s)
-# s.solve()
-# print(s)
-# print(len(list1))
-# print(s.cell_location(2))
-# import numpy as np
-# import matplotlib.pyplot as plt
-# x = np.arange(-10, 10, .1)
-# y = x ** 3
-# plt.plot(x,y)
-# plt.show()
-
-# from flask import Flask
-# app = Flask(__name__)
-#
-# @app.route("/")
-# def hello():
-#     return "Hello World"
+s = Sudoku(list_expert)
+print(s)
+s.solve()
+print(s)
