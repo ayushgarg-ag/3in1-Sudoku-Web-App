@@ -83,7 +83,7 @@ input:invalid {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-#clear, #back {
+#clear, #back, .menubutton {
     background-color: (255, 255, 255, 0.5);
     color: #a87b00;
     border: none;
@@ -95,10 +95,14 @@ input:invalid {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-#clear:focus, #back:focus {
+.menubutton {
+    width: 300px;
+    margin: 10px;
+}
+#clear:focus, #back:focus, .menubutton:focus {
     outline: none;
 }
-#clearcenter, #backcenter {
+#clearcenter, #backcenter, .menubuttoncontainer {
     display: flex;
     justify-content: center;
 }

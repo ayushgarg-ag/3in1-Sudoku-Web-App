@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Sudoku Solvers Menu</title>
+{% endblock %}
+
+{% block body %}
+<h1>Sudoku Solvers</h1>
+<div class="menubuttoncontainer">
+    <button class="menubutton" onclick="location.href='/input_classic'">Solve Classic Sudoku</button>
+</div>
+<div class="menubuttoncontainer">
+    <button class="menubutton" onclick="location.href='/input_kings'">Solve Anti-King Sudoku</button>
+</div>
+
+{% endblock %}
