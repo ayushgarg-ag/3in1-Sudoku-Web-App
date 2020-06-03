@@ -220,7 +220,7 @@ class Sudoku:
 #     count = count + 1
 
 # s2 = Sudoku(list2)
-s = Sudoku(list_expert)
-print(s)
-s.solve()
-print(s)
+# s = Sudoku(list_expert)
+# print(s)
+# s.solve()
+# print(s)
