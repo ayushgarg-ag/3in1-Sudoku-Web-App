@@ -1,11 +1,7 @@
-from flask import Flask, jsonify, request, render_template, make_response, url_for, redirect
-import json
-from flask_sqlalchemy import SQLAlchemy
-from sudopy import Sudoku
+from flask import Flask, request, render_template
+from sudopy_kings import Sudoku_Kings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-db = SQLAlchemy(app)
 
 sudoku_grid_list = []
 @app.route('/')
@@ -29,25 +25,13 @@ def solution():
                     row_list.append(int(content))
             sudoku_grid_list.append(row_list)
 
-        s = Sudoku(sudoku_grid_list)
+        s = Sudoku_Kings(sudoku_grid_list)
         print(s)
         s.solve()
         print(s)
         return render_template('solution.html', solved_array = s.return_array())
-
-    #     try:
-    #         return redirect('/')
-    #     except:
-    #         return 'There was an issue adding your task'
     else:
         return render_template('index.html')
-
-
-# @app.route("/topy", methods=['POST'])
-# def receiveArray():
-#     data = json.loads(request.get_data())
-#     print(data)
-#     return jsonify({"1":"1"})
 
 if __name__ == "__main__":
     app.run(debug=True)

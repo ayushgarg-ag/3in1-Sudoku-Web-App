@@ -1,7 +1,7 @@
 from sudokus import *
 
 
-class Sudoku:
+class Sudoku_Kings:
     def __init__(self, matrix):
         self.grid = matrix
 
@@ -19,6 +19,7 @@ class Sudoku:
             list_b = []
             mod_r = (x + 1) % 3
             mod_c = (y + 1) % 3
+
             if mod_r == 0:
                 list_mr = [x, x - 1, x - 2]
             elif mod_r == 1:
@@ -37,11 +38,22 @@ class Sudoku:
                 for j in list_mc:
                     list_b.append(self.grid[i][j])
 
+            # King's Move Constraint 
+            list_k = []
+            pos = [[x+1, y+1], [x+1, y-1], [x-1, y+1], [x-1, y-1]]
+            for i in pos:
+                if(i[0] >= 0 and i[0] < 9 and i[1] >= 0 and i[1] < 9):
+                    x = i[0]
+                    y = i[1]
+                    list_k.append(self.grid[x][y])
+
             if num in list_r:
                 return False
             elif num in list_c:
                 return False
             elif num in list_b:
+                return False
+            elif num in list_k:
                 return False
             else:
                 return True
@@ -80,8 +92,3 @@ class Sudoku:
                 if self.grid[i][j] == 0:
                     return (i, j)
         return None
-
-# s = Sudoku(list_hard)
-# print(s)
-# s.solve()
-# print(s)
