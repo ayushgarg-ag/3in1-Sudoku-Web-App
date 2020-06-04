@@ -3,7 +3,6 @@
 <div class="content">
     <h1 style="text-align: center">Sudoku Solver</h1>
     <div id="grid-container" class="grid-container">
-        <div id="grid-container" class="grid-container">
             {% for i in range(9) %}
             {% for j in range(9) %}
             <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
@@ -12,7 +11,6 @@
             </div>
             {% endfor %}
             {% endfor %}
-        </div>
     </div>
     <div id="backcenter">
             <button id = "back" onclick="location.href='/'">Menu</button>

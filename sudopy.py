@@ -8,6 +8,100 @@ class Sudoku:
     def input_num(self, x, y, num):
         self.grid[x][y] = num
 
+    def check_grid(self):
+        for x in range(9):
+            for y in range(9):
+                if self.grid[x][y] == 0:
+                    return False
+                else:
+                    list_r = self.grid[x]
+                    list_c = []
+                    for i in range(9):
+                        list_c.append(self.grid[i][y])
+                    list_b = []
+                    mod_r = (x + 1) % 3
+                    mod_c = (y + 1) % 3
+                    if mod_r == 0:
+                        list_mr = [x, x - 1, x - 2]
+                    elif mod_r == 1:
+                        list_mr = [x, x + 1, x + 2]
+                    else:
+                        list_mr = [x - 1, x, x + 1]
+
+                    if mod_c == 0:
+                        list_mc = [y, y - 1, y - 2]
+                    elif mod_c == 1:
+                        list_mc = [y, y + 1, y + 2]
+                    else:
+                        list_mc = [y - 1, y, y + 1]
+
+                    for i in list_mr:
+                        for j in list_mc:
+                            list_b.append(self.grid[i][j])
+
+                    for num in range(1,10):
+                        if num not in list_r:
+                            return False
+                        if num not in list_c:
+                            return False
+                        if num not in list_b:
+                            return False
+        return True
+
+    def check_grid_items(self):
+        list_bool = []
+        has_added = False
+        for x in range(9):
+            list_bool_row = []
+            for y in range(9):
+                if self.grid[x][y] == 0:
+                    list_bool_row.append(False)
+                    has_added = True
+                else:
+                    list_r = self.grid[x]
+                    list_c = []
+                    for i in range(9):
+                        list_c.append(self.grid[i][y])
+                    list_b = []
+                    mod_r = (x + 1) % 3
+                    mod_c = (y + 1) % 3
+                    if mod_r == 0:
+                        list_mr = [x, x - 1, x - 2]
+                    elif mod_r == 1:
+                        list_mr = [x, x + 1, x + 2]
+                    else:
+                        list_mr = [x - 1, x, x + 1]
+
+                    if mod_c == 0:
+                        list_mc = [y, y - 1, y - 2]
+                    elif mod_c == 1:
+                        list_mc = [y, y + 1, y + 2]
+                    else:
+                        list_mc = [y - 1, y, y + 1]
+
+                    for i in list_mr:
+                        for j in list_mc:
+                            list_b.append(self.grid[i][j])
+
+                    num = self.grid[x][y]
+
+                    if list_r.count(num) > 1:
+                        list_bool_row.append(False)
+                        has_added = True
+                    if list_c.count(num) > 1:
+                        list_bool_row.append(False)
+                        has_added = True
+                    if list_b.count(num) > 1:
+                        list_bool_row.append(False)
+                        has_added = True
+
+                    if not has_added:
+                        list_bool_row.append(True)
+                        has_added = True
+                has_added = False
+            list_bool.append(list_bool_row)
+        return list_bool
+                
     def check_num(self, x, y, num):
         if self.grid[x][y] != 0:
             return False
@@ -81,7 +175,8 @@ class Sudoku:
                     return (i, j)
         return None
 
-# s = Sudoku(list_hard)
-# print(s)
-# s.solve()
-# print(s)
+s = Sudoku(list_hard)
+s.solve()
+
+
+

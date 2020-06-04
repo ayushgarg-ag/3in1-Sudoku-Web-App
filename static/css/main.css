@@ -83,7 +83,7 @@ input:invalid {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-#clear, #back, .menubutton {
+#clear, #back, .menubutton, #play {
     background-color: (255, 255, 255, 0.5);
     color: #a87b00;
     border: none;
@@ -99,22 +99,26 @@ input:invalid {
     width: 300px;
     margin: 10px;
 }
-#clear:focus, #back:focus, .menubutton:focus {
+#clear:focus, #back:focus, .menubutton:focus, #play:focus {
     outline: none;
 }
-#clearcenter, #backcenter, .menubuttoncontainer {
+#clearcenter, #backcenter, .menubuttoncontainer, #playcenter {
     display: flex;
     justify-content: center;
 }
-.txt-input{
+.txt-input, .errors{
     height: 45px;
     width: 45px; 
     padding: 0;
+    /* margin: 0; */
     border: 0;
     background-color: transparent;
     outline: none;
     font-weight: bold;
     text-align: center;
+}
+.errors {
+    background-color: rgba(255,0,0,0.4)
 }
 /* Column Borders */
 .grid-container .grid-item:nth-child(n):nth-last-child(9n){

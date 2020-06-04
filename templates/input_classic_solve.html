@@ -71,15 +71,18 @@
             {% endfor %}
             {% endfor %}
         </div>
-    
+        
         <div id="solvecenter">
-            <input id="solve" type="submit" value="Solve">
+            <!-- <input id="solve" type="submit" value="Solve"> -->
+            <button id="solve" type="submit">Solve</button>
+        </div>
+        <div id="clearcenter">
+            <button id="clear" onclick="window.location.reload()" type="button">Clear</button>
         </div>
         
     </form>
-    <div id="clearcenter">
-        <button id="clear" onclick="window.location.reload()" type="clear">Clear</button>
-    </div>
+    
+    
     
 </div>
 {% endblock %}
