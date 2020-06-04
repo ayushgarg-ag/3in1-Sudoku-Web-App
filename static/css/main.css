@@ -118,7 +118,7 @@ input:invalid {
     text-align: center;
 }
 .errors {
-    background-color: rgba(255,0,0,0.4)
+    background-color: rgba(255,0,0,0.4);
 }
 /* Column Borders */
 .grid-container .grid-item:nth-child(n):nth-last-child(9n){
@@ -148,4 +148,7 @@ input:invalid {
 }
 input::selection {
     background: transparent;
+}
+.readonly {
+    color: black;
 }

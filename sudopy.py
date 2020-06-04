@@ -1,6 +1,5 @@
 from sudokus import *
 
-
 class Sudoku:
     def __init__(self, matrix):
         self.grid = matrix
@@ -88,10 +87,10 @@ class Sudoku:
                     if list_r.count(num) > 1:
                         list_bool_row.append(False)
                         has_added = True
-                    if list_c.count(num) > 1:
+                    elif list_c.count(num) > 1:
                         list_bool_row.append(False)
                         has_added = True
-                    if list_b.count(num) > 1:
+                    elif list_b.count(num) > 1:
                         list_bool_row.append(False)
                         has_added = True
 
@@ -175,8 +174,20 @@ class Sudoku:
                     return (i, j)
         return None
 
-s = Sudoku(list_hard)
-s.solve()
+# s = Sudoku(list_hard)
+# s.solve()
+# s.input_num(0, 0, 5)
+# s.check_grid_items()
 
+# if orig != 0
+#     black readonly
+# else
+#     if play != 0
+#         if check
+#             input normal
+#         else:
+#             input red
+#     else:
+#         input red
 
-
+        

@@ -6,6 +6,8 @@ import ctypes
 app = Flask(__name__)
 
 sudoku_grid_list = []
+play_list = []
+
 @app.route('/')
 def menu():
     return render_template('menu.html')
@@ -42,11 +44,13 @@ def play():
 
             # if "/input_classic_play" in request.referrer:
             s = Sudoku(sudoku_grid_list)
-            s.solve()
+            play_list = s.return_array()
+            print("Inside Play: ")
+            print(play_list)
             # elif "/input_kings" in request.referrer:
             #     s = Sudoku_Kings(sudoku_grid_list)
             
-            return render_template('play.html', play_array = s.return_array())
+            return render_template('play.html', play_array = play_list)
         else:
             return render_template('menu.html')
 
@@ -67,9 +71,10 @@ def check():
 
         s = Sudoku(sudoku_grid_list)
         print(s)
-        print(s.check_grid_items())
+        print("Inside Check: ")
+        print(play_list)
 
-        return render_template('check.html', is_solved = s.check_grid(), play_array=s.return_array(), check_array = s.check_grid_items())
+        return render_template('check.html', is_solved = s.check_grid(), play_array=s.return_array(), check_array = s.check_grid_items(), original_array = play_list)
     else:
         return render_template('menu.html')
 
