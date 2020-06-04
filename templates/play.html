@@ -61,6 +61,33 @@
         }
     }
 
+    var isNormal = true;
+
+    function changeMode(id) {
+        console.log(id)
+        if (id == "pencilmarks") {
+            isNormal = false;
+        }
+        else {
+            isNormal = true;
+        }
+        for (i = 0; i < 9; i++) {
+            for (j = 0; j < 9; j++) {
+                if (!(document.getElementById(i*9 + j)).className === "readonly") {
+                    if (isNormal) {
+                        document.getElementById(i*9 + j).className += " txt-input";
+                        document.getElementById(i*9 + j).setAttribute('maxlength', 1);
+                    }
+                    else {
+                        console.log("Inside pm");
+                        document.getElementById(i*9 + j).className += " pm-input";
+                        document.getElementById(i*9 + j).setAttribute('maxlength', 9);
+                    }
+            }
+        }
+    }
+}
+
 </script>
 {% endblock %}
 
@@ -73,8 +100,8 @@
             {% for i in range(9) %}
             {% for j in range(9) %}
             {% if play_array[i][j] != 0 %}
-                <div id="{{ i*9 + j }}" class="grid-item">
-                    <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input readonly" min="1" value="{{ play_array[i][j] }}"
+                <div class="grid-item">
+                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="9" class="readonly" min="1" value="{{ play_array[i][j] }}"
                                     onkeydown="return ( event.ctrlKey || event.altKey 
                                     || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
                                     || (95<event.keyCode && event.keyCode<106)
@@ -84,7 +111,7 @@
                 </div>
             {% else %}
                 <div class="grid-item move">
-                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1" 
+                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="9" class="" min="1" 
                                     onkeydown="return ( event.ctrlKey || event.altKey 
                                     || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
                                     || (95<event.keyCode && event.keyCode<106)
@@ -105,6 +132,12 @@
         </div>
         <div id="clearcenter">
             <button id="clear" onclick="window.location.reload()" type="button">Restart</button>
+        </div>
+        <div class="modebuttons">
+            <button onclick="changeMode(this.id)" id="normal" value="normal" type="button">Normal</button>
+        </div>
+        <div class="modebuttons">
+            <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" type="button">Pencilmarks</button>
         </div>
     </form>
 

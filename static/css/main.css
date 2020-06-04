@@ -51,8 +51,13 @@ div.center{
     position: relative;
     left: 50%;
 }
-input {
+input.txt-input {
     font-size: 25px;
+    color: transparent;
+    text-shadow: 0 0 0 #a87b00;
+}
+input.pm-input {
+    font-size: 15px;
     color: transparent;
     text-shadow: 0 0 0 #a87b00;
 }
@@ -83,7 +88,7 @@ input:invalid {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-#clear, #back, .menubutton, #play {
+#clear, #back, .menubutton, #play, #normal, #pencilmarks {
     background-color: (255, 255, 255, 0.5);
     color: #a87b00;
     border: none;
@@ -99,14 +104,14 @@ input:invalid {
     width: 300px;
     margin: 10px;
 }
-#clear:focus, #back:focus, .menubutton:focus, #play:focus {
+#clear:focus, #back:focus, .menubutton:focus, #play:focus, #normal:focus, #pencilmarks:focus {
     outline: none;
 }
-#clearcenter, #backcenter, .menubuttoncontainer, #playcenter {
+#clearcenter, #backcenter, .menubuttoncontainer, #playcenter, .modebuttons {
     display: flex;
     justify-content: center;
 }
-.txt-input, .errors{
+.txt-input, .errors, .pm-input {
     height: 45px;
     width: 45px; 
     padding: 0;
