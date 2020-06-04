@@ -29,6 +29,7 @@ def input_kings():
 
 @app.route('/play', methods=['POST', 'GET'])
 def play():
+        global play_list
         sudoku_grid_list = []
         if request.method == 'POST':
             for i in range(9):
