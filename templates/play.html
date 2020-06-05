@@ -5,10 +5,23 @@
 <meta id="my-data" data-name="{{is_solved}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <script>
+
+    var pmArray = [];
+
+    function createArray() {
+        for (var i = 0; i < 81; i++) {
+            pmArray[i] = [];
+        }
+    }
+
+    var isNormal = true;
+
+    // if (document.getElementById()
+    // document.getElementById("0").addEventListener("keyup", addToArray());
+
     $(document).keydown(
         function (e) {
             var keypressed = false;
-            document.getElementById(document.activeElement.id).select();
 
             if (event.keyCode == 39) {
                 currentId = document.activeElement.id;
@@ -46,6 +59,7 @@
             }
             if (keypressed) {
                 document.getElementById(nextId).focus();
+                document.getElementById(document.activeElement.id).select();
             }
         }
     );
@@ -61,86 +75,109 @@
         }
     }
 
-    var isNormal = true;
+
 
     function changeMode(id) {
-        console.log(id)
         if (id == "pencilmarks") {
             isNormal = false;
         }
         else {
             isNormal = true;
         }
+
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                if (!(document.getElementById(i*9 + j)).className === "readonly") {
+                if (((document.getElementById(i * 9 + j)).className != "txt-input readonly") && (document.getElementById(i * 9 + j).value == "")) {
                     if (isNormal) {
-                        document.getElementById(i*9 + j).className += " txt-input";
-                        document.getElementById(i*9 + j).setAttribute('maxlength', 1);
+                        document.getElementById(i * 9 + j).className = "txt-input";
                     }
                     else {
-                        console.log("Inside pm");
-                        document.getElementById(i*9 + j).className += " pm-input";
-                        document.getElementById(i*9 + j).setAttribute('maxlength', 9);
+                        document.getElementById(i * 9 + j).className = "pm-input";
+
                     }
+                }
             }
         }
     }
-}
+
+    function addToArray(id, value) {
+        if (isNormal === false) {
+            pmArray[id] = [];
+            pmCellArray = pmArray[id];
+            nums = value.split("");
+            // console.log(nums[nums.length - 1]);
+            firstIndex = nums.indexOf(nums[nums.length - 1]);
+            console.log(firstIndex);
+
+            for (i = 0; i < nums.length; i++) {
+                pmCellArray.push(nums[i]);
+            }
+            if (pmCellArray.includes(nums[nums.length - 1]) && pmCellArray.length > 1) {
+                pmCellArray.pop();
+                pmCellArray.splice(firstIndex, 1);
+            }
+            pmCellArray.sort();
+            console.log(pmCellArray)
+            pmArray[id] = pmCellArray;
+            idValue = "";
+            for (i = 0; i < pmCellArray.length; i++) {
+                idValue += pmCellArray[i];
+            }
+            document.getElementById(id).value = idValue;
+        }
+    }
+
 
 </script>
 {% endblock %}
 
 {% block body %}
-<body>
-<div class="content">
-    <h1 style="text-align: center">Sudoku (Classic)</h1>
-    <form action="/check" method="POST">
-        <div id="grid-container" class="grid-container">
-            {% for i in range(9) %}
-            {% for j in range(9) %}
-            {% if play_array[i][j] != 0 %}
+
+<body onload="changeMode(normal); createArray()">
+    <div class="content">
+        <h1 style="text-align: center">Sudoku (Classic)</h1>
+        <form action="/check" method="POST">
+            <div id="grid-container" class="grid-container">
+                {% for i in range(9) %}
+                {% for j in range(9) %}
+                {% if play_array[i][j] != 0 %}
                 <div class="grid-item">
-                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="9" class="readonly" min="1" value="{{ play_array[i][j] }}"
-                                    onkeydown="return ( event.ctrlKey || event.altKey 
-                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-                                    || (95<event.keyCode && event.keyCode<106)
-                                    || (event.keyCode==8) || (event.keyCode==9) 
-                                    || (event.keyCode>34 && event.keyCode<40) 
-                                    || (event.keyCode==46) )" autocomplete="off" readonly>
+                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="1" class="readonly" min="1"
+                        value="{{ play_array[i][j] }}"
+                        onkeydown="return ( event.ctrlKey || event.altKey 
+                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"
+                        autocomplete="off" readonly>
                 </div>
-            {% else %}
+                {% else %}
                 <div class="grid-item move">
-                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="9" class="" min="1" 
-                                    onkeydown="return ( event.ctrlKey || event.altKey 
-                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-                                    || (95<event.keyCode && event.keyCode<106)
-                                    || (event.keyCode==8) || (event.keyCode==9) 
-                                    || (event.keyCode>34 && event.keyCode<40) 
-                                    || (event.keyCode==46) )" autocomplete="off">
+                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="9" class=""
+                        onkeydown="return ( event.ctrlKey || event.altKey 
+                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"
+                        onkeyup="addToArray(this.id, this.value)" autocomplete="off">
                 </div>
-            {% endif %}
-            
-            {% endfor %}
-            {% endfor %}
-        </div>
+                {% endif %}
+
+                {% endfor %}
+                {% endfor %}
+            </div>
 
 
-        <div id="solvecenter">
-            <!-- <input id="solve" type="submit" value="Solve"> -->
-        <button id="solve" type="submit">Check</button>
-        </div>
-        <div id="clearcenter">
-            <button id="clear" onclick="window.location.reload()" type="button">Restart</button>
-        </div>
-        <div class="modebuttons">
-            <button onclick="changeMode(this.id)" id="normal" value="normal" type="button">Normal</button>
-        </div>
-        <div class="modebuttons">
-            <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" type="button">Pencilmarks</button>
-        </div>
-    </form>
+            <div id="solvecenter">
+                <!-- <input id="solve" type="submit" value="Solve"> -->
+                <button id="solve" type="submit">Check</button>
+            </div>
+            <div id="clearcenter">
+                <button id="clear" onclick="window.location.reload()" type="button">Restart</button>
+            </div>
+            <div class="modebuttons">
+                <button onclick="changeMode(this.id)" id="normal" value="normal" type="button">Normal</button>
+            </div>
+            <div class="modebuttons">
+                <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks"
+                    type="button">Pencilmarks</button>
+            </div>
+        </form>
 
-</div>
+    </div>
 </body>
 {% endblock %}

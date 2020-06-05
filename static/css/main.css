@@ -56,8 +56,13 @@ input.txt-input {
     color: transparent;
     text-shadow: 0 0 0 #a87b00;
 }
+input.readonly {
+    font-size: 25px;
+    color: transparent;
+    text-shadow: 0 0 0 black;
+}
 input.pm-input {
-    font-size: 15px;
+    font-size: 10px;
     color: transparent;
     text-shadow: 0 0 0 #a87b00;
 }
@@ -111,7 +116,7 @@ input:invalid {
     display: flex;
     justify-content: center;
 }
-.txt-input, .errors, .pm-input {
+.txt-input, .errors, .pm-input, .readonly {
     height: 45px;
     width: 45px; 
     padding: 0;
@@ -151,9 +156,6 @@ input:invalid {
 .grid-container .grid-item:nth-child(n+73):nth-last-child(n){
     border-bottom: 5px tan solid;
 }
-input::selection {
+/* input::selection {
     background: transparent;
-}
-.readonly {
-    color: black;
-}
+} */
