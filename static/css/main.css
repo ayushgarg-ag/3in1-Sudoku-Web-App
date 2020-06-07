@@ -51,6 +51,9 @@ div.center{
     position: relative;
     left: 50%;
 }
+input {
+    cursor: default;
+}
 input.txt-input {
     font-size: 25px;
     color: transparent;
@@ -73,10 +76,11 @@ input:focus {
     outline: none;
 }
 input:invalid {
-    /* border: 3px solid red; */
     background-color: red;
 }
-
+input::selection {
+    background: transparent;
+}
 #solvecenter {
     display: flex;
     justify-content: center;
@@ -130,6 +134,7 @@ input:invalid {
 .errors {
     background-color: rgba(255,0,0,0.4);
 }
+
 /* Column Borders */
 .grid-container .grid-item:nth-child(n):nth-last-child(9n){
     border-left: 5px tan solid;
@@ -156,6 +161,15 @@ input:invalid {
 .grid-container .grid-item:nth-child(n+73):nth-last-child(n){
     border-bottom: 5px tan solid;
 }
-/* input::selection {
-    background: transparent;
+/* .buttonfocus {
+    background-color: tan;
+    color: white;
+    border: 5px solid wh;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 } */
