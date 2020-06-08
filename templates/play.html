@@ -14,7 +14,6 @@
         <h1 style="text-align: center">Sudoku (Classic)</h1>
         <form action="/check" method="POST" onsubmit="return validateForm()">
 
-
             <div class="inline">
                 <div id="grid-container" class="grid-container">
                     {% for i in range(9) %}
@@ -40,25 +39,28 @@
                     {% endfor %}
                 </div>
 
-
-                <div class="buttoncontainers">
-                    <!-- <input id="solve" type="submit" value="Solve"> -->
-                    <button id="solve" type="submit" class="buttons">Check</button>
-                </div>
-                <div class="buttoncontainers">
-                    <button id="clear" onclick="window.location.reload()" type="button" class="buttons">Restart</button>
+                <div class="allbuttonscontainer">
+                    <div class="buttoncontainers">
+                        <!-- <input id="solve" type="submit" value="Solve"> -->
+                        <button id="solve" type="submit" class="buttons">Check</button>
+                    </div>
+                    <div class="buttoncontainers">
+                        <button id="clear" onclick="window.location.reload()" type="button"
+                            class="buttons">Restart</button>
+                    </div>
                 </div>
             </div>
 
-
-            <div class="inline modecenter">
-                <div class="modebuttons">
-                    <button onclick="changeMode(this.id)" id="normal" value="normal" type="button"
-                        class="buttons">Normal</button>
-                </div>
-                <div class="modebuttons">
-                    <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" type="button"
-                        class="buttons">Pencilmarks</button>
+            <div id="outside" class="inline">
+                <div class="modecenter">
+                    <div class="modebuttons">
+                        <button onclick="changeMode(this.id)" id="normal" value="normal" type="button"
+                            class="buttons">Normal</button>
+                    </div>
+                    <div class="modebuttons">
+                        <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" type="button"
+                            class="buttons">Pencilmarks</button>
+                    </div>
                 </div>
             </div>
 

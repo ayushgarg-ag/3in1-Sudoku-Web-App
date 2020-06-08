@@ -84,13 +84,7 @@ class Sudoku:
 
                     num = self.grid[x][y]
 
-                    if list_r.count(num) > 1:
-                        list_bool_row.append(False)
-                        has_added = True
-                    elif list_c.count(num) > 1:
-                        list_bool_row.append(False)
-                        has_added = True
-                    elif list_b.count(num) > 1:
+                    if list_r.count(num) > 1 or list_c.count(num) > 1 or list_b.count(num) > 1:
                         list_bool_row.append(False)
                         has_added = True
 

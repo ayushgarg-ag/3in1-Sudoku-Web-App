@@ -5,13 +5,16 @@
 {% endblock %}
 
 {% block body %}
+
 <body>
-<h1>Sudoku Solvers</h1>
-<div class="buttoncontainers">
-    <button class="menubutton" onclick="location.href='/input_classic_play'">Play a Sudoku</button>
-</div>
-<div class="buttoncontainers">
-    <button class="menubutton" onclick="location.href='/input_classic_solve'">Solve a Sudoku</button>
-</div>
+    <h1>Sudoku Solvers</h1>
+    <div class="allbuttonscontainer">
+        <div class="buttoncontainers">
+            <button class="menubutton" onclick="location.href='/input_classic_play'">Play a Sudoku</button>
+        </div>
+        <div class="buttoncontainers">
+            <button class="menubutton" onclick="location.href='/input_classic_solve'">Solve a Sudoku</button>
+        </div>
+    </div>
 </body>
 {% endblock %}

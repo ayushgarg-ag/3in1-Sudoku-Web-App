@@ -20,6 +20,7 @@ h1 {
 .content {
     margin: 0 auto;
     padding: 0;
+    text-align: center;
 }
 
 /* Grid CSS */
@@ -39,8 +40,8 @@ h1 {
     font-size: 20px;
     text-align: center;
     margin: 0;
-    height: 45px;
-    width: 45px;
+    height: 50px;
+    width: 50px;
 }
 /* Column Borders CSS */
 .grid-container .grid-item:nth-child(n):nth-last-child(9n){
@@ -93,8 +94,8 @@ input:focus {
     outline: 3px #a87b00 solid;
 }
 .txt-input, .errors, .pm-input, .readonly {
-    height: 45px;
-    width: 45px; 
+    height: 50px;
+    width: 50px; 
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -115,17 +116,26 @@ input::selection {
 
 /* Button Containers CSS */
 .buttoncontainers {
-    display: flex;
+    display: inline-block;
+}
+.allbuttonscontainer {
     justify-content: center;
+    text-align: center;
 }
 .modebuttons {
     display: flex;
     justify-content: center;
-    
+    vertical-align: middle;
+}
+#outside {
+    height: 484px;
+    position: absolute;
+    margin-left: 20px;
 }
 .modecenter {
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
 }
 
 
@@ -166,7 +176,6 @@ input::selection {
 }
 .inline {
     display: inline-block;
-    background-color: black;
 }
 
 

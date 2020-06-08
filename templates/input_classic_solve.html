@@ -10,7 +10,7 @@
 <body>
 <div class="content">
     <h1 style="text-align: center">Sudoku Solver (Classic)</h1>
-    <form action="/solution" method="POST">
+    <form action="/solution" method="POST" onsubmit="return validate()">
         <div id="grid-container" class="grid-container">
             {% for i in range(9) %}
             {% for j in range(9) %}
