@@ -58,7 +58,7 @@ $(document).keydown(
             document.getElementById(nextId).focus();
             // document.getElementById(document.activeElement.id).select();
         }
-        // console.log(document.getElementById(document.activeElement.id).value);
+        // console.log(document.getElementById(document.activeElement.id).className);
     }
 );
 
@@ -91,10 +91,15 @@ function changeMode(id) {
                 && (document.getElementById(i * 9 + j).value == "")) {
                 if (isNormal) {
                     document.getElementById(i * 9 + j).className = "txt-input";
+                    if (document.getElementById(i * 9 + j).className != "pm-input") {
+                        document.getElementById(i * 9 + j).maxLength = 1;
+                    }
                 }
                 else {
                     document.getElementById(i * 9 + j).className = "pm-input";
-                    document.getElementById(i * 9 + j).maxLength = 9;
+                    if (document.getElementById(i * 9 + j).className != "txt-input") {
+                        document.getElementById(i * 9 + j).maxLength = 9;
+                    }
                 }
             }
         }
@@ -128,6 +133,7 @@ function addToArray(id, value, e) {
         else {
             pmArray[id] = [];
             document.getElementById(id).className = "txt-input";
+            document.getElementById(id).maxLength = 1;
         }
     }
 }

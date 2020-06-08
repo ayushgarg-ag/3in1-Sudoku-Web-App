@@ -114,9 +114,18 @@ input::selection {
 
 
 /* Button Containers CSS */
-.buttoncontainers, .modebuttons {
+.buttoncontainers {
     display: flex;
     justify-content: center;
+}
+.modebuttons {
+    display: flex;
+    justify-content: center;
+    
+}
+.modecenter {
+    position: absolute;
+    top: 50%;
 }
 
 
@@ -155,7 +164,10 @@ input::selection {
     text-align: center;
     outline: none;
 }
-
+.inline {
+    display: inline-block;
+    background-color: black;
+}
 
 
 
