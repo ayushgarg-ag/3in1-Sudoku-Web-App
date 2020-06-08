@@ -4,65 +4,8 @@
 <title>Sudoku</title>
 <meta id="my-data" data-name="{{is_solved}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<script>
-    $(document).keydown(
-        function (e) {
-            var keypressed = false;
-            document.getElementById(document.activeElement.id).select();
+<script src="static/javascript/check.js" type="text/javascript"></script>
 
-            if (event.keyCode == 39) {
-                currentId = document.activeElement.id;
-                if (currentId != 80) {
-                    nextId = parseInt(currentId) + 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 37) {
-                currentId = document.activeElement.id;
-                if (currentId != 0) {
-                    nextId = parseInt(currentId) - 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 40) {
-                currentId = document.activeElement.id;
-                if (currentId < 72) {
-                    nextId = parseInt(currentId) + 9;
-                }
-                else if (currentId != 80) {
-                    nextId = parseInt(currentId) - 71;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 38) {
-                currentId = document.activeElement.id;
-                console.log(currentId);
-                if (currentId > 8) {
-                    nextId = parseInt(currentId) - 9;
-                }
-                else if (currentId != 0) {
-                    nextId = parseInt(currentId) + 71;
-                }
-                keypressed = true;
-            }
-            if (keypressed) {
-                document.getElementById(nextId).focus();
-            }
-        }
-    );
-
-    var solved = $('#my-data').data().name;
-
-    function checkAlert() {
-        if (solved == "True") {
-            window.alert("You successfully finished the sudoku!");
-        }
-        else {
-            window.alert("Your answer is incorrect.")
-        }
-    }
-
-</script>
 {% endblock %}
 
 {% block body %}
@@ -119,12 +62,12 @@
         </div>
 
 
-        <div id="solvecenter">
+        <div class="buttoncontainers">
             <!-- <input id="solve" type="submit" value="Solve"> -->
-        <button id="solve" type="submit">Check</button>
+        <button id="solve" type="submit" class="buttons">Check</button>
         </div>
-        <div id="clearcenter">
-            <button id="clear" onclick="window.location.reload()" type="button">Restart</button>
+        <div class="buttoncontainers">
+            <button id="clear" onclick="window.location.reload()" type="button" class="buttons">Restart</button>
         </div>
     </form>
 

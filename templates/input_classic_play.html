@@ -3,52 +3,7 @@
 {% block head %}
 <title>Sudoku Solver (Classic)</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<script>
-    $(document).keydown(
-        function (e) {
-            var keypressed = false;
-            document.getElementById(document.activeElement.id).select();
-
-            if (event.keyCode == 39) {
-                currentId = document.activeElement.id;
-                if (currentId != 80) {
-                    nextId = parseInt(currentId) + 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 37) {
-                currentId = document.activeElement.id;
-                if (currentId != 0) {
-                    nextId = parseInt(currentId) - 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 40) {
-                currentId = document.activeElement.id;
-                if (currentId < 72) {
-                    nextId = parseInt(currentId) + 9;
-                }
-                else if (currentId != 80) {
-                    nextId = parseInt(currentId) - 71;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 38) {
-                currentId = document.activeElement.id;
-                if (currentId > 8) {
-                    nextId = parseInt(currentId) - 9;
-                }
-                else if (currentId != 0) {
-                    nextId = parseInt(currentId) + 71;
-                }
-                keypressed = true;
-            }
-            if (keypressed) {
-                document.getElementById(nextId).focus();
-            }
-        }
-    );
-</script>
+<script src="static/javascript/base.js" type="text/javascript"></script>
 {% endblock %}
 {% block body %}
 <body>
@@ -71,14 +26,14 @@
             {% endfor %}
         </div>
 
-        <div id="playcenter">
-            <button id="play" type="submit">Play</button>
+        <div class="buttoncontainers">
+            <button id="play" type="submit" class="buttons">Play</button>
             <!-- <button onclick="location.href='/play'" id="play" type="button">Play</button> -->
         </div>
 
 
-        <div id="clearcenter">
-            <button id="clear" onclick="window.location.reload()" type="button">Clear</button>
+        <div class="buttoncontainers">
+            <button id="clear" onclick="window.location.reload()" type="button" class="buttons">Clear</button>
         </div>
 
     </form>

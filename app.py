@@ -63,6 +63,7 @@ def check():
             row_list = []
             for j in range(9):
                 id = "" + str(i*9 + j)
+                # print(request.form[id])
                 content = request.form[id]
                 if content == "":
                     row_list.append(0)
