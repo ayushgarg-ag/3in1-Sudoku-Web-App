@@ -1,5 +1,6 @@
 from sudokus import *
 
+
 class Sudoku:
     def __init__(self, matrix):
         self.grid = matrix
@@ -38,7 +39,7 @@ class Sudoku:
                         for j in list_mc:
                             list_b.append(self.grid[i][j])
 
-                    for num in range(1,10):
+                    for num in range(1, 10):
                         if num not in list_r:
                             return False
                         if num not in list_c:
@@ -94,7 +95,7 @@ class Sudoku:
                 has_added = False
             list_bool.append(list_bool_row)
         return list_bool
-                
+
     def check_num(self, x, y, num):
         if self.grid[x][y] != 0:
             return False
@@ -160,7 +161,7 @@ class Sudoku:
 
                 self.input_num(x, y, 0)
         return False
-    
+
     def locate_empty(self):
         for i in range(9):
             for j in range(9):
@@ -183,5 +184,3 @@ class Sudoku:
 #             input red
 #     else:
 #         input red
-
-        

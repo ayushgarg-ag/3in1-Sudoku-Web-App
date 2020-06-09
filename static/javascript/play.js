@@ -8,9 +8,6 @@ function createArray() {
 
 var isNormal = true;
 
-// if (document.getElementById()
-// document.getElementById("0").addEventListener("keyup", addToArray());
-
 $(document).keydown(
     function (e) {
         var keypressed = false;
@@ -20,21 +17,25 @@ $(document).keydown(
 
         }
 
-        if (event.keyCode == 39) {
+        if (e.keyCode == 8) {
+            document.getElementById(document.activeElement.id).select();
+        }
+
+        if (e.keyCode == 39) {
             currentId = document.activeElement.id;
             if (currentId != 80) {
                 nextId = parseInt(currentId) + 1;
             }
             keypressed = true;
         }
-        if (e.keyCode == 37) {
+        else if (e.keyCode == 37) {
             currentId = document.activeElement.id;
             if (currentId != 0) {
                 nextId = parseInt(currentId) - 1;
             }
             keypressed = true;
         }
-        if (e.keyCode == 40) {
+        else if (e.keyCode == 40) {
             currentId = document.activeElement.id;
             if (currentId < 72) {
                 nextId = parseInt(currentId) + 9;
@@ -44,7 +45,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-        if (e.keyCode == 38) {
+        else if (e.keyCode == 38) {
             currentId = document.activeElement.id;
             if (currentId > 8) {
                 nextId = parseInt(currentId) - 9;
@@ -54,11 +55,12 @@ $(document).keydown(
             }
             keypressed = true;
         }
-        if (keypressed) {
+        if (keypressed === true) {
             document.getElementById(nextId).focus();
             // document.getElementById(document.activeElement.id).select();
+
         }
-        // console.log(document.getElementById(document.activeElement.id).className);
+
     }
 );
 
@@ -107,34 +109,73 @@ function changeMode(id) {
 
 }
 
-function addToArray(id, value, e) {
-    if (e.keyCode >= 48 && e.keyCode <= 57) {
-        if (isNormal == false && document.getElementById(id).className != "txt-input") {
-            prevPmCellArray = pmArray[id];
+function arr_diff(a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}
+
+function arrEquals(a1, a2) {
+    if (a1.length != a2.length) {
+        return false;
+    }
+    for (var i = 0; i < a1.length; i++) {
+        if (a1[i] != a2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function addToArray(id, value) {
+    if (isNormal === false && document.getElementById(id).className != "txt-input") {
+        var prevPmCellArray = pmArray[id];
+        var pmCellArray = [];
+        var nums = value.split("");
+
+        for (i = 0; i < nums.length; i++) {
+            pmCellArray.push(nums[i]);
+        }
+        var diff = arr_diff(prevPmCellArray, pmCellArray);
+        pmCellArray = prevPmCellArray.concat(diff);
+        var firstIndex = pmCellArray.indexOf(pmCellArray[pmCellArray.length - 1]);
+        if (arrEquals(diff, prevPmCellArray)) {
             pmCellArray = [];
-            nums = value.split("");
-            firstIndex = nums.indexOf(nums[nums.length - 1]);
-            for (i = 0; i < nums.length; i++) {
-                pmCellArray.push(nums[i]);
-            }
-            if ((prevPmCellArray.length != pmCellArray.length)
-                && (prevPmCellArray.includes(nums[nums.length - 1]))) {
-                pmCellArray.pop();
-                pmCellArray.splice(firstIndex, 1);
-            }
-            pmCellArray.sort();
-            pmArray[id] = pmCellArray;
-            idValue = "";
-            for (i = 0; i < pmCellArray.length; i++) {
-                idValue += pmCellArray[i];
-            }
-            document.getElementById(id).value = idValue;
         }
-        else {
-            pmArray[id] = [];
-            document.getElementById(id).className = "txt-input";
-            document.getElementById(id).maxLength = 1;
+        else if ((prevPmCellArray.length != pmCellArray.length)
+            && (prevPmCellArray.includes(diff[0]))) {
+            pmCellArray.pop();
+            pmCellArray.splice(firstIndex, 1);
         }
+        pmCellArray.sort();
+        pmArray[id] = pmCellArray;
+        idValue = "";
+        for (i = 0; i < pmCellArray.length; i++) {
+            idValue += pmCellArray[i];
+        }
+        document.getElementById(id).value = idValue;
+    }
+    else {
+        pmArray[id] = [];
+        document.getElementById(id).className = "txt-input";
+        document.getElementById(id).maxLength = 1;
     }
 }
 
