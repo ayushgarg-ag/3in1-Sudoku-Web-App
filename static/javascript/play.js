@@ -18,13 +18,14 @@ $(document).keydown(
 
         if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
-
         }
 
+        // Backspace
         if (e.keyCode == 8) {
             document.getElementById(document.activeElement.id).select();
         }
 
+        // Right Arrow
         if (e.keyCode == 39) {
             currentId = document.activeElement.id;
             if (currentId != 80) {
@@ -32,6 +33,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
+        // Left arrow
         else if (e.keyCode == 37) {
             currentId = document.activeElement.id;
             if (currentId != 0) {
@@ -39,6 +41,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
+        // Down arrow
         else if (e.keyCode == 40) {
             currentId = document.activeElement.id;
             if (currentId < 72) {
@@ -49,6 +52,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
+        // Up arrow
         else if (e.keyCode == 38) {
             currentId = document.activeElement.id;
             if (currentId > 8) {
@@ -59,6 +63,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
+        // Space bar
         else if (e.keyCode == 32) {
             if (isNormal) {
                 changeMode("pencilmarks");
@@ -67,13 +72,16 @@ $(document).keydown(
                 changeMode("normal");
             }
         }
+        // Shift
         else if (e.keyCode == 16) {
             isSelectMultiple = true;
             selectArray[document.activeElement.id] = true;
             document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
         }
+        // Escape
         else if (e.keyCode == 27) {
             isSelectMultiple = false;
+        
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
                     document.getElementById(i).style.backgroundColor = "transparent";
@@ -110,8 +118,9 @@ function checkAlert() {
 }
 
 function changeMode(id) {
-    // console.log(cur_id);
-    // document.getElementById(cur_id).focus();
+    if (document.getElementById(cur_id) !== null) {
+        document.getElementById(cur_id).focus();
+    }
     if (id == "pencilmarks") {
         isNormal = false;
         document.getElementById("pencilmarks").className = "modefocus";
@@ -260,7 +269,7 @@ function selectClick(id) {
     else {
         for (var i = 0; i < 81; i++) {
             if (selectArray[i]) {
-                document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+                document.getElementById(i).style.backgroundColor = "transparent";
                 selectArray[i] = false;
             }
         }
