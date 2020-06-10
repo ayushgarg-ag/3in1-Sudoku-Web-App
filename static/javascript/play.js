@@ -12,7 +12,7 @@ $(document).keydown(
     function (e) {
         var keypressed = false;
 
-        if (isNormal) {
+        if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
 
         }
@@ -54,6 +54,15 @@ $(document).keydown(
                 nextId = parseInt(currentId) + 71;
             }
             keypressed = true;
+        }
+        else if (e.keyCode == 32) {
+            console.log("peekaboo");
+            if (isNormal) {
+                changeMode("pencilmarks");
+            }
+            else {
+                changeMode("normal");
+            }
         }
         if (keypressed === true) {
             document.getElementById(nextId).focus();
@@ -193,4 +202,8 @@ function validateForm() {
         }
     }
     return true;
+}
+
+function selectFocus(id) {  
+    document.getElementById(id).style.backgroundColor = "red";
 }
