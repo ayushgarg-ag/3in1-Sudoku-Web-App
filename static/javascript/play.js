@@ -1,12 +1,16 @@
 var pmArray = [];
+var selectArray = [];
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
         pmArray[i] = [];
+        selectArray[i] = false;
     }
 }
 
 var isNormal = true;
+var isSelectMultiple = false;
+var cur_id;
 
 $(document).keydown(
     function (e) {
@@ -56,12 +60,25 @@ $(document).keydown(
             keypressed = true;
         }
         else if (e.keyCode == 32) {
-            console.log("peekaboo");
             if (isNormal) {
                 changeMode("pencilmarks");
             }
             else {
                 changeMode("normal");
+            }
+        }
+        else if (e.keyCode == 16) {
+            isSelectMultiple = true;
+            selectArray[document.activeElement.id] = true;
+            document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        }
+        else if (e.keyCode == 27) {
+            isSelectMultiple = false;
+            for (var i = 0; i < 81; i++) {
+                if (selectArray[i]) {
+                    document.getElementById(i).style.backgroundColor = "transparent";
+                    selectArray[i] = false;
+                }
             }
         }
         if (keypressed === true) {
@@ -70,6 +87,14 @@ $(document).keydown(
 
         }
 
+    }
+);
+
+$(document).keyup(
+    function (e) {
+        if (e.keyCode == 16) {
+            isSelectMultiple = false;
+        }
     }
 );
 
@@ -85,6 +110,8 @@ function checkAlert() {
 }
 
 function changeMode(id) {
+    // console.log(cur_id);
+    // document.getElementById(cur_id).focus();
     if (id == "pencilmarks") {
         isNormal = false;
         document.getElementById("pencilmarks").className = "modefocus";
@@ -115,7 +142,9 @@ function changeMode(id) {
             }
         }
     }
-
+    if (document.getElementById(cur_id) !== null){
+        document.getElementById(cur_id).focus();
+    }
 }
 
 function arr_diff(a1, a2) {
@@ -180,17 +209,28 @@ function addToArray(id, value) {
             idValue += pmCellArray[i];
         }
         document.getElementById(id).value = idValue;
+        for (var i = 0; i < 81; i++) {
+            if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+                document.getElementById(i).value = idValue;
+            }
+        }
     }
     else {
         pmArray[id] = [];
         document.getElementById(id).className = "txt-input";
         document.getElementById(id).maxLength = 1;
+        idValue = document.getElementById(id).value;
+        for (var i = 0; i < 81; i++) {
+            if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+                document.getElementById(i).value = idValue;
+            }
+        }
     }
 }
 
 function validateForm() {
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
             if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
                 alert("You cannot check since there are still pencilmarks on the board.");
                 return false;
@@ -205,5 +245,28 @@ function validateForm() {
 }
 
 function selectFocus(id) {  
-    document.getElementById(id).style.backgroundColor = "red";
+    if (isSelectMultiple) {
+        selectArray[id] = true;
+        
+        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+    }
+}
+
+function selectClick(id) {  
+    if (isSelectMultiple) {
+        selectArray[id] = true;
+        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+    }
+    else {
+        for (var i = 0; i < 81; i++) {
+            if (selectArray[i]) {
+                document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+                selectArray[i] = false;
+            }
+        }
+    }
+}
+
+function setId(id) {
+    cur_id = id;
 }
