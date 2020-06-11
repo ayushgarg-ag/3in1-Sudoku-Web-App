@@ -81,7 +81,7 @@ $(document).keydown(
         // Escape
         else if (e.keyCode == 27) {
             isSelectMultiple = false;
-        
+
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
                     document.getElementById(i).style.backgroundColor = "transparent";
@@ -151,7 +151,7 @@ function changeMode(id) {
             }
         }
     }
-    if (document.getElementById(cur_id) !== null){
+    if (document.getElementById(cur_id) !== null) {
         document.getElementById(cur_id).focus();
     }
 }
@@ -191,36 +191,66 @@ function arrEquals(a1, a2) {
     return true;
 }
 
-function addToArray(id, value) {
-    if (isNormal === false && document.getElementById(id).className != "txt-input") {
-        var prevPmCellArray = pmArray[id];
-        var pmCellArray = [];
-        var nums = value.split("");
+function delPmArrayInput(id, diff) {
+    pmCellArray = pmArray[id].concat(diff);
+    var firstIndex = pmCellArray.indexOf(pmCellArray[pmCellArray.length - 1]);
+    if (pmArray[id].includes(diff)) {
+        console.log(diff + " was deleted from id " + id);
+        pmCellArray.pop();
+        pmCellArray.splice(firstIndex, 1);
+    }
+    return pmCellArray;
+}
 
-        for (i = 0; i < nums.length; i++) {
-            pmCellArray.push(nums[i]);
-        }
-        var diff = arr_diff(prevPmCellArray, pmCellArray);
-        pmCellArray = prevPmCellArray.concat(diff);
-        var firstIndex = pmCellArray.indexOf(pmCellArray[pmCellArray.length - 1]);
-        if (arrEquals(diff, prevPmCellArray)) {
-            pmCellArray = [];
-        }
-        else if ((prevPmCellArray.length != pmCellArray.length)
-            && (prevPmCellArray.includes(diff[0]))) {
-            pmCellArray.pop();
-            pmCellArray.splice(firstIndex, 1);
-        }
-        pmCellArray.sort();
+function sortAndWriteCellValue(id, pmCellArray) {
+    console.log("Entered sort and write");
+    if (pmCellArray.length == 0) {
+        document.getElementById(id).value = "";
+    }
+    else {
         pmArray[id] = pmCellArray;
+        pmCellArray.sort();
         idValue = "";
         for (i = 0; i < pmCellArray.length; i++) {
             idValue += pmCellArray[i];
         }
         document.getElementById(id).value = idValue;
+    }
+}
+
+function addToArray(id, value) {
+    if (isNormal === false && document.getElementById(id).className != "txt-input") {
+        var prevPmCellArray = pmArray[id];
+        lastNumEntered = value[value.length - 1];
+        var pmCellArray = prevPmCellArray.concat(lastNumEntered);
+        var nums = value.split("");
+
+        if (nums.length == 0) {
+            pmCellArray = [];
+        }
+        // deleting from pmCellArray
+        if (pmCellArray.length != 0) {
+            pmCellArray = delPmArrayInput(id, lastNumEntered);
+        }
+        // sort and write
+        sortAndWriteCellValue(id, pmCellArray);
+
         for (var i = 0; i < 81; i++) {
             if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
-                document.getElementById(i).value = idValue;
+                if (i != id) {
+                    if (document.getElementById(i).value.includes(lastNumEntered) == false) {
+                        document.getElementById(i).value += lastNumEntered;
+                    }
+                    else {
+                        var array = delPmArrayInput(i, lastNumEntered);
+                        sortAndWriteCellValue(i, array);
+                        console.log("I: " + i);
+                        console.log("Last num entered: " + lastNumEntered)
+                        console.log("Array: " + array);
+                        console.log("")
+
+                    }
+                }
             }
         }
     }
@@ -253,15 +283,15 @@ function validateForm() {
     return true;
 }
 
-function selectFocus(id) {  
+function selectFocus(id) {
     if (isSelectMultiple) {
         selectArray[id] = true;
-        
+
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
 }
 
-function selectClick(id) {  
+function selectClick(id) {
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
