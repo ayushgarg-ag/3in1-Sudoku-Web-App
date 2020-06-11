@@ -312,24 +312,26 @@ function selectFocus(id) {
 }
 
 function selectClick(id) {
+    if (document.getElementById(cur_id) !== null) {
+        document.getElementById(cur_id).focus();
+    }
 
     if (isSelectMultiple) {
-        
         selectArray[id] = true;
-        console.log(selectArray);
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
     else {
-    
-
         for (var i = 0; i < 81; i++) {
             if (selectArray[i]) {
                 document.getElementById(i).style.backgroundColor = "transparent";
                 selectArray[i] = false;
             }
         }
+        document.activeElement.focus();
     }
-
+    if (document.getElementById(cur_id) !== null) {
+        document.getElementById(cur_id).focus();
+    }
 }
 
 function setId(id) {
