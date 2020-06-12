@@ -42,18 +42,32 @@ def play():
                     else:
                         row_list.append(int(content))
                 sudoku_grid_list.append(row_list)
-
-            # if "/input_classic_play" in request.referrer:
             s = Sudoku(sudoku_grid_list)
-            play_list = s.return_array()
-            # print("Inside Play: ")
-            # print(play_list)
-            # elif "/input_kings" in request.referrer:
-            #     s = Sudoku_Kings(sudoku_grid_list)
-            
-            return render_template('play.html', play_array = play_list)
+            if '/input_classic_play' in request.referrer:
+                play_list = s.return_array()
+                return render_template('play.html', input_array = play_list, play_array = None)
+            elif '/play' in request.referrer:
+                return render_template('play.html', is_solved = s.check_grid(), check_array = s.check_grid_items(), play_array = s.return_array(), input_array = play_list)
+
         else:
             return render_template('menu.html')
+
+'''
+for i 
+    for j
+        if play == null
+            if input != 0
+                readonly from input
+            else
+                normal no value
+        else
+            if input != 0
+                readonly from input
+            else if check
+                normal value from play
+            else 
+                error
+'''
 
 @app.route('/check', methods=['POST', 'GET'])
 def check():

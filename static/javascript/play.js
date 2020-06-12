@@ -337,3 +337,14 @@ function selectClick(id) {
 function setId(id) {
     cur_id = id;
 }
+
+var solved = $('#my-data').data().name;
+
+function checkAlert() {
+    if (solved == "True") {
+        window.alert("You successfully finished the sudoku!");
+    }
+    else {
+        window.alert("Your answer is incorrect.")
+    }
+}
