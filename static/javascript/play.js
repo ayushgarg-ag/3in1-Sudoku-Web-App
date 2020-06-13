@@ -341,10 +341,13 @@ function setId(id) {
 var solved = $('#my-data').data().name;
 
 function checkAlert() {
-    if (solved == "True") {
-        window.alert("You successfully finished the sudoku!");
-    }
-    else {
-        window.alert("Your answer is incorrect.")
+    console.log(solved);
+    if (solved != "None") {
+        if (solved == "True") {
+            window.alert("You successfully finished the sudoku!");
+        }
+        else {
+            window.alert("Your answer is incorrect.")
+        }
     }
 }

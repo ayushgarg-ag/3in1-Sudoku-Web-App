@@ -45,7 +45,7 @@ def play():
             s = Sudoku(sudoku_grid_list)
             if '/input_classic_play' in request.referrer:
                 play_list = s.return_array()
-                return render_template('play.html', input_array = play_list, play_array = None)
+                return render_template('play.html', is_solved = "None", input_array = play_list, play_array = None)
             elif '/play' in request.referrer:
                 return render_template('play.html', is_solved = s.check_grid(), check_array = s.check_grid_items(), play_array = s.return_array(), input_array = play_list)
 
