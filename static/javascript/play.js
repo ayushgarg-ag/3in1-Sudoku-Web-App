@@ -14,32 +14,35 @@ var cur_id;
 
 $(document).keydown(
     function (e) {
+    
         var keypressed = false;
 
+//         // debugger;
+//         // console.log(document.getElementById(document.activeElement.id).className);
         if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
         }
 
-        // Backspace/Delete
+//         // Backspace/Delete
         if (e.keyCode == 8) {
+            document.getElementById(document.activeElement.id).value = [];
+            pmArray[document.activeElement.id] = [];
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
                     document.getElementById(i).value = [];
                     pmArray[i] = [];
                 }
-            }
-            
+            }   
         }
-
-        // Right Arrow
-        if (e.keyCode == 39) {
+//         // Right Arrow
+        else if (e.keyCode == 39) {
             currentId = document.activeElement.id;
             if (currentId != 80) {
                 nextId = parseInt(currentId) + 1;
             }
             keypressed = true;
         }
-        // Left arrow
+//         // Left arrow
         else if (e.keyCode == 37) {
             currentId = document.activeElement.id;
             if (currentId != 0) {
@@ -47,7 +50,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-        // Down arrow
+//         // Down arrow
         else if (e.keyCode == 40) {
             currentId = document.activeElement.id;
             if (currentId < 72) {
@@ -58,7 +61,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-        // Up arrow
+//         // Up arrow
         else if (e.keyCode == 38) {
             currentId = document.activeElement.id;
             if (currentId > 8) {
@@ -69,14 +72,16 @@ $(document).keydown(
             }
             keypressed = true;
         }
-        // Space bar
+//         // Space bar
         else if (e.keyCode == 32) {
+            // console.log("Before: " + isNormal);
             if (isNormal) {
                 changeMode("pencilmarks");
             }
             else {
                 changeMode("normal");
             }
+            // console.log("After: " + isNormal);
         }
         // Shift
         else if (e.keyCode == 16) {
@@ -165,23 +170,28 @@ function changeMode(id) {
 }
 
 function arr_diff(a1, a2) {
-
     var a = [], diff = [];
 
     for (var i = 0; i < a1.length; i++) {
-        a[a1[i]] = true;
+        if (a[a1[i]] != null) {
+            a[a1[i]]++;
+        } else {
+            a[a1[i]] = 1;
+        }
     }
 
     for (var i = 0; i < a2.length; i++) {
-        if (a[a2[i]]) {
-            delete a[a2[i]];
+        if (a[a2[i]] != null) {
+            a[a2[i]]--;
         } else {
-            a[a2[i]] = true;
+            a[a2[i]] = 1;
         }
     }
 
     for (var k in a) {
-        diff.push(k);
+        for (var i = 0; i < a[k]; i++) {
+            diff.push(k);
+        }
     }
 
     return diff;
@@ -217,19 +227,24 @@ function sortAndWriteCellValue(id, pmCellArray) {
     else {
         pmArray[id] = pmCellArray;
         pmCellArray.sort();
-        idValue = "";
+        var idValue = "";
         for (i = 0; i < pmCellArray.length; i++) {
             idValue += pmCellArray[i];
         }
+        console.log("Value before: " + document.getElementById(id).value);
         document.getElementById(id).value = idValue;
+        console.log("Value after: " + document.getElementById(id).value);
     }
 }
 
 function pmInput(id, value) {
+    
+
     var prevPmCellArray = pmArray[id];
-    lastNumEntered = value[value.length - 1];
-    var pmCellArray = prevPmCellArray.concat(lastNumEntered);
     var nums = value.split("");
+    // var lastNumEntered = value[value.length - 1];
+    var lastNumEntered = arr_diff(nums, prevPmCellArray)[0];
+    var pmCellArray = prevPmCellArray.concat(lastNumEntered);
 
     if (nums.length == 0) {
         pmCellArray = [];
@@ -240,7 +255,6 @@ function pmInput(id, value) {
     }
     // sort and write
     sortAndWriteCellValue(id, pmCellArray);
-
     return lastNumEntered;
 }
 
@@ -248,7 +262,8 @@ function normalInput(id) {
     pmArray[id] = [];
     document.getElementById(id).className = "txt-input";
     document.getElementById(id).maxLength = 1;
-    idValue = document.getElementById(id).value;
+    var idValue = document.getElementById(id).value;
+    // console.log("IDValue: " + idValue);
     for (var i = 0; i < 81; i++) {
         if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
             pmArray[id] = [];
@@ -257,13 +272,15 @@ function normalInput(id) {
             document.getElementById(i).value = idValue;
         }
     }
-
+    // document.getElementById(id).value = idValue;
 }
 
 function addToArray(id, value, isOnInput) {
+    // console.log("Value: " + value);
     if (isOnInput) {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
-            lastNumEntered = pmInput(id, value);
+            var lastNumEntered = pmInput(id, value);
+            // console.log("Last num entered: " + lastNumEntered);
             // recursive step
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false && document.getElementById(i).className.includes("txt-input") == false) {
@@ -279,7 +296,13 @@ function addToArray(id, value, isOnInput) {
     }
     else {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
-            pmInput(id, value);
+            if (document.getElementById(id).value != null) {
+                var new_val = document.getElementById(id).value + value;
+                pmInput(id, new_val);
+            }
+            else {
+                pmInput(id, value);
+            }
         }
         else {
             normalInput(id); 
@@ -341,7 +364,6 @@ function setId(id) {
 var solved = $('#my-data').data().name;
 
 function checkAlert() {
-    console.log(solved);
     if (solved != "None") {
         if (solved == "True") {
             window.alert("You successfully finished the sudoku!");

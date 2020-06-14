@@ -114,7 +114,7 @@ input:focus {
     text-align: center;
 }
 input:invalid {
-    background-color: red;
+    background-color: green;
 }
 input::selection {
     background: transparent;
