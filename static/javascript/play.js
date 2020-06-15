@@ -1,5 +1,9 @@
 var pmArray = [];
 var selectArray = [];
+var isNormal = true;
+var isSelectMultiple = false;
+var cur_id;
+var lastNumEntered = "";
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
@@ -8,22 +12,11 @@ function createArray() {
     }
 }
 
-var isNormal = true;
-var isSelectMultiple = false;
-var cur_id;
-
 $(document).keydown(
     function (e) {
-    
         var keypressed = false;
 
-//         // debugger;
-//         // console.log(document.getElementById(document.activeElement.id).className);
-        if (isNormal && document.getElementById(document.activeElement.id) != null) {
-            document.getElementById(document.activeElement.id).select();
-        }
-
-//         // Backspace/Delete
+        // Delete
         if (e.keyCode == 8) {
             document.getElementById(document.activeElement.id).value = [];
             pmArray[document.activeElement.id] = [];
@@ -32,9 +25,9 @@ $(document).keydown(
                     document.getElementById(i).value = [];
                     pmArray[i] = [];
                 }
-            }   
+            }
         }
-//         // Right Arrow
+        // Right Arrow
         else if (e.keyCode == 39) {
             currentId = document.activeElement.id;
             if (currentId != 80) {
@@ -42,7 +35,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-//         // Left arrow
+        // Left arrow
         else if (e.keyCode == 37) {
             currentId = document.activeElement.id;
             if (currentId != 0) {
@@ -50,7 +43,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-//         // Down arrow
+        // Down arrow
         else if (e.keyCode == 40) {
             currentId = document.activeElement.id;
             if (currentId < 72) {
@@ -61,7 +54,7 @@ $(document).keydown(
             }
             keypressed = true;
         }
-//         // Up arrow
+        // Up arrow
         else if (e.keyCode == 38) {
             currentId = document.activeElement.id;
             if (currentId > 8) {
@@ -72,16 +65,14 @@ $(document).keydown(
             }
             keypressed = true;
         }
-//         // Space bar
+        // Space bar
         else if (e.keyCode == 32) {
-            // console.log("Before: " + isNormal);
             if (isNormal) {
                 changeMode("pencilmarks");
             }
             else {
                 changeMode("normal");
             }
-            // console.log("After: " + isNormal);
         }
         // Shift
         else if (e.keyCode == 16) {
@@ -102,12 +93,18 @@ $(document).keydown(
                 }
             }
         }
+        else if (48 < e.keyCode && e.keyCode < 58) {
+            lastNumEntered = String.fromCharCode(e.keyCode);
+            console.log("lastnum: " + lastNumEntered);
+        }
+
         if (keypressed === true) {
             document.getElementById(nextId).focus();
             // document.getElementById(document.activeElement.id).select();
-
         }
-
+        if (isNormal && document.getElementById(document.activeElement.id) != null) {
+            document.getElementById(document.activeElement.id).select();
+        }
     }
 );
 
@@ -158,7 +155,7 @@ function changeMode(id) {
                 else {
                     document.getElementById(i * 9 + j).className = "pm-input";
                     if (document.getElementById(i * 9 + j).className != "txt-input") {
-                        document.getElementById(i * 9 + j).maxLength = 9;
+                        document.getElementById(i * 9 + j).maxLength = 10;
                     }
                 }
             }
@@ -169,48 +166,8 @@ function changeMode(id) {
     }
 }
 
-function arr_diff(a1, a2) {
-    var a = [], diff = [];
-
-    for (var i = 0; i < a1.length; i++) {
-        if (a[a1[i]] != null) {
-            a[a1[i]]++;
-        } else {
-            a[a1[i]] = 1;
-        }
-    }
-
-    for (var i = 0; i < a2.length; i++) {
-        if (a[a2[i]] != null) {
-            a[a2[i]]--;
-        } else {
-            a[a2[i]] = 1;
-        }
-    }
-
-    for (var k in a) {
-        for (var i = 0; i < a[k]; i++) {
-            diff.push(k);
-        }
-    }
-
-    return diff;
-}
-
-function arrEquals(a1, a2) {
-    if (a1.length != a2.length) {
-        return false;
-    }
-    for (var i = 0; i < a1.length; i++) {
-        if (a1[i] != a2[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function delPmArrayInput(id, diff) {
-    pmCellArray = pmArray[id].concat(diff);
+    var pmCellArray = pmArray[id].concat(diff);
     var firstIndex = pmCellArray.indexOf(pmCellArray[pmCellArray.length - 1]);
     if (pmArray[id].includes(diff)) {
         pmCellArray.pop();
@@ -238,12 +195,8 @@ function sortAndWriteCellValue(id, pmCellArray) {
 }
 
 function pmInput(id, value) {
-    
-
     var prevPmCellArray = pmArray[id];
     var nums = value.split("");
-    // var lastNumEntered = value[value.length - 1];
-    var lastNumEntered = arr_diff(nums, prevPmCellArray)[0];
     var pmCellArray = prevPmCellArray.concat(lastNumEntered);
 
     if (nums.length == 0) {
@@ -263,7 +216,6 @@ function normalInput(id) {
     document.getElementById(id).className = "txt-input";
     document.getElementById(id).maxLength = 1;
     var idValue = document.getElementById(id).value;
-    // console.log("IDValue: " + idValue);
     for (var i = 0; i < 81; i++) {
         if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
             pmArray[id] = [];
@@ -272,21 +224,20 @@ function normalInput(id) {
             document.getElementById(i).value = idValue;
         }
     }
-    // document.getElementById(id).value = idValue;
 }
 
 function addToArray(id, value, isOnInput) {
-    // console.log("Value: " + value);
+    console.log("Value: " + value);
     if (isOnInput) {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
-            var lastNumEntered = pmInput(id, value);
-            // console.log("Last num entered: " + lastNumEntered);
+            pmInput(id, value);
+            console.log("Last num entered: " + lastNumEntered);
             // recursive step
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false && document.getElementById(i).className.includes("txt-input") == false) {
                     if (i != id) {
                         addToArray(i, lastNumEntered, false);
-                    }                    
+                    }
                 }
             }
         }
@@ -297,15 +248,17 @@ function addToArray(id, value, isOnInput) {
     else {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
             if (document.getElementById(id).value != null) {
+                console.log("old val: " + document.getElementById(id).value);
                 var new_val = document.getElementById(id).value + value;
                 pmInput(id, new_val);
+                console.log("new val: " + new_val);
             }
             else {
                 pmInput(id, value);
             }
         }
         else {
-            normalInput(id); 
+            normalInput(id);
         }
     }
 }
@@ -335,9 +288,9 @@ function selectFocus(id) {
 }
 
 function selectClick(id) {
-    if (document.getElementById(cur_id) !== null) {
-        document.getElementById(cur_id).focus();
-    }
+    // if (document.getElementById(cur_id) !== null) {
+    //     document.getElementById(cur_id).focus();
+    // }
 
     if (isSelectMultiple) {
         selectArray[id] = true;
@@ -352,9 +305,9 @@ function selectClick(id) {
         }
         document.activeElement.focus();
     }
-    if (document.getElementById(cur_id) !== null) {
-        document.getElementById(cur_id).focus();
-    }
+    // if (document.getElementById(cur_id) !== null) {
+    //     document.getElementById(cur_id).focus();
+    // }
 }
 
 function setId(id) {

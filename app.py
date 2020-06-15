@@ -8,49 +8,53 @@ app = Flask(__name__)
 sudoku_grid_list = []
 play_list = []
 
+
 @app.route('/')
 def menu():
     return render_template('menu.html')
 
+
 @app.route('/input_classic_play')
 def input_classic_play():
-    # sudoku_grid_list = []
     return render_template('input_classic_play.html')
+
 
 @app.route('/input_classic_solve')
 def input_classic_solve():
-    # sudoku_grid_list = []
     return render_template('input_classic_solve.html')
+
 
 @app.route('/input_kings')
 def input_kings():
     sudoku_grid_list = []
     return render_template('input_kings.html')
 
+
 @app.route('/play', methods=['POST', 'GET'])
 def play():
-        global play_list
-        sudoku_grid_list = []
-        if request.method == 'POST':
-            for i in range(9):
-                row_list = []
-                for j in range(9):
-                    id = "" + str(i*9 + j)
-                    content = request.form[id]
-                    if content == "":
-                        row_list.append(0)
-                    else:
-                        row_list.append(int(content))
-                sudoku_grid_list.append(row_list)
-            s = Sudoku(sudoku_grid_list)
-            if '/input_classic_play' in request.referrer:
-                play_list = s.return_array()
-                return render_template('play.html', is_solved = "None", input_array = play_list, play_array = None)
-            elif '/play' in request.referrer:
-                return render_template('play.html', is_solved = s.check_grid(), check_array = s.check_grid_items(), play_array = s.return_array(), input_array = play_list)
+    global play_list
+    sudoku_grid_list = []
+    if request.method == 'POST':
+        for i in range(9):
+            row_list = []
+            for j in range(9):
+                id = "" + str(i*9 + j)
+                content = request.form[id]
+                if content == "":
+                    row_list.append(0)
+                else:
+                    row_list.append(int(content))
+            sudoku_grid_list.append(row_list)
+        s = Sudoku(sudoku_grid_list)
+        if '/input_classic_play' in request.referrer:
+            play_list = s.return_array()
+            return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
+        elif '/play' in request.referrer:
+            return render_template('play.html', is_solved=s.check_grid(), check_array=s.check_grid_items(), play_array=s.return_array(), input_array=play_list)
 
-        else:
-            return render_template('menu.html')
+    else:
+        return render_template('menu.html')
+
 
 '''
 for i 
@@ -68,32 +72,6 @@ for i
             else 
                 error
 '''
-
-@app.route('/check', methods=['POST', 'GET'])
-def check():
-    sudoku_grid_list = []
-    if request.method == 'POST':
-        for i in range(9):
-            row_list = []
-            for j in range(9):
-                id = "" + str(i*9 + j)
-                # print(request.form[id])
-                content = request.form[id]
-                if content == "":
-                    row_list.append(0)
-                else:
-                    row_list.append(int(content))
-            sudoku_grid_list.append(row_list)
-
-        s = Sudoku(sudoku_grid_list)
-        # print(s)
-        # print("Inside Check: ")
-        # print(play_list)
-
-        return render_template('check.html', is_solved = s.check_grid(), play_array=s.return_array(), check_array = s.check_grid_items(), original_array = play_list)
-    else:
-        return render_template('menu.html')
-
 
 @app.route('/solution', methods=['POST', 'GET'])
 def solution():
@@ -116,9 +94,10 @@ def solution():
             s = Sudoku_Kings(sudoku_grid_list)
         s.solve()
 
-        return render_template('solution.html', solved_array = s.return_array())
+        return render_template('solution.html', solved_array=s.return_array())
     else:
         return render_template('menu.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
