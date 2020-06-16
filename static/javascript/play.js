@@ -27,6 +27,7 @@ $(document).keydown(
                     pmArray[i] = [];
                 }
             }
+            changeClassName();
         }
         // Right Arrow
         else if (e.keyCode == 39) {
@@ -141,7 +142,10 @@ function changeMode(id) {
         document.getElementById("pencilmarks").className = "buttons";
         document.getElementById("normal").className = "modefocus";
     }
+    changeClassName(id);
+}
 
+function changeClassName() {
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 9; j++) {
             if (((document.getElementById(i * 9 + j)).className != "txt-input readonly")
@@ -217,20 +221,27 @@ function normalInput(id) {
     pmArray[id] = [];
     document.getElementById(id).className = "txt-input";
     document.getElementById(id).maxLength = 1;
+    var isMultiple = false;
     var idValue = document.getElementById(id).value;
     for (var i = 0; i < 81; i++) {
+        isMultiple = true;
         if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
             pmArray[id] = [];
             document.getElementById(i).className = "txt-input";
             document.getElementById(i).maxLength = 1;
             document.getElementById(i).value = idValue;
+            history[historyIndex] = [i, idValue, "normal"];
+            historyIndex++;
         }
     }
-    history[historyIndex] = [id, idValue, "normal"];
-    historyIndex++;
+    if (!isMultiple) {
+        history[historyIndex] = [id, idValue, "normal"];
+        historyIndex++;
+    }
 }
 
 function addToArray(id, value, isOnInput) {
+    // debugger;
     if (isOnInput) {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
@@ -269,12 +280,10 @@ function undo() {
         return;
     }
     historyIndex--;
-    history.length--;
     var lastChange = history[historyIndex];
     var id = lastChange[0];
     for (var i = historyIndex - 1; i >= 0; i--) {
         if (history[i][0] == id) {
-            console.log(history[i][2]);
             if (history[i][2] == "normal") {
                 document.getElementById(id).className = "txt-input";
                 if (document.getElementById(id).className != "pm-input") {
@@ -287,13 +296,13 @@ function undo() {
                     document.getElementById(id).maxLength = 10;
                 }
             }
-        document.getElementById(id).value = history[i][1];
-        pmArray[id] = [];
-        return;
+            document.getElementById(id).value = history[i][1];
+            pmArray[id] = [];
+            return;
         }
     }
+    pmArray[id] = [];
     document.getElementById(id).value = "";
-    console.log("index: " + historyIndex);
 }
 
 function validateForm() {
