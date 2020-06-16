@@ -2,8 +2,9 @@ var pmArray = [];
 var selectArray = [];
 var isNormal = true;
 var isSelectMultiple = false;
-var cur_id;
 var lastNumEntered = "";
+var history = [];
+var historyIndex = 0;
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
@@ -95,7 +96,6 @@ $(document).keydown(
         }
         else if (48 < e.keyCode && e.keyCode < 58) {
             lastNumEntered = String.fromCharCode(e.keyCode);
-            console.log("lastnum: " + lastNumEntered);
         }
 
         if (keypressed === true) {
@@ -110,6 +110,9 @@ $(document).keydown(
 
 $(document).keyup(
     function (e) {
+
+        console.log("History: " + history[historyIndex - 1]);
+
         if (e.keyCode == 16) {
             isSelectMultiple = false;
         }
@@ -128,9 +131,6 @@ function checkAlert() {
 }
 
 function changeMode(id) {
-    if (document.getElementById(cur_id) !== null) {
-        document.getElementById(cur_id).focus();
-    }
     if (id == "pencilmarks") {
         isNormal = false;
         document.getElementById("pencilmarks").className = "modefocus";
@@ -161,9 +161,6 @@ function changeMode(id) {
             }
         }
     }
-    if (document.getElementById(cur_id) !== null) {
-        document.getElementById(cur_id).focus();
-    }
 }
 
 function delPmArrayInput(id, diff) {
@@ -188,9 +185,7 @@ function sortAndWriteCellValue(id, pmCellArray) {
         for (i = 0; i < pmCellArray.length; i++) {
             idValue += pmCellArray[i];
         }
-        console.log("Value before: " + document.getElementById(id).value);
         document.getElementById(id).value = idValue;
-        console.log("Value after: " + document.getElementById(id).value);
     }
 }
 
@@ -208,6 +203,13 @@ function pmInput(id, value) {
     }
     // sort and write
     sortAndWriteCellValue(id, pmCellArray);
+
+    // add to undo stack
+    idValue = pmCellArray.join("");
+
+    history[historyIndex] = [id, idValue, "pencilmarks"];
+    historyIndex++;
+
     return lastNumEntered;
 }
 
@@ -224,14 +226,15 @@ function normalInput(id) {
             document.getElementById(i).value = idValue;
         }
     }
+    history[historyIndex] = [id, idValue, "normal"];
+    historyIndex++;
 }
 
 function addToArray(id, value, isOnInput) {
-    console.log("Value: " + value);
     if (isOnInput) {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
-            console.log("Last num entered: " + lastNumEntered);
+
             // recursive step
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false && document.getElementById(i).className.includes("txt-input") == false) {
@@ -242,16 +245,14 @@ function addToArray(id, value, isOnInput) {
             }
         }
         else {
+            // debugger;
             normalInput(id);
         }
     }
     else {
         if (isNormal === false && document.getElementById(id).className != "txt-input") {
             if (document.getElementById(id).value != null) {
-                console.log("old val: " + document.getElementById(id).value);
-                var new_val = document.getElementById(id).value + value;
-                pmInput(id, new_val);
-                console.log("new val: " + new_val);
+                pmInput(id, document.getElementById(id).value + value);
             }
             else {
                 pmInput(id, value);
@@ -261,6 +262,36 @@ function addToArray(id, value, isOnInput) {
             normalInput(id);
         }
     }
+}
+
+function undo() {
+    if (historyIndex == 0) {
+        return;
+    }
+    historyIndex--;
+    var lastChange = history[historyIndex];
+    var id = lastChange[0];
+    for (var i = historyIndex - 1; i >= 0; i--) {
+        if (history[i][0] == id) {
+            console.log(history[i][2]);
+            if (history[i][2] == "normal") {
+                document.getElementById(id).className = "txt-input";
+                if (document.getElementById(id).className != "pm-input") {
+                    document.getElementById(id).maxLength = 1;
+                }
+            }
+            else {
+                document.getElementById(id).className = "pm-input";
+                if (document.getElementById(id).className != "txt-input") {
+                    document.getElementById(id).maxLength = 10;
+                }
+            }
+            document.getElementById(id).value = history[i][1];
+            return;
+        }
+    }
+    document.getElementById(id).value = "";
+    console.log("index: " + historyIndex);
 }
 
 function validateForm() {
@@ -288,10 +319,6 @@ function selectFocus(id) {
 }
 
 function selectClick(id) {
-    // if (document.getElementById(cur_id) !== null) {
-    //     document.getElementById(cur_id).focus();
-    // }
-
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
@@ -305,13 +332,6 @@ function selectClick(id) {
         }
         document.activeElement.focus();
     }
-    // if (document.getElementById(cur_id) !== null) {
-    //     document.getElementById(cur_id).focus();
-    // }
-}
-
-function setId(id) {
-    cur_id = id;
 }
 
 var solved = $('#my-data').data().name;

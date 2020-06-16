@@ -53,7 +53,7 @@ def play():
             return render_template('play.html', is_solved=s.check_grid(), check_array=s.check_grid_items(), play_array=s.return_array(), input_array=play_list)
 
     else:
-        return render_template('menu.html')
+        return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
 
 
 '''
