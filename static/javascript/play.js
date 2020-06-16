@@ -269,6 +269,7 @@ function undo() {
         return;
     }
     historyIndex--;
+    history.length--;
     var lastChange = history[historyIndex];
     var id = lastChange[0];
     for (var i = historyIndex - 1; i >= 0; i--) {
@@ -286,8 +287,9 @@ function undo() {
                     document.getElementById(id).maxLength = 10;
                 }
             }
-            document.getElementById(id).value = history[i][1];
-            return;
+        document.getElementById(id).value = history[i][1];
+        pmArray[id] = [];
+        return;
         }
     }
     document.getElementById(id).value = "";
