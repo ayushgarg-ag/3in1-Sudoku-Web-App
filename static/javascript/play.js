@@ -5,6 +5,7 @@ var isSelectMultiple = false;
 var lastNumEntered = "";
 var history = [];
 var historyIndex = 0;
+var curId = 0;
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
@@ -98,22 +99,32 @@ $(document).keydown(
         else if (48 < e.keyCode && e.keyCode < 58) {
             lastNumEntered = String.fromCharCode(e.keyCode);
         }
+        else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
+            for (var i = 0; i < 81; i++) {
+                selectArray[i] = true;
+                document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+            }
+        }
+        else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
+            undo();
+        }
 
-        if (keypressed === true) {
+
+        if (keypressed == true) {
             document.getElementById(nextId).focus();
             // document.getElementById(document.activeElement.id).select();
         }
         if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
         }
+        if (document.activeElement.id != null) {
+            curId = document.activeElement.id;
+        }
     }
 );
 
 $(document).keyup(
     function (e) {
-
-        console.log("History: " + history[historyIndex - 1]);
-
         if (e.keyCode == 16) {
             isSelectMultiple = false;
         }
@@ -143,6 +154,9 @@ function changeMode(id) {
         document.getElementById("normal").className = "modefocus";
     }
     changeClassName(id);
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
 }
 
 function changeClassName() {
@@ -224,8 +238,8 @@ function normalInput(id) {
     var isMultiple = false;
     var idValue = document.getElementById(id).value;
     for (var i = 0; i < 81; i++) {
-        isMultiple = true;
         if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+            isMultiple = true;
             pmArray[id] = [];
             document.getElementById(i).className = "txt-input";
             document.getElementById(i).maxLength = 1;
@@ -234,16 +248,15 @@ function normalInput(id) {
             historyIndex++;
         }
     }
-    if (!isMultiple) {
+    if (isMultiple == false) {
         history[historyIndex] = [id, idValue, "normal"];
         historyIndex++;
     }
 }
 
 function addToArray(id, value, isOnInput) {
-    // debugger;
     if (isOnInput) {
-        if (isNormal === false && document.getElementById(id).className != "txt-input") {
+        if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
 
             // recursive step
@@ -256,12 +269,11 @@ function addToArray(id, value, isOnInput) {
             }
         }
         else {
-            // debugger;
             normalInput(id);
         }
     }
     else {
-        if (isNormal === false && document.getElementById(id).className != "txt-input") {
+        if (isNormal == false && document.getElementById(id).className != "txt-input") {
             if (document.getElementById(id).value != null) {
                 pmInput(id, document.getElementById(id).value + value);
             }
@@ -276,6 +288,9 @@ function addToArray(id, value, isOnInput) {
 }
 
 function undo() {
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
     if (historyIndex == 0) {
         return;
     }
@@ -303,6 +318,7 @@ function undo() {
     }
     pmArray[id] = [];
     document.getElementById(id).value = "";
+    
 }
 
 function validateForm() {
@@ -330,6 +346,7 @@ function selectFocus(id) {
 }
 
 function selectClick(id) {
+    curId = id;
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
