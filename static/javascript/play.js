@@ -1,11 +1,13 @@
 var pmArray = [];
 var selectArray = [];
-var isNormal = true;
-var isSelectMultiple = false;
-var lastNumEntered = "";
 var history = [];
 var historyIndex = 0;
 var curId = 0;
+var isNormal = true;
+var isSelectMultiple = false;
+var drag = false;
+var lastNumEntered = "";
+var solved = $('#my-data').data().name;
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
@@ -96,27 +98,31 @@ $(document).keydown(
                 }
             }
         }
+        // Numbers
         else if (48 < e.keyCode && e.keyCode < 58) {
             lastNumEntered = String.fromCharCode(e.keyCode);
         }
+        // Control/Command 'A'
         else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
             for (var i = 0; i < 81; i++) {
                 selectArray[i] = true;
                 document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
             }
         }
+        // Control/Command 'Z'
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
             undo();
         }
 
-
+        // If arrow key was pressed
         if (keypressed == true) {
             document.getElementById(nextId).focus();
-            // document.getElementById(document.activeElement.id).select();
         }
+
         if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
         }
+
         if (document.activeElement.id != null) {
             curId = document.activeElement.id;
         }
@@ -131,7 +137,29 @@ $(document).keyup(
     }
 );
 
-var solved = $('#my-data').data().name;
+$(document).mousedown(
+    function () {
+        drag = true;
+        isSelectMultiple = false;
+    }
+);
+
+function selectDrag(id) {
+    if (drag) {
+        isSelectMultiple = true;
+        selectArray[id] = true;
+        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        selectArray[document.activeElement.id] = true;
+        document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+    }
+    
+}
+
+$(document).mouseup(
+    function () {
+        drag = false;
+    }
+);
 
 function checkAlert() {
     if (solved == "True") {
@@ -318,7 +346,7 @@ function undo() {
     }
     pmArray[id] = [];
     document.getElementById(id).value = "";
-    
+
 }
 
 function validateForm() {
