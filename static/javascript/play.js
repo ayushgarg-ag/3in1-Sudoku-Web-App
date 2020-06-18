@@ -1,9 +1,11 @@
 var pmArray = [];
 var selectArray = [];
+var colorMap = {};
 var history = [];
 var historyIndex = 0;
 var curId = 0;
 var isNormal = true;
+var isColor = false;
 var isSelectMultiple = false;
 var drag = false;
 var lastNumEntered = "";
@@ -13,6 +15,7 @@ function createArray() {
     for (var i = 0; i < 81; i++) {
         pmArray[i] = [];
         selectArray[i] = false;
+        colorMap[i] = "";
     }
 }
 
@@ -93,7 +96,12 @@ $(document).keydown(
 
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
-                    document.getElementById(i).style.backgroundColor = "transparent";
+                    if (colorMap[i] == "") {
+                        document.getElementById(i).style.backgroundColor = "transparent";
+                    }
+                    else {
+                        document.getElementById(i).style.backgroundColor = colorMap[i];
+                    }
                     selectArray[i] = false;
                 }
             }
@@ -112,6 +120,19 @@ $(document).keydown(
         // Control/Command 'Z'
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
             undo();
+        }
+        // Control/Command 1
+        else if (e.keyCode == 66) {
+            console.log("herro");
+            console.log(isSelectMultiple);
+            for (var i = 0; i < 81; i++) {
+                if (selectArray[i]) {
+                    document.getElementById(i).style.backgroundColor = "lightblue";
+                    colorMap[i] = "lightblue";
+                }
+            }
+            document.getElementById(document.activeElement.id).style.backgroundColor = "lightblue";
+            colorMap[document.activeElement.id] = "lightblue";
         }
 
         // If arrow key was pressed
@@ -185,7 +206,7 @@ function changeMode(id) {
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
-}
+}  
 
 function changeClassName() {
     for (i = 0; i < 9; i++) {
@@ -380,9 +401,15 @@ function selectClick(id) {
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
     else {
+        // debugger;
         for (var i = 0; i < 81; i++) {
             if (selectArray[i]) {
-                document.getElementById(i).style.backgroundColor = "transparent";
+                if (colorMap[i] == "") {
+                    document.getElementById(i).style.backgroundColor = "transparent";
+                }
+                else {
+                    document.getElementById(i).style.backgroundColor = colorMap[i];
+                }
                 selectArray[i] = false;
             }
         }
