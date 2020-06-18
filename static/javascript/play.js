@@ -10,6 +10,55 @@ var isSelectMultiple = false;
 var drag = false;
 var lastNumEntered = "";
 var solved = $('#my-data').data().name;
+var currentColor = "yellow";
+var numbersTable = `
+    <table>
+        <tr>
+            <td><button type="button" class="colors" onclick="tableInput('1')">1</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('2')">2</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('3')">3</button></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="colors" onclick="tableInput('4')">4</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('5')">5</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('6')">6</button></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="colors" onclick="tableInput('7')">7</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('8')">8</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('9')">9</button></td>
+        </tr>
+    </table>
+`;
+var colorsTable = `
+    <table>
+        <tr>
+            <td><button type="button" id="lightblue" class="colors" style="background-color: lightblue;" type="button"
+                    onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="lightgreen" class="colors" style="background-color: lightgreen;"
+                    type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="lightcoral" class="colors" style="background-color: lightcoral;"
+                    type="button" onclick="setColor(this.id)"> </button></td>
+        </tr>
+        <tr>
+            <td><button type="button" id="lightpink" class="colors" style="background-color: lightpink;" type="button"
+                    onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="rgba(255, 255, 255, 0.8)" class="colors"
+                    style="background-color: rgba(255, 255, 255, 0.8);" type="button"
+                    onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="lightgrey" class="colors" style="background-color: lightgrey;" type="button"
+                    onclick="setColor(this.id)"> </button></td>
+        </tr>
+        <tr>
+            <td><button type="button" id="lightsalmon" class="colors" style="background-color: lightsalmon;"
+                    type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="lightseagreen" class="colors" style="background-color: lightseagreen;"
+                    type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="lightskyblue" class="colors" style="background-color: lightskyblue;"
+                    type="button" onclick="setColor(this.id)"> </button></td>
+        </tr>
+    </table>
+`;
 
 function createArray() {
     for (var i = 0; i < 81; i++) {
@@ -75,10 +124,14 @@ $(document).keydown(
         }
         // Space bar
         else if (e.keyCode == 32) {
-            if (isNormal) {
+            // debugger;
+            if (isNormal && !isColor) {
                 changeMode("pencilmarks");
             }
-            else {
+            else if (!isNormal && !isColor) {
+                changeMode("colors");
+            }
+            else if (isColor && !isNormal) {
                 changeMode("normal");
             }
         }
@@ -121,19 +174,6 @@ $(document).keydown(
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
             undo();
         }
-        // Control/Command 1
-        else if (e.keyCode == 66) {
-            console.log("herro");
-            console.log(isSelectMultiple);
-            for (var i = 0; i < 81; i++) {
-                if (selectArray[i]) {
-                    document.getElementById(i).style.backgroundColor = "lightblue";
-                    colorMap[i] = "lightblue";
-                }
-            }
-            document.getElementById(document.activeElement.id).style.backgroundColor = "lightblue";
-            colorMap[document.activeElement.id] = "lightblue";
-        }
 
         // If arrow key was pressed
         if (keypressed == true) {
@@ -173,7 +213,7 @@ function selectDrag(id) {
         selectArray[document.activeElement.id] = true;
         document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
-    
+
 }
 
 $(document).mouseup(
@@ -194,19 +234,66 @@ function checkAlert() {
 function changeMode(id) {
     if (id == "pencilmarks") {
         isNormal = false;
+        isColor = false;
         document.getElementById("pencilmarks").className = "modefocus";
         document.getElementById("normal").className = "buttons";
+        document.getElementById("colors").className = "buttons";
+
+        document.getElementById("tablecontainer").innerHTML = numbersTable;
+    }
+    else if (id == "colors") {
+        isColor = true;
+        isNormal = false;
+        document.getElementById("colors").className = "modefocus";
+        document.getElementById("pencilmarks").className = "buttons";
+        document.getElementById("normal").className = "buttons";
+
+        document.getElementById("tablecontainer").innerHTML = `
+        <table>
+            <tr>
+                <td><button id="lightblue" class="colors" style="background-color: lightblue;" type="button"
+                        onclick="setColor(this.id)"></button></td>
+                <td><button id="lightgreen" class="colors" style="background-color: lightgreen;"
+                        type="button" onclick="setColor(this.id)"></button></td>
+                <td><button id="lightcoral" class="colors" style="background-color: lightcoral;"
+                        type="button" onclick="setColor(this.id)"></button></td>
+            </tr>
+            <tr>
+                <td><button id="lightpink" class="colors" style="background-color: lightpink;" type="button"
+                        onclick="setColor(this.id)"></button></td>
+                <td><button id="rgba(255, 255, 255, 0.8)" class="colors"
+                        style="background-color: rgba(255, 255, 255, 0.8);" type="button"
+                        onclick="setColor(this.id)"></button></td>
+                <td><button id="lightgrey" class="colors" style="background-color: lightgrey;" type="button"
+                        onclick="setColor(this.id)"></button></td>
+            </tr>
+            <tr>
+                <td><button id="lightsalmon" class="colors" style="background-color: lightsalmon;"
+                        type="button" onclick="setColor(this.id)"></button></td>
+                <td><button id="lightseagreen" class="colors" style="background-color: lightseagreen;"
+                        type="button" onclick="setColor(this.id)"></button></td>
+                <td><button id="lightskyblue" class="colors" style="background-color: lightskyblue;"
+                        type="button" onclick="setColor(this.id)"></button></td>
+            </tr>
+        </table>
+        `;
     }
     else {
         isNormal = true;
+        isColor = false;
         document.getElementById("pencilmarks").className = "buttons";
         document.getElementById("normal").className = "modefocus";
+        document.getElementById("colors").className = "buttons";
+
+        document.getElementById("tablecontainer").innerHTML = numbersTable;
     }
-    changeClassName(id);
+    if (!isColor) {
+        changeClassName(id);
+    }
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
-}  
+}
 
 function changeClassName() {
     for (i = 0; i < 9; i++) {
@@ -257,6 +344,7 @@ function sortAndWriteCellValue(id, pmCellArray) {
 }
 
 function pmInput(id, value) {
+    console.log(lastNumEntered);
     var prevPmCellArray = pmArray[id];
     var nums = value.split("");
     var pmCellArray = prevPmCellArray.concat(lastNumEntered);
@@ -280,25 +368,35 @@ function pmInput(id, value) {
     return lastNumEntered;
 }
 
-function normalInput(id) {
-    pmArray[id] = [];
-    document.getElementById(id).className = "txt-input";
-    document.getElementById(id).maxLength = 1;
-    var isMultiple = false;
-    var idValue = document.getElementById(id).value;
-    for (var i = 0; i < 81; i++) {
-        if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
-            isMultiple = true;
-            pmArray[id] = [];
-            document.getElementById(i).className = "txt-input";
-            document.getElementById(i).maxLength = 1;
-            document.getElementById(i).value = idValue;
-            history[historyIndex] = [i, idValue, "normal"];
+function normalInput(id, value) {
+    if (value == null) {
+        pmArray[id] = [];
+        document.getElementById(id).className = "txt-input";
+        document.getElementById(id).maxLength = 1;
+        var isMultiple = false;
+        var idValue = document.getElementById(id).value;
+        for (var i = 0; i < 81; i++) {
+            if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+                isMultiple = true;
+                pmArray[id] = [];
+                document.getElementById(i).className = "txt-input";
+                document.getElementById(i).maxLength = 1;
+                document.getElementById(i).value = idValue;
+                history[historyIndex] = [i, idValue, "normal"];
+                historyIndex++;
+            }
+        }
+        if (isMultiple == false) {
+            history[historyIndex] = [id, idValue, "normal"];
             historyIndex++;
         }
     }
-    if (isMultiple == false) {
-        history[historyIndex] = [id, idValue, "normal"];
+    else {
+        pmArray[id] = [];
+        document.getElementById(id).className = "txt-input";
+        document.getElementById(id).maxLength = 1;
+        document.getElementById(id).value = value;
+        history[historyIndex] = [id, value, "normal"];
         historyIndex++;
     }
 }
@@ -318,7 +416,7 @@ function addToArray(id, value, isOnInput) {
             }
         }
         else {
-            normalInput(id);
+            normalInput(id, null);
         }
     }
     else {
@@ -331,7 +429,7 @@ function addToArray(id, value, isOnInput) {
             }
         }
         else {
-            normalInput(id);
+            normalInput(id, null);
         }
     }
 }
@@ -428,4 +526,52 @@ function checkAlert() {
             window.alert("Your answer is incorrect.")
         }
     }
+}
+
+function tableInput(num) {
+    // debugger;
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    var isMultiple = false;
+    if (!isColor) {
+        for (var i = 0; i < 81; i++) {
+            if (selectArray[i]) {
+                isMultiple = true;
+                if (isNormal) {
+                    normalInput(i, num);
+                }
+                else {
+                    lastNumEntered = num;
+                    pmInput(i, num);
+                }
+            }
+        }
+        // debugger;
+        if (isMultiple == false) {
+            if (isNormal) {
+                normalInput(document.activeElement.id, num);
+            }
+            else {
+                lastNumEntered = num;
+                pmInput(document.activeElement.id, num);
+            }
+        }
+    }
+}
+
+function setColor(color) {
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    currentColor = color;
+    for (var i = 0; i < 81; i++) {
+        if (selectArray[i]) {
+            document.getElementById(i).style.backgroundColor = currentColor;
+            colorMap[i] = currentColor;
+        }
+    }
+    document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
+    colorMap[document.activeElement.id] = currentColor;
+
 }

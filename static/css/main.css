@@ -145,7 +145,6 @@ input::selection {
     transform: translateY(-50%);
 }
 
-
 /* Buttons CSS */
 .buttons, .menubutton {
     background-color: (255, 255, 255, 0.5);
@@ -185,6 +184,27 @@ input::selection {
     display: inline-block;
 }
 
+/* Color Table CSS */
+table {
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(172, 128, 72);
+    margin-bottom: 20px;
+    border-radius: 15px;
+    height: 175px;
+}
+.colors {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 1px 2px #888888;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: rgb(83,62,45, 0.85);
+}
 
 /* div.center{
     margin: 20px;
