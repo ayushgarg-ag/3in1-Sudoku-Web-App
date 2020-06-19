@@ -10,6 +10,7 @@ var isSelectMultiple = false;
 var drag = false;
 var isDeletePms = false;
 var isHighlightNums = false;
+var isHighlightRcb = false;
 var lastNumEntered = "";
 var redirect = "check";
 var solved = $('#my-data').data().name;
@@ -389,7 +390,6 @@ function normalInput(id, value) {
 }
 
 function addToArray(id, value, isOnInput) {
-    // debugger;
     if (isOnInput) {
         if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
@@ -479,6 +479,9 @@ function selectFocus(id) {
     if (isHighlightNums) {
         highlightNums();
     }
+    if (isHighlightRcb) {
+        highlightRcb();
+    }
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
@@ -561,15 +564,15 @@ function setColor(color) {
     }
     document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
     colorMap[document.activeElement.id] = currentColor;
-
 }
 
 function pageRedirect(id) {
     redirect = id;
 }
 
-function deletePms() {
-    id = parseInt(document.activeElement.id);
+
+function createConflictArray() {
+    var id = parseInt(document.activeElement.id);
     var conflictArray = [];
     for (var i = id - id%9; i < (9-id%9) + id; i++) {
         conflictArray.push(parseInt(i));
@@ -611,6 +614,11 @@ function deletePms() {
             }
         }
     }
+    return conflictArray;
+}
+
+function deletePms() {
+    var conflictArray = createConflictArray();
     for (var id = 0; id < conflictArray.length; id++) {
         if (pmArray[conflictArray[id]].includes(lastNumEntered)) {
             pmInput(conflictArray[id], lastNumEntered);
@@ -633,14 +641,12 @@ function toggleDeletePms() {
 }
 
 function highlightNums() {
-    // debugger;
     var num = document.activeElement.value;
     for (var i = 0; i < 81; i++) {
         document.getElementById(i).style.filter = "brightness(100%)";
         if (document.getElementById(i).value.includes(num)) {
-            if (num != "") {
+            if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
                 document.getElementById(i).style.filter = "brightness(85%)";
-                // document.getElementById(i).style.backgroundColor = "green";
             }
         }
     }
@@ -653,9 +659,41 @@ function toggleHighlightNums() {
     if (isHighlightNums) {
         isHighlightNums = false;
         document.getElementById("highlightnums").className = "buttons";
+        for (var i = 0; i < 81; i++) {
+            document.getElementById(i).style.filter = "brightness(100%)";
+        }
     }
     else {
         isHighlightNums = true;
         document.getElementById("highlightnums").className = "modefocus";
+        highlightNums();
+    }
+}
+
+function highlightRcb() {
+    var conflictArray = createConflictArray();
+    for (var i = 0; i < 81; i++) {
+        document.getElementById(i).style.filter = "brightness(100%)";
+    }
+    for (var i = 0; i < conflictArray.length; i++) {
+        document.getElementById(conflictArray[i]).style.filter = "brightness(85%)";
+    }
+}
+
+function toggleHighlightRcb() {
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    if (isHighlightRcb) {
+        isHighlightRcb = false;
+        document.getElementById("highlightrcb").className = "buttons";
+        for (var i = 0; i < 81; i++) {
+            document.getElementById(i).style.filter = "brightness(100%)";
+        }
+    }
+    else {
+        isHighlightRcb = true;
+        document.getElementById("highlightrcb").className = "modefocus";
+        highlightRcb();
     }
 }
