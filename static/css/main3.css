@@ -1,0 +1,217 @@
+/* Document CSS */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+body {
+    background-color: tan;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 45px;
+    margin: 10px;
+}
+.content {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+/* Grid CSS */
+.grid-container {
+    display: grid;
+    margin: 0;
+    position: relative;
+    left: 0%;
+    justify-content: center;
+    padding: 1px;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid tan;
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    height: 50px;
+    width: 50px;
+}
+/* Column Borders CSS */
+.grid-container .grid-item:nth-child(n):nth-last-child(9n){
+    border-left: 5px tan solid;
+}
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+6){
+    border-left: 4px tan solid;
+}
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+3){
+    border-left: 4px tan solid;
+}
+.grid-container .grid-item:nth-child(n):nth-last-child(9n+1){
+    border-right: 5px tan solid;
+}
+/* Row Borders CSS */
+.grid-container .grid-item:nth-child(n):nth-last-child(n+73){
+    border-top: 5px tan solid;
+}
+.grid-container .grid-item:nth-child(n+28):nth-last-child(n+46){
+    border-top: 4px tan solid;
+}
+.grid-container .grid-item:nth-child(n+55):nth-last-child(n+19){
+    border-top: 4px tan solid;
+}
+.grid-container .grid-item:nth-child(n+73):nth-last-child(n){
+    border-bottom: 5px tan solid;
+}
+
+
+/* Inputs CSS */
+input {
+    cursor: default;
+}
+input.txt-input {
+    font-size: 25px;
+    color: transparent;
+    text-shadow: 0 0 0 #a87b00;
+}
+input.readonly {
+    font-size: 25px;
+    color: transparent;
+    text-shadow: 0 0 0 rgb(83,62,45, 0.85);
+}
+input.pm-input {
+    font-size: 10px;
+    color: transparent;
+    text-shadow: 0 0 0 #a87b00;
+}
+input:focus {
+    outline: 3px #a87b00 solid;
+}
+.txt-input, .pm-input, .readonly {
+    height: 50px;
+    width: 50px; 
+    padding: 0;
+    border: 0;
+    background-color:  #f6f0e8;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+}
+.errors {
+    background-color: rgba(255,0,0,0.4);
+    height: 50px;
+    width: 50px; 
+    padding: 0;
+    border: 0;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+}
+input:invalid {
+    background-color: green;
+}
+input::selection {
+    background: transparent;
+}
+
+
+/* Button Containers CSS */
+.buttoncontainers {
+    display: inline-block;
+}
+.allbuttonscontainer {
+    justify-content: center;
+    text-align: center;
+}
+.modebuttons {
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+}
+#outside {
+    height: 484px;
+    position: absolute;
+    margin-left: 20px;
+}
+.modecenter {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Buttons CSS */
+.buttons, .menubutton {
+    background-color: (255, 255, 255, 0.5);
+    color: #a87b00;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+.buttons:focus, .menubutton:focus {
+    outline: none;
+}
+.menubutton {
+    width: 300px;
+    margin: 10px;
+}
+.modefocus {
+    background-color: tan;
+    color: white;
+    border: 3px solid white;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    outline: none;
+}
+.inline {
+    display: inline-block;
+}
+
+/* Color Table CSS */
+table {
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(172, 128, 72);
+    margin-bottom: 20px;
+    border-radius: 15px;
+    height: 175px;
+}
+.colors {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 1px 2px #888888;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: rgb(83,62,45, 0.85);
+}
+
+/* div.center{
+    margin: 20px;
+    position: relative;
+    left: 50%;
+} */
+/* .center:focus {
+    background-color: red;
+    font-size: 100px;
+} */

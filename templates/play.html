@@ -10,12 +10,28 @@
 {% block body %}
 
 <body onload="changeMode(normal); createArray(); checkAlert()">
-    <div class="content">
-        <h1 style="text-align: center">Sudoku (Classic)</h1>
-        <form action="/play" method="POST" onsubmit="return validateForm()">
+    <h1 style="text-align: center">Sudoku Player</h1>
+    <form action="/play" method="POST" onsubmit="return validateForm()">
+        <div class="content">
+            <div id="outsideoption" class="inline">
+                <div id="optioncontainer">
+                    <div class="modebuttons">
+                        <button onclick="toggleDeletePms()" id="deletepms" type="button" class="buttons">Delete
+                            Pms</button>
+                    </div>
+                    <div class="modebuttons">
+                        <button onclick="toggleHighlightNums()" id="highlightnums" type="button"
+                            class="buttons">Highlight Nums</button>
+                    </div>
+                    <div class="modebuttons">
+                        <button onclick="toggleHighlightRcb()" id="highlightrcb" type="button" class="buttons">Highlight
+                            RCB</button>
+                    </div>
+                </div>
+            </div>
 
-            <div class="inline">
-                <div id="grid-container" class="grid-container">
+            <div id="outsidegrid" class="inline">
+                <div id="grid-container">
                     {% for i in range(9) %}
                     {% for j in range(9) %}
                     {% if play_array == None %}
@@ -86,8 +102,8 @@
                 </div>
             </div>
 
-            <div id="outside" class="inline">
-                <div class="modecenter">
+            <div id="outsidemode" class="inline">
+                <div id="modecontainer">
                     <div id="tablecontainer">
                         <table>
                             <tr>
@@ -123,19 +139,10 @@
                     <div class="modebuttons">
                         <button onclick="undo()" id="pencilmarks" type="button" class="buttons">Undo</button>
                     </div>
-                    <div class="modebuttons">
-                        <button onclick="toggleDeletePms()" id="deletepms" type="button" class="buttons">Delete Pms</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="toggleHighlightNums()" id="highlightnums" type="button" class="buttons">Highlight Nums</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="toggleHighlightRcb()" id="highlightrcb" type="button" class="buttons">Highlight RCB</button>
-                    </div>
                 </div>
             </div>
 
-        </form>
+    </form>
 
     </div>
 </body>
