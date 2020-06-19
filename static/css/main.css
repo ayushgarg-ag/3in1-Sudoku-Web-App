@@ -98,7 +98,7 @@ input:focus {
     width: 50px; 
     padding: 0;
     border: 0;
-    background-color: transparent;
+    background-color:  #f6f0e8;
     outline: none;
     font-weight: bold;
     text-align: center;

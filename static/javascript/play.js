@@ -1,14 +1,17 @@
 var pmArray = [];
 var selectArray = [];
-var colorMap = {};
 var history = [];
+var colorMap = {};
 var historyIndex = 0;
-var curId = 0;
+var curId = null;
 var isNormal = true;
 var isColor = false;
 var isSelectMultiple = false;
 var drag = false;
+var isDeletePms = false;
+var isHighlightNums = false;
 var lastNumEntered = "";
+var redirect = "check";
 var solved = $('#my-data').data().name;
 var currentColor = "yellow";
 var numbersTable = `
@@ -43,8 +46,8 @@ var colorsTable = `
         <tr>
             <td><button type="button" id="lightpink" class="colors" style="background-color: lightpink;" type="button"
                     onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="rgba(255, 255, 255, 0.8)" class="colors"
-                    style="background-color: rgba(255, 255, 255, 0.8);" type="button"
+            <td><button type="button" id="#f6f0e8" class="colors"
+                    style="background-color: #f6f0e8;" type="button"
                     onclick="setColor(this.id)"> </button></td>
             <td><button type="button" id="lightgrey" class="colors" style="background-color: lightgrey;" type="button"
                     onclick="setColor(this.id)"> </button></td>
@@ -124,7 +127,6 @@ $(document).keydown(
         }
         // Space bar
         else if (e.keyCode == 32) {
-            // debugger;
             if (isNormal && !isColor) {
                 changeMode("pencilmarks");
             }
@@ -208,12 +210,17 @@ $(document).mousedown(
 function selectDrag(id) {
     if (drag) {
         isSelectMultiple = true;
-        selectArray[id] = true;
-        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
         selectArray[document.activeElement.id] = true;
         document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
-    }
+        selectArray[id] = true;
+        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
 
+        curId = id;
+        if (!document.getElementById(id).className.includes("readonly") && document.getElementById(curId) != null) {
+            document.getElementById(curId).focus();
+        }
+
+    }
 }
 
 $(document).mouseup(
@@ -248,35 +255,7 @@ function changeMode(id) {
         document.getElementById("pencilmarks").className = "buttons";
         document.getElementById("normal").className = "buttons";
 
-        document.getElementById("tablecontainer").innerHTML = `
-        <table>
-            <tr>
-                <td><button id="lightblue" class="colors" style="background-color: lightblue;" type="button"
-                        onclick="setColor(this.id)"></button></td>
-                <td><button id="lightgreen" class="colors" style="background-color: lightgreen;"
-                        type="button" onclick="setColor(this.id)"></button></td>
-                <td><button id="lightcoral" class="colors" style="background-color: lightcoral;"
-                        type="button" onclick="setColor(this.id)"></button></td>
-            </tr>
-            <tr>
-                <td><button id="lightpink" class="colors" style="background-color: lightpink;" type="button"
-                        onclick="setColor(this.id)"></button></td>
-                <td><button id="rgba(255, 255, 255, 0.8)" class="colors"
-                        style="background-color: rgba(255, 255, 255, 0.8);" type="button"
-                        onclick="setColor(this.id)"></button></td>
-                <td><button id="lightgrey" class="colors" style="background-color: lightgrey;" type="button"
-                        onclick="setColor(this.id)"></button></td>
-            </tr>
-            <tr>
-                <td><button id="lightsalmon" class="colors" style="background-color: lightsalmon;"
-                        type="button" onclick="setColor(this.id)"></button></td>
-                <td><button id="lightseagreen" class="colors" style="background-color: lightseagreen;"
-                        type="button" onclick="setColor(this.id)"></button></td>
-                <td><button id="lightskyblue" class="colors" style="background-color: lightskyblue;"
-                        type="button" onclick="setColor(this.id)"></button></td>
-            </tr>
-        </table>
-        `;
+        document.getElementById("tablecontainer").innerHTML = colorsTable;
     }
     else {
         isNormal = true;
@@ -344,7 +323,6 @@ function sortAndWriteCellValue(id, pmCellArray) {
 }
 
 function pmInput(id, value) {
-    console.log(lastNumEntered);
     var prevPmCellArray = pmArray[id];
     var nums = value.split("");
     var pmCellArray = prevPmCellArray.concat(lastNumEntered);
@@ -369,6 +347,7 @@ function pmInput(id, value) {
 }
 
 function normalInput(id, value) {
+    
     if (value == null) {
         pmArray[id] = [];
         document.getElementById(id).className = "txt-input";
@@ -392,16 +371,25 @@ function normalInput(id, value) {
         }
     }
     else {
-        pmArray[id] = [];
-        document.getElementById(id).className = "txt-input";
-        document.getElementById(id).maxLength = 1;
-        document.getElementById(id).value = value;
-        history[historyIndex] = [id, value, "normal"];
-        historyIndex++;
+        if (document.getElementById(id).className.includes("readonly") == false) {
+            pmArray[id] = [];
+            document.getElementById(id).className = "txt-input";
+            document.getElementById(id).maxLength = 1;
+            document.getElementById(id).value = value;
+            history[historyIndex] = [id, value, "normal"];
+            historyIndex++;
+        }
+    }
+    if (isDeletePms) {
+        deletePms();
+    }
+    if (isHighlightNums) {
+        highlightNums();
     }
 }
 
 function addToArray(id, value, isOnInput) {
+    // debugger;
     if (isOnInput) {
         if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
@@ -469,6 +457,9 @@ function undo() {
 }
 
 function validateForm() {
+    if (redirect == "clear") {
+        return true;
+    }
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
             if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
@@ -485,9 +476,11 @@ function validateForm() {
 }
 
 function selectFocus(id) {
+    if (isHighlightNums) {
+        highlightNums();
+    }
     if (isSelectMultiple) {
         selectArray[id] = true;
-
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
 }
@@ -499,7 +492,6 @@ function selectClick(id) {
         document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
     }
     else {
-        // debugger;
         for (var i = 0; i < 81; i++) {
             if (selectArray[i]) {
                 if (colorMap[i] == "") {
@@ -515,8 +507,6 @@ function selectClick(id) {
     }
 }
 
-var solved = $('#my-data').data().name;
-
 function checkAlert() {
     if (solved != "None") {
         if (solved == "True") {
@@ -529,7 +519,6 @@ function checkAlert() {
 }
 
 function tableInput(num) {
-    // debugger;
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -547,7 +536,6 @@ function tableInput(num) {
                 }
             }
         }
-        // debugger;
         if (isMultiple == false) {
             if (isNormal) {
                 normalInput(document.activeElement.id, num);
@@ -574,4 +562,100 @@ function setColor(color) {
     document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
     colorMap[document.activeElement.id] = currentColor;
 
+}
+
+function pageRedirect(id) {
+    redirect = id;
+}
+
+function deletePms() {
+    id = parseInt(document.activeElement.id);
+    var conflictArray = [];
+    for (var i = id - id%9; i < (9-id%9) + id; i++) {
+        conflictArray.push(parseInt(i));
+    }
+    for (var i = 0; i < 81; i++) {
+        if (i%9 == id%9) {
+            conflictArray.push(parseInt(i));
+        }
+    }
+    var x = parseInt(id / 9);
+    var y = id % 9;
+    var listMR = [];
+    var listMC = [];
+    var modR = (x + 1) % 3;
+    var modC = (y + 1) % 3;
+    if (modR == 0) {
+        listMR = [x, x - 1, x - 2];
+    }
+    else if (modR == 1) {
+        listMR = [x, x + 1, x + 2];
+    }
+    else {
+        listMR = [x - 1, x, x + 1];
+    }
+
+    if (modC == 0) {
+        listMC = [y, y - 1, y - 2];
+    }
+    else if (modC == 1) {
+        listMC = [y, y + 1, y + 2];
+    }
+    else {
+        listMC = [y - 1, y, y + 1];
+    }
+    for (var i = 0; i < listMR.length; i++) {
+        for (var j = 0; j < listMC.length; j++) {
+            if (conflictArray.includes(9*listMR[i] + listMC[j]) == false) {
+                conflictArray.push(parseInt(9*listMR[i]+listMC[j]));
+            }
+        }
+    }
+    for (var id = 0; id < conflictArray.length; id++) {
+        if (pmArray[conflictArray[id]].includes(lastNumEntered)) {
+            pmInput(conflictArray[id], lastNumEntered);
+        }
+    }
+}
+
+function toggleDeletePms() {
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    if (isDeletePms) {
+        isDeletePms = false;
+        document.getElementById("deletepms").className = "buttons";
+    }
+    else {
+        isDeletePms = true;
+        document.getElementById("deletepms").className = "modefocus";
+    }
+}
+
+function highlightNums() {
+    // debugger;
+    var num = document.activeElement.value;
+    for (var i = 0; i < 81; i++) {
+        document.getElementById(i).style.filter = "brightness(100%)";
+        if (document.getElementById(i).value.includes(num)) {
+            if (num != "") {
+                document.getElementById(i).style.filter = "brightness(85%)";
+                // document.getElementById(i).style.backgroundColor = "green";
+            }
+        }
+    }
+}
+
+function toggleHighlightNums() {
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    if (isHighlightNums) {
+        isHighlightNums = false;
+        document.getElementById("highlightnums").className = "buttons";
+    }
+    else {
+        isHighlightNums = true;
+        document.getElementById("highlightnums").className = "modefocus";
+    }
 }
