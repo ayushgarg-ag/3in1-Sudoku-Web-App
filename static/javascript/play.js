@@ -12,6 +12,7 @@ var isDeletePms = false;
 var isHighlightNums = false;
 var isHighlightRcb = false;
 var lastNumEntered = "";
+var theme = "tan";
 var redirect = "check";
 var solved = $('#my-data').data().name;
 var currentColor = "yellow";
@@ -645,17 +646,20 @@ function toggleDeletePms() {
 }
 
 function highlightNums() {
-    var num = document.activeElement.value;
-    for (var i = 0; i < 81; i++) {
-        document.getElementById(i).style.filter = "brightness(100%)";
-        if (document.getElementById(i).value.includes(num)) {
-            if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
-                document.getElementById(i).style.filter = "brightness(85%)";
-            }
-        }
-    }
     if (isHighlightRcb) {
         highlightRcb();
+    }
+    var num = document.activeElement.value;
+    for (var i = 0; i < 81; i++) {
+        // document.getElementById(i).style.filter = "brightness(100%)";
+        // document.getElementById(i).style.backdropFilter = "brightness(100%)";
+        if (document.getElementById(i).value.includes(num)) {
+            if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
+                document.getElementById(i).style.backgroundColor = LightenDarkenColor("#226897", 20);
+                
+                // document.getElementById(i).style.backdropFilter = "brightness(85%)";
+            }
+        }
     }
 }
 
@@ -667,7 +671,8 @@ function toggleHighlightNums() {
         isHighlightNums = false;
         document.getElementById("highlightnums").className = "buttons";
         for (var i = 0; i < 81; i++) {
-            document.getElementById(i).style.filter = "brightness(100%)";
+            // document.getElementById(i).style.filter = "brightness(100%)";
+            // document.getElementById(i).style.backdropFilter = "brightness(100%)";
         }
     }
     else {
@@ -680,10 +685,16 @@ function toggleHighlightNums() {
 function highlightRcb() {
     var conflictArray = createConflictArray();
     for (var i = 0; i < 81; i++) {
-        document.getElementById(i).style.filter = "brightness(100%)";
+        document.getElementById(i).style.backgroundColor = "#226897";
+        // document.getElementById(i).style.backgroundColor = LightenDarkenColor("#226897", -20);
+        // document.getElementById(i).style.filter = "brightness(100%)";
+        // document.getElementById(i).style.backdropFilter = "brightness(100%)";
     }
+    // debugger;
     for (var i = 0; i < conflictArray.length; i++) {
-        document.getElementById(conflictArray[i]).style.filter = "brightness(85%)";
+        document.getElementById(conflictArray[i]).style.backgroundColor = "#1e5980";
+        // document.getElementById(conflictArray[i]).style.filter = "brightness(85%)";
+        // document.getElementById(i).style.backdropFilter = "brightness(85%)";
     }
 }
 
@@ -696,6 +707,7 @@ function toggleHighlightRcb() {
         document.getElementById("highlightrcb").className = "buttons";
         for (var i = 0; i < 81; i++) {
             document.getElementById(i).style.filter = "brightness(100%)";
+            document.getElementById(i).style.backdropFilter = "brightness(100%)";
         }
     }
     else {
@@ -737,4 +749,71 @@ function restart() {
     }    
     history = [];
     historyIndex = 0;
+}
+
+function changeTheme() {
+    let root = document.documentElement;
+    if (theme == "dark") {
+        root.style.setProperty('--primaryColor', "#1b262c");
+        root.style.setProperty('--itemBackground', "#226897");
+        root.style.setProperty('--textColor', "#bbe1fa");
+        root.style.setProperty('--readOnlyColor', "#000000");
+        root.style.setProperty('--tableColor', "#3282b8");
+        root.style.setProperty('--headerColor', "#3282b8");
+        root.style.setProperty('--tableItemBackground', "#a1c4db");
+        root.style.setProperty('--buttonBackground', "#305a75");
+        theme = "tan";
+    }
+    else if (theme == "tan"){
+        root.style.setProperty('--primaryColor', "#d2b48c");
+        root.style.setProperty('--itemBackground', "#f6f0e8");
+        root.style.setProperty('--textColor', "#a87b00");
+        root.style.setProperty('--readOnlyColor', "#533e2d");
+        root.style.setProperty('--tableColor', "#ac8048");
+        root.style.setProperty('--headerColor', "#ffffff");
+        root.style.setProperty('--tableItemBackground', "#f6f0e8");
+        root.style.setProperty('--buttonBackground', "#f6f0e8");
+        theme = "light";
+    }
+    else {
+        root.style.setProperty('--primaryColor', "#faf9f9");
+        root.style.setProperty('--itemBackground', "#add2c9");
+        root.style.setProperty('--textColor', "#5ea3a3");
+        root.style.setProperty('--readOnlyColor', "#488b8f");
+        root.style.setProperty('--tableColor', "#488b8f");
+        root.style.setProperty('--headerColor', "#5ea3a3");
+        root.style.setProperty('--tableItemBackground', "#add2c9");
+        root.style.setProperty('--buttonBackground', "#add2c9");
+        theme = "dark";
+    }
+}
+
+function LightenDarkenColor(col, amt) {
+
+    var usePound = false;
+
+    if (col[0] == "#") {
+        col = col.slice(1);
+        usePound = true;
+    }
+
+    var num = parseInt(col, 16);
+
+    var r = (num >> 16) + amt;
+
+    if (r > 255) r = 255;
+    else if (r < 0) r = 0;
+
+    var b = ((num >> 8) & 0x00FF) + amt;
+
+    if (b > 255) b = 255;
+    else if (b < 0) b = 0;
+
+    var g = (num & 0x0000FF) + amt;
+
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+
+    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+
 }

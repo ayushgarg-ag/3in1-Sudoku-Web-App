@@ -1,7 +1,27 @@
 /* Color Variables */
 :root {
-    --primaryColor: tan;
+    /* DARK COLOR THEME */
+    --primaryColor: #1b262c;
+    --itemBackground: #226897;
+    --textColor: #bbe1fa;
+    --readOnlyColor: #000000;
+    --tableColor: #3282b8;
+    --headerColor: #3282b8;
+    --tableItemBackground: #a1c4db;
+    --buttonBackground: #305a75;
+
+    /* TAN COLOR THEME */
+    /* --primaryColor: #d2b48c;
     --itemBackground: #f6f0e8;
+    --textColor: #a87b00;
+    --readOnlyColor: #533e2d; 
+    --tableColor: #ac8048;
+    --headerColor: #ffffff;
+    --tableItemBackground: #f6f0e8;
+    --buttonBackground: #f6f0e8; */
+    
+    
+    
 }
 /* Document CSS */
 body, html {
@@ -19,7 +39,7 @@ body {
 }
 h1 {
     text-align: center;
-    color: white;
+    color: var(--headerColor);
     font-family: 'Roboto', sans-serif;
     font-size: 45px;
     margin: 8px;
@@ -69,7 +89,7 @@ h1 {
     padding: 1px;
 }
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--itemBackground);
     border: 1px solid var(--primaryColor);
     padding: 0;
     font-size: 20px;
@@ -78,6 +98,7 @@ h1 {
     height: 50px;
     width: 50px;
 }
+
 /* Column Borders CSS */
 #grid-container .grid-item:nth-child(n):nth-last-child(9n){
     border-left: 5px var(--primaryColor) solid;
@@ -113,17 +134,17 @@ input {
 input.txt-input {
     font-size: 25px;
     color: transparent;
-    text-shadow: 0 0 0 #a87b00;
+    text-shadow: 0 0 0 var(--textColor);
 }
 input.readonly {
     font-size: 25px;
     color: transparent;
-    text-shadow: 0 0 0 rgb(83,62,45, 0.85);
+    text-shadow: 0 0 0 var(--readOnlyColor);
 }
 input.pm-input {
     font-size: 10px;
     color: transparent;
-    text-shadow: 0 0 0 #a87b00;
+    text-shadow: 0 0 0 var(--textColor);
 }
 input:focus {
     outline: 3px #a87b00 solid;
@@ -133,7 +154,7 @@ input:focus {
     width: 50px; 
     padding: 0;
     border: 0;
-    background-color:  #f6f0e8;
+    background-color: var(--itemBackground);
     outline: none;
     font-weight: bold;
     text-align: center;
@@ -166,8 +187,8 @@ input::selection {
 
 /* Buttons CSS */
 .buttons, .menubutton {
-    background-color: (255, 255, 255, 0.5);
-    color: #a87b00;
+    background-color: var(--buttonBackground);
+    color: var(--textColor);
     border: none;
     border-radius: 25px;
     font-size: 18px;
@@ -187,9 +208,9 @@ input::selection {
     margin: 10px;
 }
 .modefocus {
-    background-color: tan;
-    color: white;
-    border: 3px solid white;
+    background-color: var(--primaryColor);
+    color: var(--itemBackground);
+    border: 3px solid var(--itemBackground);
     border-radius: 25px;
     font-size: 18px;
     margin: 3px;
@@ -209,7 +230,7 @@ table {
     margin: auto;
     text-align: center;
     padding: 5px;
-    background-color: rgb(172, 128, 72);
+    background-color: var(--tableColor);
     margin-bottom: 20px;
     border-radius: 15px;
     height: 175px;
@@ -218,15 +239,11 @@ table {
     width: 45px;
     height: 45px;
     border-radius: 10px;
-    border: 2px solid grey;
-    box-shadow: 1px 2px #888888;
+    border: 2px solid var(--primaryColor);
+    box-shadow: 1px 2px var(--primaryColor);
     font-size: 18px;
     font-family: sans-serif;
     font-weight: bold;
-    color: rgb(83,62,45, 0.85);
+    color: var(--readOnlyColor);
+    background-color: var(--tableItemBackground);
 }
-/* @media only screen and (max-width: 1000px) {
-  body {
-    transform: scale(0.5);
-  }
-} */
