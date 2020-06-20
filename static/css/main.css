@@ -22,33 +22,34 @@ h1 {
     margin: .25em;
     height: 8vh;
 }
-.content {
-    /* height: 100%;
-    width: 100%; */
-    /* margin: 0 auto;
-    padding: 0; */
-    margin: auto;
-    width: 50vw;
+#content {
+    display: flex;
+    justify-content: center;
     text-align: center;
-    left: 50%;
 }
 #outsideoption {
-    background-color: green;
     float: left;
-    height: 90vh;
+    height: 30vh;
     max-width: 25vw;
+    top: 50%;
+    position: relative;
+    margin-right: 20px;
+    margin-top: 162px;
 }
 #outsidegrid {
-    background-color: blue;
-    height: 90vh;
+    height: 50vh;
     max-width: 50vw;
     float: left;
 }
 #outsidemode {
-    background-color: red;
+    display: flex;
+    vertical-align: middle;
     float: left;
-    height: 90vh;
+    height: 50vh;
     max-width: 25vw;
+    position: relative;
+    margin-left: 20px;
+    margin-top: 40px;
 }
 .inline {
     display: inline-block;
@@ -148,4 +149,74 @@ input:invalid {
 }
 input::selection {
     background: transparent;
+}
+
+/* Button Containers CSS */
+.buttoncontainers {
+    display: inline-block;
+}
+.allbuttonscontainer {
+    justify-content: center;
+    text-align: center;
+}
+
+/* Buttons CSS */
+.buttons, .menubutton {
+    background-color: (255, 255, 255, 0.5);
+    color: #a87b00;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+.buttons:focus, .menubutton:focus {
+    outline: none;
+}
+.menubutton {
+    width: 300px;
+    margin: 10px;
+}
+.modefocus {
+    background-color: tan;
+    color: white;
+    border: 3px solid white;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 3px;
+    width: 200px;
+    height: 45px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    outline: none;
+}
+.inline {
+    display: inline-block;
+}
+
+/* Color Table CSS */
+table {
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(172, 128, 72);
+    margin-bottom: 20px;
+    border-radius: 15px;
+    height: 175px;
+}
+.colors {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 1px 2px #888888;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: rgb(83,62,45, 0.85);
 }
