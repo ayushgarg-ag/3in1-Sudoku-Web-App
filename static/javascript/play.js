@@ -77,7 +77,7 @@ $(document).keydown(
         var keypressed = false;
 
         // Delete
-        if (e.keyCode == 8) {
+        if (e.keyCode == 8 && document.activeElement.id != "") {
             document.getElementById(document.activeElement.id).value = [];
             pmArray[document.activeElement.id] = [];
             for (var i = 0; i < 81; i++) {
@@ -140,10 +140,12 @@ $(document).keydown(
         }
         // Shift
         else if (e.keyCode == 16) {
-            isSelectMultiple = true;
-            selectArray[document.activeElement.id] = true;
-            if (document.activeElement.id != "pencilmarks") {
-                document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+            if (document.activeElement.id != "") {
+                isSelectMultiple = true;
+                selectArray[document.activeElement.id] = true;
+                if (document.activeElement.id != "pencilmarks") {
+                    document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+                }
             }
         }
         // Escape
@@ -153,7 +155,7 @@ $(document).keydown(
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
                     if (colorMap[i] == "") {
-                        document.getElementById(i).style.backgroundColor = "transparent";
+                        document.getElementById(i).style.backgroundColor = "#f6f0e8";
                     }
                     else {
                         document.getElementById(i).style.backgroundColor = colorMap[i];
@@ -179,7 +181,7 @@ $(document).keydown(
         }
 
         // If arrow key was pressed
-        if (keypressed == true) {
+        if (keypressed == true && document.activeElement.id != "") {
             document.getElementById(nextId).focus();
         }
 
@@ -203,13 +205,15 @@ $(document).keyup(
 
 $(document).mousedown(
     function () {
-        drag = true;
-        isSelectMultiple = false;
+        if (document.activeElement.id != "") {
+            drag = true;
+            isSelectMultiple = false;
+        }
     }
 );
 
 function selectDrag(id) {
-    if (drag) {
+    if (drag && document.activeElement.id != "" && id != null) {
         isSelectMultiple = true;
         selectArray[document.activeElement.id] = true;
         document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
@@ -650,6 +654,9 @@ function highlightNums() {
             }
         }
     }
+    if (isHighlightRcb) {
+        highlightRcb();
+    }
 }
 
 function toggleHighlightNums() {
@@ -696,4 +703,38 @@ function toggleHighlightRcb() {
         document.getElementById("highlightrcb").className = "modefocus";
         highlightRcb();
     }
+}
+
+
+function restart() {
+    for (var i = 0; i < 81; i++) {
+        selectArray[i] = true;
+        document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+    }
+
+    document.getElementById(document.activeElement.id).value = [];
+    pmArray[document.activeElement.id] = [];
+    for (var i = 0; i < 81; i++) {
+        if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+            document.getElementById(i).value = [];
+            pmArray[i] = [];
+        }
+    }
+    changeClassName();
+
+    isSelectMultiple = false;
+    for (var i = 0; i < 81; i++) {
+        if (selectArray[i]) {
+            if (colorMap[i] == "") {
+                document.getElementById(i).style.backgroundColor = "#f6f0e8";
+            }
+            else {
+                document.getElementById(i).style.backgroundColor = colorMap[i];
+            }
+            selectArray[i] = false;
+        }
+        document.getElementById(i).style.backgroundColor = "#f6f0e8";
+    }    
+    history = [];
+    historyIndex = 0;
 }

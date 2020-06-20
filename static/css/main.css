@@ -13,40 +13,44 @@ body {
     background-color: var(--primaryColor);
     margin: 0;
     padding: 0;
+    height: 50%;
+    /* width: 100vw;
+    height: 100vh; */
 }
 h1 {
     text-align: center;
     color: white;
     font-family: 'Roboto', sans-serif;
     font-size: 45px;
-    margin: .25em;
-    height: 8vh;
+    margin: 8px;
 }
 #content {
     display: flex;
     justify-content: center;
     text-align: center;
+    /* width: auto;
+    height: auto; */
 }
 #outsideoption {
     float: left;
-    height: 30vh;
-    max-width: 25vw;
+    /* width: auto;
+    height: auto; */
     top: 50%;
     position: relative;
     margin-right: 20px;
     margin-top: 162px;
 }
 #outsidegrid {
-    height: 50vh;
-    max-width: 50vw;
+    /* width: auto;
+    height: auto; */
     float: left;
 }
 #outsidemode {
     display: flex;
     vertical-align: middle;
     float: left;
-    height: 50vh;
-    max-width: 25vw;
+    /* width: auto;
+    height: auto; */
     position: relative;
     margin-left: 20px;
     margin-top: 40px;
@@ -167,6 +171,7 @@ input::selection {
     border: none;
     border-radius: 25px;
     font-size: 18px;
+    overflow: hidden;
     margin: 3px;
     width: 200px;
     height: 45px;
@@ -220,3 +225,8 @@ table {
     font-weight: bold;
     color: rgb(83,62,45, 0.85);
 }
+/* @media only screen and (max-width: 1000px) {
+  body {
+    transform: scale(0.5);
+  }
+} */

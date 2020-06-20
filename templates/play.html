@@ -3,13 +3,14 @@
 {% block head %}
 <title>Sudoku</title>
 <meta id="my-data" data-name="{{is_solved}}">
+<meta name="viewport" content="initial-scale=1">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <script src="static/javascript/play.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
 
-<body onload="changeMode(normal); createArray(); checkAlert()">
+<body onload="changeMode(normal); createArray(); checkAlert()" scroll="no">
     <h1 style="text-align: center">Sudoku Player</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
@@ -96,8 +97,9 @@
                         <button id="solve" type="submit" class="buttons">Check</button>
                     </div>
                     <div class="buttoncontainers">
-                        <button id="clear" formaction="/play" formmethod="GET" type="submit"
-                            class="buttons">Restart</button>
+                        <!-- <button id="clear" formaction="/play" formmethod="GET" type="submit"
+                            class="buttons">Restart</button> -->
+                            <button id="clear" onclick="restart()" type="button" class="buttons">Restart</button>
                     </div>
                 </div>
             </div>
