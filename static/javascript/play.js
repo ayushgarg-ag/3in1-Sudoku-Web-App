@@ -17,6 +17,17 @@ var redirect = "check";
 var root = document.documentElement;
 var solved = $('#my-data').data().name;
 var currentColor = "yellow";
+
+var color1 = root.style.getPropertyValue('--color1');
+var color2 = root.style.getPropertyValue('--color2');
+var color3 = root.style.getPropertyValue('--color3');
+var color4 = root.style.getPropertyValue('--color4');
+var color5 = root.style.getPropertyValue('--color5');
+var color6 = root.style.getPropertyValue('--color6');
+var color7 = root.style.getPropertyValue('--color7');
+var color8 = root.style.getPropertyValue('--color8');
+var color9 = root.style.getPropertyValue('--color9');
+
 var numbersTable = `
     <table>
         <tr>
@@ -39,29 +50,19 @@ var numbersTable = `
 var colorsTable = `
     <table>
         <tr>
-            <td><button type="button" id="lightblue" class="colors" style="background-color: lightblue;" type="button"
-                    onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="lightgreen" class="colors" style="background-color: lightgreen;"
-                    type="button" onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="lightcoral" class="colors" style="background-color: lightcoral;"
-                    type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color1" class="colors" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color2" class="colors" style="background-color: color2;" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color3" class="colors" style="background-color: color3;" type="button" onclick="setColor(this.id)"> </button></td>
         </tr>
         <tr>
-            <td><button type="button" id="lightpink" class="colors" style="background-color: lightpink;" type="button"
-                    onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="#f6f0e8" class="colors"
-                    style="background-color: #f6f0e8;" type="button"
-                    onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="lightgrey" class="colors" style="background-color: lightgrey;" type="button"
-                    onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color4" class="colors" style="background-color: color4;" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color5" class="colors" tyle="background-color: color5;" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color6" class="colors" style="background-color: color6;" type="button" onclick="setColor(this.id)"> </button></td>
         </tr>
         <tr>
-            <td><button type="button" id="lightsalmon" class="colors" style="background-color: lightsalmon;"
-                    type="button" onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="lightseagreen" class="colors" style="background-color: lightseagreen;"
-                    type="button" onclick="setColor(this.id)"> </button></td>
-            <td><button type="button" id="lightskyblue" class="colors" style="background-color: lightskyblue;"
-                    type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color7" class="colors" style="background-color: color7;" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color8" class="colors" style="background-color: color8;" type="button" onclick="setColor(this.id)"> </button></td>
+            <td><button type="button" id="color9" class="colors" style="background-color: color9;" type="button" onclick="setColor(this.id)"> </button></td>
         </tr>
     </table>
 `;
@@ -78,124 +79,130 @@ $(document).keydown(
     function (e) {
         var keypressed = false;
 
-        // Delete
-        if (e.keyCode == 8 && document.activeElement.id != "") {
-            document.getElementById(document.activeElement.id).value = [];
-            pmArray[document.activeElement.id] = [];
-            for (var i = 0; i < 81; i++) {
-                if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
-                    document.getElementById(i).value = [];
-                    pmArray[i] = [];
+        if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+            // Delete
+            if (e.keyCode == 8 && document.activeElement.id != "") {
+                document.getElementById(document.activeElement.id).value = [];
+                pmArray[document.activeElement.id] = [];
+                for (var i = 0; i < 81; i++) {
+                    if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+                        document.getElementById(i).value = [];
+                        pmArray[i] = [];
+                    }
                 }
+                changeClassName();
             }
-            changeClassName();
-        }
-        // Right Arrow
-        else if (e.keyCode == 39) {
-            currentId = document.activeElement.id;
-            if (currentId != 80) {
-                nextId = parseInt(currentId) + 1;
+            // Right Arrow
+            else if (e.keyCode == 39) {
+                currentId = document.activeElement.id;
+                if (currentId != 80) {
+                    nextId = parseInt(currentId) + 1;
+                }
+                keypressed = true;
             }
-            keypressed = true;
-        }
-        // Left arrow
-        else if (e.keyCode == 37) {
-            currentId = document.activeElement.id;
-            if (currentId != 0) {
-                nextId = parseInt(currentId) - 1;
+            // Left arrow
+            else if (e.keyCode == 37) {
+                currentId = document.activeElement.id;
+                if (currentId != 0) {
+                    nextId = parseInt(currentId) - 1;
+                }
+                keypressed = true;
             }
-            keypressed = true;
-        }
-        // Down arrow
-        else if (e.keyCode == 40) {
-            currentId = document.activeElement.id;
-            if (currentId < 72) {
-                nextId = parseInt(currentId) + 9;
+            // Down arrow
+            else if (e.keyCode == 40) {
+                currentId = document.activeElement.id;
+                if (currentId < 72) {
+                    nextId = parseInt(currentId) + 9;
+                }
+                else if (currentId != 80) {
+                    nextId = parseInt(currentId) - 71;
+                }
+                keypressed = true;
             }
-            else if (currentId != 80) {
-                nextId = parseInt(currentId) - 71;
+            // Up arrow
+            else if (e.keyCode == 38) {
+                currentId = document.activeElement.id;
+                if (currentId > 8) {
+                    nextId = parseInt(currentId) - 9;
+                }
+                else if (currentId != 0) {
+                    nextId = parseInt(currentId) + 71;
+                }
+                keypressed = true;
             }
-            keypressed = true;
-        }
-        // Up arrow
-        else if (e.keyCode == 38) {
-            currentId = document.activeElement.id;
-            if (currentId > 8) {
-                nextId = parseInt(currentId) - 9;
-            }
-            else if (currentId != 0) {
-                nextId = parseInt(currentId) + 71;
-            }
-            keypressed = true;
-        }
-        // Space bar
-        else if (e.keyCode == 32) {
-            if (isNormal && !isColor) {
-                changeMode("pencilmarks");
-            }
-            else if (!isNormal && !isColor) {
-                changeMode("colors");
-            }
-            else if (isColor && !isNormal) {
-                changeMode("normal");
-            }
-        }
-        // Shift
-        else if (e.keyCode == 16) {
-            if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+            // Shift
+            else if (e.keyCode == 16) {
+
                 isSelectMultiple = true;
                 selectArray[document.activeElement.id] = true;
                 if (document.activeElement.id != "pencilmarks") {
                     document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
                 }
             }
-        }
-        // Escape
-        else if (e.keyCode == 27) {
-            isSelectMultiple = false;
+            // Numbers
+            else if (48 < e.keyCode && e.keyCode < 58) {
+                lastNumEntered = String.fromCharCode(e.keyCode);
+            }
 
-            for (var i = 0; i < 81; i++) {
-                if (selectArray[i]) {
-                    if (colorMap[i] == "") {
-                        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
+        }
+
+            // Escape
+            else if (e.keyCode == 27) {
+                isSelectMultiple = false;
+
+                for (var i = 0; i < 81; i++) {
+                    if (selectArray[i]) {
+                        if (colorMap[i] == "") {
+                            document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
+                        }
+                        else {
+                            document.getElementById(i).style.backgroundColor = colorMap[i];
+                        }
+                        selectArray[i] = false;
                     }
-                    else {
-                        document.getElementById(i).style.backgroundColor = colorMap[i];
-                    }
-                    selectArray[i] = false;
                 }
             }
-        }
-        // Numbers
-        else if (48 < e.keyCode && e.keyCode < 58) {
-            lastNumEntered = String.fromCharCode(e.keyCode);
-        }
-        // Control/Command 'A'
-        else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
-            for (var i = 0; i < 81; i++) {
-                selectArray[i] = true;
-                document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+            
+            // Space bar
+            else if (e.keyCode == 32) {
+                if (isNormal && !isColor) {
+                    changeMode("pencilmarks");
+                }
+                else if (!isNormal && !isColor) {
+                    changeMode("colors");
+                }
+                else if (isColor && !isNormal) {
+                    changeMode("normal");
+                }
+            }
+                // Control/Command 'Z'
+            else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
+                undo();
+            }
+            
+            // Control/Command 'A'
+            else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
+                for (var i = 0; i < 81; i++) {
+                    selectArray[i] = true;
+                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+                }
+            }
+            
+            // If arrow key was pressed
+            if (keypressed == true && document.activeElement.id != "") {
+                document.getElementById(nextId).focus();
+            }
+
+            if (isNormal && document.getElementById(document.activeElement.id) != null) {
+                document.getElementById(document.activeElement.id).select();
+            }
+
+            if (document.activeElement.id != null) {
+                curId = document.activeElement.id;
+
             }
         }
-        // Control/Command 'Z'
-        else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
-            undo();
-        }
-
-        // If arrow key was pressed
-        if (keypressed == true && document.activeElement.id != "") {
-            document.getElementById(nextId).focus();
-        }
-
-        if (isNormal && document.getElementById(document.activeElement.id) != null) {
-            document.getElementById(document.activeElement.id).select();
-        }
-
-        if (document.activeElement.id != null) {
-            curId = document.activeElement.id;
-            
-        }
-    }
+        
 );
 
 $(document).keyup(
@@ -203,7 +210,7 @@ $(document).keyup(
         if (e.keyCode == 16) {
             isSelectMultiple = false;
         }
-        else if (e.keycode == 32) {}
+        else if (e.keycode == 32) { }
     }
 );
 
@@ -265,6 +272,15 @@ function changeMode(id) {
         document.getElementById("normal").className = "buttons";
 
         document.getElementById("tablecontainer").innerHTML = colorsTable;
+        document.getElementById("color1").style.backgroundColor = root.style.getPropertyValue("--color1");
+        document.getElementById("color2").style.backgroundColor = root.style.getPropertyValue("--color2");
+        document.getElementById("color3").style.backgroundColor = root.style.getPropertyValue("--color3");
+        document.getElementById("color4").style.backgroundColor = root.style.getPropertyValue("--color4");
+        document.getElementById("color5").style.backgroundColor = root.style.getPropertyValue("--color5");
+        document.getElementById("color6").style.backgroundColor = root.style.getPropertyValue("--color6");
+        document.getElementById("color7").style.backgroundColor = root.style.getPropertyValue("--color7");
+        document.getElementById("color8").style.backgroundColor = root.style.getPropertyValue("--color8");
+        document.getElementById("color9").style.backgroundColor = root.style.getPropertyValue("--color9");
     }
     else {
         isNormal = true;
@@ -274,6 +290,7 @@ function changeMode(id) {
         document.getElementById("colors").className = "buttons";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
+
     }
     if (!isColor) {
         changeClassName(id);
@@ -356,7 +373,7 @@ function pmInput(id, value) {
 }
 
 function normalInput(id, value) {
-    
+
     if (value == null) {
         pmArray[id] = [];
         document.getElementById(id).className = "txt-input";
@@ -492,7 +509,7 @@ function selectFocus(id) {
     if (isHighlightNums) {
         highlightNums();
     }
-    
+
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -562,20 +579,7 @@ function tableInput(num) {
     }
 }
 
-function setColor(color) {
-    if (document.getElementById(curId) != null) {
-        document.getElementById(curId).focus();
-    }
-    currentColor = color;
-    for (var i = 0; i < 81; i++) {
-        if (selectArray[i]) {
-            document.getElementById(i).style.backgroundColor = currentColor;
-            colorMap[i] = currentColor;
-        }
-    }
-    document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
-    colorMap[document.activeElement.id] = currentColor;
-}
+
 
 function pageRedirect(id) {
     redirect = id;
@@ -587,11 +591,11 @@ function createConflictArray() {
     }
     var id = parseInt(document.activeElement.id);
     var conflictArray = [];
-    for (var i = id - id%9; i < (9-id%9) + id; i++) {
+    for (var i = id - id % 9; i < (9 - id % 9) + id; i++) {
         conflictArray.push(parseInt(i));
     }
     for (var i = 0; i < 81; i++) {
-        if (i%9 == id%9) {
+        if (i % 9 == id % 9) {
             conflictArray.push(parseInt(i));
         }
     }
@@ -622,8 +626,8 @@ function createConflictArray() {
     }
     for (var i = 0; i < listMR.length; i++) {
         for (var j = 0; j < listMC.length; j++) {
-            if (conflictArray.includes(9*listMR[i] + listMC[j]) == false) {
-                conflictArray.push(parseInt(9*listMR[i]+listMC[j]));
+            if (conflictArray.includes(9 * listMR[i] + listMC[j]) == false) {
+                conflictArray.push(parseInt(9 * listMR[i] + listMC[j]));
             }
         }
     }
@@ -756,7 +760,7 @@ function restart() {
             selectArray[i] = false;
         }
         document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
-    }    
+    }
     history = [];
     historyIndex = 0;
 }
@@ -778,14 +782,11 @@ function themeOption() {
 }
 
 function changeTheme() {
-    console.log(document.getElementsByTagName("link")[0].innerHTML);
-    console.log(document.getElementById("stylesheet"));
-    
-    let root = document.documentElement;
     var themeid = window.localStorage.getItem("storedTheme");
+    let root = document.documentElement;
     console.log(themeid);
     if (themeid == "tan") {
-        root.style.cssText("--primaryColor: #d2b48c");
+        root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
         root.style.setProperty('--textColor', "#a87b00");
         root.style.setProperty('--readOnlyColor', "#533e2d");
@@ -793,8 +794,10 @@ function changeTheme() {
         root.style.setProperty('--headerColor', "#ffffff");
         root.style.setProperty('--tableItemBackground', "#f6f0e8");
         root.style.setProperty('--buttonBackground', "#f6f0e8");
+        root.style.setProperty('--buttonText', "#a87b00");
         root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#533e2d");
+        root.style.setProperty('--focusText', "#f6f0e8");
         window.localStorage.setItem("storedTheme", "tan");
     }
     else if (themeid == "dark") {
@@ -806,37 +809,56 @@ function changeTheme() {
         root.style.setProperty('--headerColor', "#3282b8");
         root.style.setProperty('--tableItemBackground', "#a1c4db");
         root.style.setProperty('--buttonBackground', "#305a75");
+        root.style.setProperty('--buttonText', "#bbe1fa");
         root.style.setProperty('--shiftColor', "#978522");
         root.style.setProperty('--messageTextColor', "#bbe1fa");
+        root.style.setProperty('--focusText', "#226897");
         window.localStorage.setItem("storedTheme", "dark");
     }
     else if (themeid == "retro") {
         root.style.setProperty('--primaryColor', "#111f4d");
         root.style.setProperty('--itemBackground', "#F3ECE7");
         root.style.setProperty('--textColor', "#e43a19");
-        root.style.setProperty('--readOnlyColor', "#533e2d");
+        root.style.setProperty('--readOnlyColor', "#020205");
         root.style.setProperty('--tableColor', "#e43a19");
-        root.style.setProperty('--headerColor', "#5ea3a3");
+        root.style.setProperty('--headerColor', "#e43a19");
         root.style.setProperty('--tableItemBackground', "#f2f4f7");
-        root.style.setProperty('--buttonBackground', "#020205");
+        root.style.setProperty('--buttonBackground', "#e43a19");
+        root.style.setProperty('--buttonText', "#020205");
         root.style.setProperty('--shiftColor', "#4ac286");
         root.style.setProperty('--messageTextColor', "#e43a19");
+        root.style.setProperty('--focusText', "#F3ECE7");
         window.localStorage.setItem("storedTheme", "retro");
     }
     else {
-        root.style.setProperty('--primaryColor', "#111f4d");
-        root.style.setProperty('--itemBackground', "#F3ECE7");
-        root.style.setProperty('--textColor', "#e43a19");
-        root.style.setProperty('--readOnlyColor', "#533e2d");
-        root.style.setProperty('--tableColor', "#e43a19");
-        root.style.setProperty('--headerColor', "#5ea3a3");
-        root.style.setProperty('--tableItemBackground', "#f2f4f7");
-        root.style.setProperty('--buttonBackground', "#020205");
-        root.style.setProperty('--shiftColor', "#4ac286");
-        root.style.setProperty('--messageTextColor', "#e43a19");
+        root.style.setProperty('--primaryColor', "#add2c9");
+        root.style.setProperty('--itemBackground', "#f1ebeb");
+        root.style.setProperty('--textColor', "#5ea3a3");
+        root.style.setProperty('--readOnlyColor', "#28595c");
+        root.style.setProperty('--tableColor', "#28595c");
+        root.style.setProperty('--headerColor', "#28595c");
+        root.style.setProperty('--tableItemBackground', "#62a7a1");
+        root.style.setProperty('--buttonBackground', "#4db492");
+        root.style.setProperty('--buttonText', "#d2fff0");
+        root.style.setProperty('--shiftColor', "#a36f5e");
+        root.style.setProperty('--messageTextColor', "#1b4857");
+        root.style.setProperty('--focusText', "#28595c");
+
+        root.style.setProperty('--color1', "#a36f5e");
+        root.style.setProperty('--color2', "#a3925e");
+        root.style.setProperty('--color3', "#805ea3");
+        root.style.setProperty('--color4', "#5e5ea3");
+        root.style.setProperty('--color5', "#5ea35e");
+        root.style.setProperty('--color6', "#348a8a");
+        root.style.setProperty('--color7', "#a36f5e");
+        root.style.setProperty('--color8', "black");
+        root.style.setProperty('--color9', "grey");
+
         window.localStorage.setItem("storedTheme", "light");
     }
 
+    console.log(root.style.getPropertyValue('--color1'));
+    console.log(document.getElementById("color1"));
     for (var i = 0; i < 81; i++) {
         selectArray[i] = true;
     }
@@ -870,8 +892,24 @@ function instructionsDisplay() {
         document.getElementById("instructions").innerHTML = "Instructions";
         showInstructions = true;
     }
-}    
+}
 
-function hideIns () {
-    document.getElementById("insoverlay").style.display = "none";
+$(window).load(function () {
+    $("body").addClass('all-loaded');
+});
+
+function setColor(id) {
+    color = document.getElementById(id).style.backgroundColor;
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    currentColor = color;
+    for (var i = 0; i < 81; i++) {
+        if (selectArray[i]) {
+            document.getElementById(i).style.backgroundColor = currentColor;
+            colorMap[i] = currentColor;
+        }
+    }
+    document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
+    colorMap[document.activeElement.id] = currentColor;
 }

@@ -9,13 +9,14 @@
     --headerColor: #3282b8;
     --tableItemBackground: #a1c4db;
     --buttonBackground: #305a75;
+    -buttonText: #bbe1fa;
     --shiftColor: #978522;
     --messageTextColor: #bbe1fa; */
 
     
 
     /* TAN COLOR THEME */
-    --primaryColor: #d2b48c;
+    /* --primaryColor: #d2b48c;
     --itemBackground: #f6f0e8;
     --textColor: #a87b00;
     --readOnlyColor: #533e2d; 
@@ -23,10 +24,36 @@
     --headerColor: #ffffff;
     --tableItemBackground: #f6f0e8;
     --buttonBackground: #f6f0e8;
+    --buttonText: #a87b00;
     --shiftColor: #fce17a;
-    --messageTextColor: #533e2d;
+    --messageTextColor: #533e2d; */
     
-    
+    /* LIGHT COLOR THEME */
+    --primaryColor: #add2c9;
+    --itemBackground: #f1ebeb;
+    --textColor: #5ea3a3;
+    --readOnlyColor: #28595c;
+    --tableColor: #5ea3a3;
+    --headerColor: #5ea3a3;
+    --tableItemBackground: #62a7a1;
+    --buttonBackground: #8f9eaf;
+    --buttonText: #3c4d85;
+    --shiftColor: #919e56;
+    --messageTextColor: #1b4857;
+    --focusText: #28595c;
+
+    --color1: #a36f5e;
+    --color2: #a3925e;
+    --color3: #805ea3;
+    --color4: #5e5ea3;
+    --color5: #5ea35e;
+    --color6: #348a8a;
+    --color7: #a36f5e;
+    --color8: black;
+    --color9: grey;
+    --color: #d2fff0;
+    -color: #4db492;
+    --color: #78ccb0;
     
 }
 /* Document CSS */
@@ -40,15 +67,19 @@ body {
     margin: 0;
     padding: 0;
     height: 50%;
+    opacity: 0;
     /* width: 100vw;
     height: 100vh; */
+}
+body.all-loaded {
+    opacity: 1;
 }
 h1 {
     text-align: center;
     color: var(--headerColor);
     font-family: 'Roboto', sans-serif;
     font-size: 45px;
-    margin: 8px;
+    margin: 8px 0px 8px 0px;
 }
 #content {
     display: flex;
@@ -68,6 +99,7 @@ h1 {
     top: 50%;
     position: relative;
     margin-right: 20px;
+    margin-left: 18px;
     /* margin-top: 85px; */
 }
 #outsidegrid {
@@ -109,6 +141,7 @@ h1 {
     padding: 10px;
     color: var(--messageTextColor);
     text-align: left;
+    overflow: hidden;
 }
 .grid-item {
     background-color: var(--itemBackground);
@@ -210,7 +243,7 @@ input::selection {
 /* Buttons CSS */
 .buttons, .menubutton, .optiondivs {
     background-color: var(--buttonBackground);
-    color: var(--textColor);
+    color: var(--buttonText);
     border: none;
     border-radius: 25px;
     font-size: 18px;
@@ -247,8 +280,8 @@ input::selection {
 }
 .modefocus, .focusdivs {
     background-color: var(--primaryColor);
-    color: var(--itemBackground);
-    border: 3px solid var(--itemBackground);
+    color: var(--focusText);
+    border: 3px solid var(--focusText);
     border-radius: 25px;
     font-size: 18px;
     margin: 3px;
@@ -270,7 +303,7 @@ input::selection {
     user-select: none;
     margin-top: 2px;
     margin-bottom: 2px;
-    border: 3px solid var(--itemBackground);
+    border: 3px solid var(--focusText);
     overflow: hidden;
     /* box-shadow: 3px solid var(--itemBackground) inset; */
 
@@ -360,13 +393,19 @@ h3 {
     background: linear-gradient(180deg, rgba(27,38,44,1) 0%, rgba(34,104,151,1) 50%, rgba(187,225,250,1) 100%);
 }
 #tan {
-    background: rgb(210,180,140);
-    background: linear-gradient(180deg, rgba(210,180,140,1) 0%, rgba(246,240,232,1) 50%, rgba(168,123,0,1) 100%);
+    background: rgb(168,123,0);
+    background: linear-gradient(180deg, rgba(168,123,0,1) 0%, rgba(210,180,140,1) 30%, rgba(246,240,232,1) 100%);
 }
 #light {
-    background-color: white;
+    background: rgb(77,180,146);
+    background: linear-gradient(180deg, rgba(77,180,146,1) 0%, rgba(210,255,240,1) 75%, rgba(241,235,235,1) 100%);
 }
 #retro {
     background: rgb(17,31,77);
-    background: linear-gradient(180deg, rgba(17,31,77,1) 0%, rgba(242,244,247,1) 50%, rgba(228,58,25,1) 100%);
+    background: linear-gradient(180deg, rgba(17,31,77,1) 0%, rgba(65,44,119,1) 30%, rgba(228,58,25,1) 60%, rgba(243,236,231,1) 100%);
 }
+
+/* #changetheme {
+    height: 100%;
+    width: 100%;
+} */

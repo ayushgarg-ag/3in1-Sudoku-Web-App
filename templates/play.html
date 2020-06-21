@@ -11,7 +11,7 @@
 {% block body %}
 
 <body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()" scroll="no">
-    <h1 style="text-align: center">Sudoku</h1>
+    <h1>Sudoku</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
             <div id="outsideoption" class="inline">
@@ -24,7 +24,7 @@
                         <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box</div><br><br><br>
                     
                         <div id="changetheme" class="optiondivs">
-                            <div onclick="themeOption()">Change Theme</div>
+                            <div id="themebutton" onclick="themeOption()">Change Theme</div>
                         </div>
                     
                         <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
