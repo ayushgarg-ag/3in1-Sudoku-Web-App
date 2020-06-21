@@ -1,5 +1,3 @@
-// var theme = window.localStorage.getItem("storedTheme");
-
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
     <div onclick="themeOption()">Change Theme</div>`;

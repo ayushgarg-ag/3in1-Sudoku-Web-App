@@ -17,7 +17,7 @@ function themeOption() {
 }
 
 function changeTheme() {
-    let root = document.documentElement;
+    let root = document.getElementsByTagName('html')[0];
     var themeid;
     if (window.localStorage.getItem("storedTheme") == null) {
         themeid = "tan";

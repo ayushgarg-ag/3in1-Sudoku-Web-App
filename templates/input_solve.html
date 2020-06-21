@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Sudoku Solver (Classic)</title>
+<title>Sudoku Solver</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <script src="static/javascript/base.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
 
-<body>
+<body onload="changeTheme()">
     <div class="content">
         <h1 style="text-align: center">Sudoku Solver (Classic)</h1>
         <form action="/solution" method="POST" onsubmit="return validate()">
 
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
-                    <div onclick="changeTheme()" id="changetheme" class="optiondivs">Change Theme</div>
+                    <div id="changetheme" class="optiondivs">
+                        <div onclick="themeOption()">Change Theme</div>
+                    </div>
             
                     <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
             

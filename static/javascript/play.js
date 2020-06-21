@@ -778,11 +778,14 @@ function themeOption() {
 }
 
 function changeTheme() {
+    console.log(document.getElementsByTagName("link")[0].innerHTML);
+    console.log(document.getElementById("stylesheet"));
+    
     let root = document.documentElement;
     var themeid = window.localStorage.getItem("storedTheme");
     console.log(themeid);
     if (themeid == "tan") {
-        root.style.setProperty('--primaryColor', "#d2b48c");
+        root.style.cssText("--primaryColor: #d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
         root.style.setProperty('--textColor', "#a87b00");
         root.style.setProperty('--readOnlyColor', "#533e2d");
