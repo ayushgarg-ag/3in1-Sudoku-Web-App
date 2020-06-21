@@ -11,9 +11,11 @@ var drag = false;
 var isDeletePms = false;
 var isHighlightNums = false;
 var isHighlightRcb = false;
+var showInstructions = true;
 var lastNumEntered = "";
-var theme = "tan";
+var theme = "dark";
 var redirect = "check";
+var root = document.documentElement;
 var solved = $('#my-data').data().name;
 var currentColor = "yellow";
 var numbersTable = `
@@ -141,11 +143,11 @@ $(document).keydown(
         }
         // Shift
         else if (e.keyCode == 16) {
-            if (document.activeElement.id != "") {
+            if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
                 isSelectMultiple = true;
                 selectArray[document.activeElement.id] = true;
                 if (document.activeElement.id != "pencilmarks") {
-                    document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+                    document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
                 }
             }
         }
@@ -156,7 +158,7 @@ $(document).keydown(
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
                     if (colorMap[i] == "") {
-                        document.getElementById(i).style.backgroundColor = "#f6f0e8";
+                        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
                     }
                     else {
                         document.getElementById(i).style.backgroundColor = colorMap[i];
@@ -173,7 +175,7 @@ $(document).keydown(
         else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
             for (var i = 0; i < 81; i++) {
                 selectArray[i] = true;
-                document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+                document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
             }
         }
         // Control/Command 'Z'
@@ -192,6 +194,7 @@ $(document).keydown(
 
         if (document.activeElement.id != null) {
             curId = document.activeElement.id;
+            
         }
     }
 );
@@ -201,6 +204,7 @@ $(document).keyup(
         if (e.keyCode == 16) {
             isSelectMultiple = false;
         }
+        else if (e.keycode == 32) {}
     }
 );
 
@@ -217,9 +221,9 @@ function selectDrag(id) {
     if (drag && document.activeElement.id != "" && id != null) {
         isSelectMultiple = true;
         selectArray[document.activeElement.id] = true;
-        document.getElementById(document.activeElement.id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
         selectArray[id] = true;
-        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
 
         curId = id;
         if (!document.getElementById(id).className.includes("readonly") && document.getElementById(curId) != null) {
@@ -481,15 +485,17 @@ function validateForm() {
 }
 
 function selectFocus(id) {
-    if (isHighlightNums) {
-        highlightNums();
-    }
+    curId = id;
     if (isHighlightRcb) {
         highlightRcb();
     }
+    if (isHighlightNums) {
+        highlightNums();
+    }
+    
     if (isSelectMultiple) {
         selectArray[id] = true;
-        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
     }
 }
 
@@ -497,13 +503,13 @@ function selectClick(id) {
     curId = id;
     if (isSelectMultiple) {
         selectArray[id] = true;
-        document.getElementById(id).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
     }
     else {
         for (var i = 0; i < 81; i++) {
             if (selectArray[i]) {
                 if (colorMap[i] == "") {
-                    document.getElementById(i).style.backgroundColor = "transparent";
+                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
                 }
                 else {
                     document.getElementById(i).style.backgroundColor = colorMap[i];
@@ -575,8 +581,10 @@ function pageRedirect(id) {
     redirect = id;
 }
 
-
 function createConflictArray() {
+    if (isNaN(document.activeElement.id)) {
+        return [];
+    }
     var id = parseInt(document.activeElement.id);
     var conflictArray = [];
     for (var i = id - id%9; i < (9-id%9) + id; i++) {
@@ -632,32 +640,33 @@ function deletePms() {
 }
 
 function toggleDeletePms() {
+    debugger;
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
     if (isDeletePms) {
         isDeletePms = false;
-        document.getElementById("deletepms").className = "buttons";
+        document.getElementById("deletepms").className = "optiondivs";
     }
     else {
         isDeletePms = true;
-        document.getElementById("deletepms").className = "modefocus";
+        document.getElementById("deletepms").className = "focusdivs";
     }
 }
 
 function highlightNums() {
+    var conflictArray = []
     if (isHighlightRcb) {
-        highlightRcb();
+        conflictArray = createConflictArray();
     }
     var num = document.activeElement.value;
     for (var i = 0; i < 81; i++) {
-        // document.getElementById(i).style.filter = "brightness(100%)";
-        // document.getElementById(i).style.backdropFilter = "brightness(100%)";
+        if (conflictArray.includes(i) == false) {
+            document.getElementById(i).style.filter = "brightness(100%)";
+        }
         if (document.getElementById(i).value.includes(num)) {
             if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
-                document.getElementById(i).style.backgroundColor = LightenDarkenColor("#226897", 20);
-                
-                // document.getElementById(i).style.backdropFilter = "brightness(85%)";
+                document.getElementById(i).style.filter = "brightness(75%)";
             }
         }
     }
@@ -669,15 +678,17 @@ function toggleHighlightNums() {
     }
     if (isHighlightNums) {
         isHighlightNums = false;
-        document.getElementById("highlightnums").className = "buttons";
+        document.getElementById("highlightnums").className = "optiondivs";
         for (var i = 0; i < 81; i++) {
-            // document.getElementById(i).style.filter = "brightness(100%)";
-            // document.getElementById(i).style.backdropFilter = "brightness(100%)";
+            document.getElementById(i).style.filter = "brightness(100%)";
+        }
+        if (isHighlightRcb) {
+            highlightRcb();
         }
     }
     else {
         isHighlightNums = true;
-        document.getElementById("highlightnums").className = "modefocus";
+        document.getElementById("highlightnums").className = "focusdivs";
         highlightNums();
     }
 }
@@ -685,16 +696,13 @@ function toggleHighlightNums() {
 function highlightRcb() {
     var conflictArray = createConflictArray();
     for (var i = 0; i < 81; i++) {
-        document.getElementById(i).style.backgroundColor = "#226897";
-        // document.getElementById(i).style.backgroundColor = LightenDarkenColor("#226897", -20);
-        // document.getElementById(i).style.filter = "brightness(100%)";
-        // document.getElementById(i).style.backdropFilter = "brightness(100%)";
+        document.getElementById(i).style.filter = "brightness(100%)";
     }
-    // debugger;
     for (var i = 0; i < conflictArray.length; i++) {
-        document.getElementById(conflictArray[i]).style.backgroundColor = "#1e5980";
-        // document.getElementById(conflictArray[i]).style.filter = "brightness(85%)";
-        // document.getElementById(i).style.backdropFilter = "brightness(85%)";
+        document.getElementById(conflictArray[i]).style.filter = "brightness(75%)";
+    }
+    if (isHighlightNums) {
+        highlightNums();
     }
 }
 
@@ -704,15 +712,17 @@ function toggleHighlightRcb() {
     }
     if (isHighlightRcb) {
         isHighlightRcb = false;
-        document.getElementById("highlightrcb").className = "buttons";
+        document.getElementById("highlightrcb").className = "optiondivs";
         for (var i = 0; i < 81; i++) {
             document.getElementById(i).style.filter = "brightness(100%)";
-            document.getElementById(i).style.backdropFilter = "brightness(100%)";
+        }
+        if (isHighlightNums) {
+            highlightNums();
         }
     }
     else {
         isHighlightRcb = true;
-        document.getElementById("highlightrcb").className = "modefocus";
+        document.getElementById("highlightrcb").className = "focusdivs";
         highlightRcb();
     }
 }
@@ -721,7 +731,7 @@ function toggleHighlightRcb() {
 function restart() {
     for (var i = 0; i < 81; i++) {
         selectArray[i] = true;
-        document.getElementById(i).style.backgroundColor = "rgba(254, 215, 0, 0.6)";
+        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
     }
 
     document.getElementById(document.activeElement.id).value = [];
@@ -738,14 +748,14 @@ function restart() {
     for (var i = 0; i < 81; i++) {
         if (selectArray[i]) {
             if (colorMap[i] == "") {
-                document.getElementById(i).style.backgroundColor = "#f6f0e8";
+                document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
             }
             else {
                 document.getElementById(i).style.backgroundColor = colorMap[i];
             }
             selectArray[i] = false;
         }
-        document.getElementById(i).style.backgroundColor = "#f6f0e8";
+        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
     }    
     history = [];
     historyIndex = 0;
@@ -762,6 +772,7 @@ function changeTheme() {
         root.style.setProperty('--headerColor', "#3282b8");
         root.style.setProperty('--tableItemBackground', "#a1c4db");
         root.style.setProperty('--buttonBackground', "#305a75");
+        root.style.setProperty('--shiftColor', "#978522");
         theme = "tan";
     }
     else if (theme == "tan"){
@@ -773,47 +784,70 @@ function changeTheme() {
         root.style.setProperty('--headerColor', "#ffffff");
         root.style.setProperty('--tableItemBackground', "#f6f0e8");
         root.style.setProperty('--buttonBackground', "#f6f0e8");
+        root.style.setProperty('--shiftColor', "#fce17a");
         theme = "light";
     }
+    // else if (theme == "light") {
+    //     root.style.setProperty('--primaryColor', "#111f4d");
+    //     // root.style.setProperty('--itemBackground', "#f2f4f7");
+    //     root.style.setProperty('--itemBackground', "#EAD4C4");
+    //     root.style.setProperty('--textColor', "#e43a19");
+    //     root.style.setProperty('--readOnlyColor', "#533e2d");
+    //     root.style.setProperty('--tableColor', "#e43a19");
+    //     root.style.setProperty('--headerColor', "#5ea3a3");
+    //     root.style.setProperty('--tableItemBackground', "#f2f4f7");
+    //     root.style.setProperty('--buttonBackground', "#020205");
+    //     root.style.setProperty('--shiftColor', "#4ac286");
+    //     theme = "retro";
+    // }
     else {
-        root.style.setProperty('--primaryColor', "#faf9f9");
-        root.style.setProperty('--itemBackground', "#add2c9");
-        root.style.setProperty('--textColor', "#5ea3a3");
-        root.style.setProperty('--readOnlyColor', "#488b8f");
-        root.style.setProperty('--tableColor', "#488b8f");
+        root.style.setProperty('--primaryColor', "#111f4d");
+        // root.style.setProperty('--itemBackground', "#f2f4f7");
+        root.style.setProperty('--itemBackground', "#F3ECE7");
+        root.style.setProperty('--textColor', "#e43a19");
+        root.style.setProperty('--readOnlyColor', "#533e2d");
+        root.style.setProperty('--tableColor', "#e43a19");
         root.style.setProperty('--headerColor', "#5ea3a3");
-        root.style.setProperty('--tableItemBackground', "#add2c9");
-        root.style.setProperty('--buttonBackground', "#add2c9");
+        root.style.setProperty('--tableItemBackground', "#f2f4f7");
+        root.style.setProperty('--buttonBackground', "#020205");
+        root.style.setProperty('--shiftColor', "#4ac286");
         theme = "dark";
     }
-}
 
-function LightenDarkenColor(col, amt) {
-
-    var usePound = false;
-
-    if (col[0] == "#") {
-        col = col.slice(1);
-        usePound = true;
+    for (var i = 0; i < 81; i++) {
+        selectArray[i] = true;
     }
 
-    var num = parseInt(col, 16);
+    isSelectMultiple = false;
+    for (var i = 0; i < 81; i++) {
+        if (selectArray[i]) {
+            if (colorMap[i] == "") {
+                document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
+            }
+            else {
+                document.getElementById(i).style.backgroundColor = colorMap[i];
+            }
+            selectArray[i] = false;
+        }
+    }
+    
+}
 
-    var r = (num >> 16) + amt;
+// Overlays
+function instructionsDisplay() {
+    console.log(showInstructions);
+    if (showInstructions) {
+        document.getElementById("instructionsdisplay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        showInstructions = false;
+    }
+    else {
+        document.getElementById("instructionsdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        showInstructions = true;
+    }
+}    
 
-    if (r > 255) r = 255;
-    else if (r < 0) r = 0;
-
-    var b = ((num >> 8) & 0x00FF) + amt;
-
-    if (b > 255) b = 255;
-    else if (b < 0) b = 0;
-
-    var g = (num & 0x0000FF) + amt;
-
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
-
-    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
-
+function hideIns () {
+    document.getElementById("insoverlay").style.display = "none";
 }

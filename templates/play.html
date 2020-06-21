@@ -10,30 +10,80 @@
 
 {% block body %}
 
-<body onload="changeMode(normal); createArray(); checkAlert()" scroll="no">
+<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert();" scroll="no">
     <h1 style="text-align: center">Sudoku Player</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
-                    <div class="modebuttons">
-                        <button onclick="toggleDeletePms()" id="deletepms" type="button" class="buttons">Delete
-                            Pms</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="toggleHighlightNums()" id="highlightnums" type="button"
-                            class="buttons">Highlight Nums</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="toggleHighlightRcb()" id="highlightrcb" type="button" class="buttons">Highlight RCB</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="changeTheme()" id="theme" type="button" class="buttons">Change Theme</button>
-                    </div>
+                    
+                        <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
+                    
+                    
+                        <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits</div>
+                    
+                    
+                        <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box</div><br><br><br>
+                    
+                    
+                        <div onclick="changeTheme()" id="changetheme" class="optiondivs">Change Theme</div>
+                    
+                    
+                        <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
+
+                        <!-- <div id="insoverlay">
+                            <button id="close" onclick="hideIns()" type="button">X</button>
+                            <div id="ins">This is our instructions</div>
+                        </div> -->
+
+                    
+                    
+                        <div onclick="showAbout()" id="about" class="optiondivs">About</div>
+                    
                 </div>
             </div>
 
             <div id="outsidegrid" class="inline">
+                <div id="instructionsdisplay">
+                    <h2>How to play sudoku</h2>
+                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column, or block.</p>
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Change Theme: Choose between Dark, Tan, Light, and Retro</li>
+                        <li>Toggling Options:</li>
+                        <ul>
+                            <li>Auto delete pencilmarks when inputting a normal number</li>
+                            <li>Highlight all of the same normal/pencilmarked numbers</li>
+                            <li>Highlight the respective row, column, and block</li>
+                        </ul>
+                    <li>Input Options</li>
+                        <ul>
+                            <li>Press keyboard numbers, or</li>
+                            <li>Click numbers on the keypad</li>
+                        </ul>
+                    <li>Multiple Selections</li>
+                        <ul>
+                            <li>Hold shift and use arrow keys, or</li>
+                            <li>Click different cells</li>
+                            <li>Drag your cursor around</li>
+                            <li>"Control A" to select all cells</li>
+                            <li>To unselect, (1) click on any cell, or (2) press escape</li>
+                        </ul>
+                    <li>Shortcuts</li>
+                        <ul>
+                            <li>Dragging</li>
+                            <li>Arrow Keys</li>
+                            <li>Shift</li>
+                            <li>Escape</li>
+                            <li>Control A</li>
+                            <li>Control Z</li>
+                            <li>Space</li>
+                            <li>Delete</li>
+                        </ul>
+                        
+                    </ul>
+                    <p></p>
+                </div>
                 <div id="grid-container">
                     {% for i in range(9) %}
                     {% for j in range(9) %}
