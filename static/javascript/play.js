@@ -13,7 +13,6 @@ var isHighlightNums = false;
 var isHighlightRcb = false;
 var showInstructions = true;
 var lastNumEntered = "";
-var theme = "dark";
 var redirect = "check";
 var root = document.documentElement;
 var solved = $('#my-data').data().name;
@@ -466,6 +465,7 @@ function undo() {
 }
 
 function validateForm() {
+    window.localStorage.setItem("storedTheme", theme);
     if (redirect == "clear") {
         return true;
     }
@@ -761,21 +761,27 @@ function restart() {
     historyIndex = 0;
 }
 
+function revertChangeTheme() {
+    document.getElementById("changetheme").innerHTML = `
+    <div onclick="themeOption()">Change Theme</div>`;
+}
+
+function themeOption() {
+    document.getElementById("changetheme").innerHTML = `
+    <div id="themescontainer">
+    <div class="themes" id="dark" onclick="window.localStorage.setItem('storedTheme', this.id); changeTheme(); revertChangeTheme()"></div>
+    <div class="themes" id="tan" onclick="window.localStorage.setItem('storedTheme', this.id); changeTheme(); revertChangeTheme()"></div>
+    <div class="themes" id="light" onclick="window.localStorage.setItem('storedTheme', this.id); changeTheme(); revertChangeTheme()"></div>
+    <div class="themes" id="retro" onclick="window.localStorage.setItem('storedTheme', this.id); changeTheme(); revertChangeTheme()"></div>
+    </div>
+    `;
+}
+
 function changeTheme() {
     let root = document.documentElement;
-    if (theme == "dark") {
-        root.style.setProperty('--primaryColor', "#1b262c");
-        root.style.setProperty('--itemBackground', "#226897");
-        root.style.setProperty('--textColor', "#bbe1fa");
-        root.style.setProperty('--readOnlyColor', "#000000");
-        root.style.setProperty('--tableColor', "#3282b8");
-        root.style.setProperty('--headerColor', "#3282b8");
-        root.style.setProperty('--tableItemBackground', "#a1c4db");
-        root.style.setProperty('--buttonBackground', "#305a75");
-        root.style.setProperty('--shiftColor', "#978522");
-        theme = "tan";
-    }
-    else if (theme == "tan"){
+    var themeid = window.localStorage.getItem("storedTheme");
+    console.log(themeid);
+    if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
         root.style.setProperty('--textColor', "#a87b00");
@@ -785,24 +791,24 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#f6f0e8");
         root.style.setProperty('--buttonBackground', "#f6f0e8");
         root.style.setProperty('--shiftColor', "#fce17a");
-        theme = "light";
+        root.style.setProperty('--messageTextColor', "#533e2d");
+        window.localStorage.setItem("storedTheme", "tan");
     }
-    // else if (theme == "light") {
-    //     root.style.setProperty('--primaryColor', "#111f4d");
-    //     // root.style.setProperty('--itemBackground', "#f2f4f7");
-    //     root.style.setProperty('--itemBackground', "#EAD4C4");
-    //     root.style.setProperty('--textColor', "#e43a19");
-    //     root.style.setProperty('--readOnlyColor', "#533e2d");
-    //     root.style.setProperty('--tableColor', "#e43a19");
-    //     root.style.setProperty('--headerColor', "#5ea3a3");
-    //     root.style.setProperty('--tableItemBackground', "#f2f4f7");
-    //     root.style.setProperty('--buttonBackground', "#020205");
-    //     root.style.setProperty('--shiftColor', "#4ac286");
-    //     theme = "retro";
-    // }
-    else {
+    else if (themeid == "dark") {
+        root.style.setProperty('--primaryColor', "#1b262c");
+        root.style.setProperty('--itemBackground', "#226897");
+        root.style.setProperty('--textColor', "#bbe1fa");
+        root.style.setProperty('--readOnlyColor', "#000000");
+        root.style.setProperty('--tableColor', "#3282b8");
+        root.style.setProperty('--headerColor', "#3282b8");
+        root.style.setProperty('--tableItemBackground', "#a1c4db");
+        root.style.setProperty('--buttonBackground', "#305a75");
+        root.style.setProperty('--shiftColor', "#978522");
+        root.style.setProperty('--messageTextColor', "#bbe1fa");
+        window.localStorage.setItem("storedTheme", "dark");
+    }
+    else if (themeid == "retro") {
         root.style.setProperty('--primaryColor', "#111f4d");
-        // root.style.setProperty('--itemBackground', "#f2f4f7");
         root.style.setProperty('--itemBackground', "#F3ECE7");
         root.style.setProperty('--textColor', "#e43a19");
         root.style.setProperty('--readOnlyColor', "#533e2d");
@@ -811,7 +817,21 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#f2f4f7");
         root.style.setProperty('--buttonBackground', "#020205");
         root.style.setProperty('--shiftColor', "#4ac286");
-        theme = "dark";
+        root.style.setProperty('--messageTextColor', "#e43a19");
+        window.localStorage.setItem("storedTheme", "retro");
+    }
+    else {
+        root.style.setProperty('--primaryColor', "#111f4d");
+        root.style.setProperty('--itemBackground', "#F3ECE7");
+        root.style.setProperty('--textColor', "#e43a19");
+        root.style.setProperty('--readOnlyColor', "#533e2d");
+        root.style.setProperty('--tableColor', "#e43a19");
+        root.style.setProperty('--headerColor', "#5ea3a3");
+        root.style.setProperty('--tableItemBackground', "#f2f4f7");
+        root.style.setProperty('--buttonBackground', "#020205");
+        root.style.setProperty('--shiftColor', "#4ac286");
+        root.style.setProperty('--messageTextColor', "#e43a19");
+        window.localStorage.setItem("storedTheme", "light");
     }
 
     for (var i = 0; i < 81; i++) {
@@ -830,20 +850,21 @@ function changeTheme() {
             selectArray[i] = false;
         }
     }
-    
+
 }
 
 // Overlays
 function instructionsDisplay() {
-    console.log(showInstructions);
     if (showInstructions) {
         document.getElementById("instructionsdisplay").style.display = "block";
         document.getElementById("grid-container").style.display = "none";
+        document.getElementById("instructions").innerHTML = "Close Instructions";
         showInstructions = false;
     }
     else {
         document.getElementById("instructionsdisplay").style.display = "none";
         document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("instructions").innerHTML = "Instructions";
         showInstructions = true;
     }
 }    

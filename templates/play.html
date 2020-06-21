@@ -10,8 +10,8 @@
 
 {% block body %}
 
-<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert();" scroll="no">
-    <h1 style="text-align: center">Sudoku Player</h1>
+<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()" scroll="no">
+    <h1 style="text-align: center">Sudoku</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
             <div id="outsideoption" class="inline">
@@ -19,38 +19,29 @@
                     
                         <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
                     
-                    
                         <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits</div>
-                    
                     
                         <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box</div><br><br><br>
                     
-                    
-                        <div onclick="changeTheme()" id="changetheme" class="optiondivs">Change Theme</div>
-                    
+                        <div id="changetheme" class="optiondivs">
+                            <div onclick="themeOption()">Change Theme</div>
+                        </div>
                     
                         <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
-
-                        <!-- <div id="insoverlay">
-                            <button id="close" onclick="hideIns()" type="button">X</button>
-                            <div id="ins">This is our instructions</div>
-                        </div> -->
-
                     
-                    
-                        <div onclick="showAbout()" id="about" class="optiondivs">About</div>
-                    
+                        <div onclick="showAbout()" id="about" class="optiondivs">About</div> 
                 </div>
             </div>
 
             <div id="outsidegrid" class="inline">
                 <div id="instructionsdisplay">
-                    <h2>How to play sudoku</h2>
+                    <h3 id="top">How To Play Sudoku</h3>
                     <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column, or block.</p>
-                    <h2>Features</h2>
+                    <h3>Features</h3>
                     <ul>
-                        <li>Change Theme: Choose between Dark, Tan, Light, and Retro</li>
-                        <li>Toggling Options:</li>
+                        <li>Change Themes: Click "Change Themes" and choose between dark, tan, light, and retro theme (from left to right)</li>
+                        <li>Toggling Options</li>
+                        
                         <ul>
                             <li>Auto delete pencilmarks when inputting a normal number</li>
                             <li>Highlight all of the same normal/pencilmarked numbers</li>
@@ -58,27 +49,21 @@
                         </ul>
                     <li>Input Options</li>
                         <ul>
-                            <li>Press keyboard numbers, or</li>
-                            <li>Click numbers on the keypad</li>
+                            <li>Press keyboard numbers or click numbers on the keypad</li>
+                            <li>Pencilmarks mode will input notes in the cells (double input the same number to delete)</li>
+                            <li>Color different cells on the grid (center color is the default)</li>
                         </ul>
                     <li>Multiple Selections</li>
                         <ul>
-                            <li>Hold shift and use arrow keys, or</li>
-                            <li>Click different cells</li>
+                            <li>Hold <i>Shift</i> and use arrow keys or click different cells</li>
                             <li>Drag your cursor around</li>
-                            <li>"Control A" to select all cells</li>
-                            <li>To unselect, (1) click on any cell, or (2) press escape</li>
+                            <li><i>"Control A"</i> to select all cells</li>
+                            <li>To unselect, (1) click on any cell, or (2) press <i>Escape</i></li>
                         </ul>
                     <li>Shortcuts</li>
                         <ul>
-                            <li>Dragging</li>
-                            <li>Arrow Keys</li>
-                            <li>Shift</li>
-                            <li>Escape</li>
-                            <li>Control A</li>
-                            <li>Control Z</li>
-                            <li>Space</li>
-                            <li>Delete</li>
+                            <li><i>"Control Z"</i> to undo previous changes</li>
+                            <li>Click <i>Space</i> to change between "Normal", "Pencilmarks", and "Colors" mode</li>
                         </ul>
                         
                     </ul>

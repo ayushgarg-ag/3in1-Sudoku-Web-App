@@ -1,7 +1,7 @@
 /* Color Variables */
 :root {
     /* DARK COLOR THEME */
-    --primaryColor: #1b262c;
+    /* --primaryColor: #1b262c;
     --itemBackground: #226897;
     --textColor: #bbe1fa;
     --readOnlyColor: #000000;
@@ -10,12 +10,12 @@
     --tableItemBackground: #a1c4db;
     --buttonBackground: #305a75;
     --shiftColor: #978522;
-    /* --shiftColor: #2b88c4; */
-    /* --shiftColor: #fc7ae6; */
+    --messageTextColor: #bbe1fa; */
+
     
 
     /* TAN COLOR THEME */
-    /* --primaryColor: #d2b48c;
+    --primaryColor: #d2b48c;
     --itemBackground: #f6f0e8;
     --textColor: #a87b00;
     --readOnlyColor: #533e2d; 
@@ -23,7 +23,8 @@
     --headerColor: #ffffff;
     --tableItemBackground: #f6f0e8;
     --buttonBackground: #f6f0e8;
-    --shiftColor: #fce17a; */
+    --shiftColor: #fce17a;
+    --messageTextColor: #533e2d;
     
     
     
@@ -106,9 +107,8 @@ h1 {
     border: 1px solid white;
     font-size: 14px;
     padding: 10px;
-    color: var(--textColor);
+    color: var(--messageTextColor);
     text-align: left;
-    
 }
 .grid-item {
     background-color: var(--itemBackground);
@@ -325,4 +325,48 @@ table {
     color: var(--readOnlyColor);
     text-align: center;
     font-size: 30px;
+}
+h3 {
+    font-weight: bold;
+    text-decoration: underline;
+}
+#top {
+    margin-top: 1px;
+}
+
+/* .themes {
+    display: inline;
+    border: 1px solid black;
+    float: left;
+} */
+
+#themescontainer {
+  display: flex;
+}
+#themescontainer > div {
+  flex: 1; /*grow*/
+  /* height: 100%; */
+    width: 41;
+    height: 49px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    user-select: none;
+}
+#dark {
+    background: rgb(27,38,44);
+    background: linear-gradient(180deg, rgba(27,38,44,1) 0%, rgba(34,104,151,1) 50%, rgba(187,225,250,1) 100%);
+}
+#tan {
+    background: rgb(210,180,140);
+    background: linear-gradient(180deg, rgba(210,180,140,1) 0%, rgba(246,240,232,1) 50%, rgba(168,123,0,1) 100%);
+}
+#light {
+    background-color: white;
+}
+#retro {
+    background: rgb(17,31,77);
+    background: linear-gradient(180deg, rgba(17,31,77,1) 0%, rgba(242,244,247,1) 50%, rgba(228,58,25,1) 100%);
 }

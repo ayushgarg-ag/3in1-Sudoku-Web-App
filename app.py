@@ -14,14 +14,14 @@ def menu():
     return render_template('menu.html')
 
 
-@app.route('/input_classic_play')
+@app.route('/input_play')
 def input_classic_play():
-    return render_template('input_classic_play.html')
+    return render_template('input_play.html')
 
 
-@app.route('/input_classic_solve')
+@app.route('/input_solve')
 def input_classic_solve():
-    return render_template('input_classic_solve.html')
+    return render_template('input_solve.html')
 
 
 @app.route('/input_kings')
@@ -46,7 +46,7 @@ def play():
                     row_list.append(int(content))
             sudoku_grid_list.append(row_list)
         s = Sudoku(sudoku_grid_list)
-        if '/input_classic_play' in request.referrer:
+        if '/input_play' in request.referrer:
             play_list = s.return_array()
             return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
         elif '/play' in request.referrer:
@@ -88,7 +88,7 @@ def solution():
                     row_list.append(int(content))
             sudoku_grid_list.append(row_list)
 
-        if "/input_classic_solve" in request.referrer:
+        if "/input_solve" in request.referrer:
             s = Sudoku(sudoku_grid_list)
         elif "/input_kings" in request.referrer:
             s = Sudoku_Kings(sudoku_grid_list)

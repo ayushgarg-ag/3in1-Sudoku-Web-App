@@ -12,6 +12,17 @@
     <div class="content">
         <h1 style="text-align: center">Sudoku Solver (Classic)</h1>
         <form action="/solution" method="POST" onsubmit="return validate()">
+
+            <div id="outsideoption" class="inline">
+                <div id="optioncontainer">
+                    <div onclick="changeTheme()" id="changetheme" class="optiondivs">Change Theme</div>
+            
+                    <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
+            
+                    <div onclick="showAbout()" id="about" class="optiondivs">About</div>
+                </div>
+            </div>
+
             <div id="grid-container" class="grid-container">
                 {% for i in range(9) %}
                 {% for j in range(9) %}
