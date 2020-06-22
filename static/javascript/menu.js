@@ -1,4 +1,4 @@
-// window.localStorage.setItem("storedTheme", "tan");
+var showMessages = true;
 
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
@@ -109,3 +109,23 @@ function changeTheme() {
 $(window).load(function () {
     $("body").addClass('all-loaded');
 });
+
+function messagesDisplay() {
+    debugger;
+    if (showMessages) {
+        document.getElementById("playimage").style.display = "none";
+        document.getElementById("solveimage").style.display = "none";
+        document.getElementById("menuinstructionsdisplay").style.display = "block";
+        document.getElementById("menuaboutdisplay").style.display = "block";
+        document.getElementById("messages").innerHTML = "Close Instructions<br>and About";
+        showMessages = false;
+    }
+    else {
+        document.getElementById("menuinstructionsdisplay").style.display = "none";
+        document.getElementById("menuaboutdisplay").style.display = "none";
+        document.getElementById("playimage").style.display = "block";
+        document.getElementById("solveimage").style.display = "block";
+        document.getElementById("messages").innerHTML = "Instructions<br>and About";
+        showMessages = true;
+    }
+}

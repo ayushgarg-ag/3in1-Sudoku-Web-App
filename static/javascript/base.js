@@ -1,3 +1,6 @@
+var showInstructions = true;
+var showAbout = true;
+
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
     <div onclick="themeOption()">Change Theme</div>`;
@@ -220,3 +223,36 @@ $(document).keydown(
 $(window).load(function () {
     $("body").addClass('all-loaded');
 });
+
+function instructionsDisplay() {
+    if (showAbout) {
+        if (showInstructions) {
+            document.getElementById("instructionsdisplay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            document.getElementById("instructions").innerHTML = "Close Instructions";
+            showInstructions = false;
+        }
+        else {
+            document.getElementById("instructionsdisplay").style.display = "none";
+            document.getElementById("grid-container").style.display = "grid";
+            document.getElementById("instructions").innerHTML = "Instructions";
+            showInstructions = true;
+        }
+    }
+}
+function aboutDisplay() {
+    if (showInstructions) {
+        if (showAbout) {
+            document.getElementById("aboutdisplay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            document.getElementById("about").innerHTML = "Close About";
+            showAbout = false;
+        }
+        else {
+            document.getElementById("aboutdisplay").style.display = "none";
+            document.getElementById("grid-container").style.display = "grid";
+            document.getElementById("about").innerHTML = "About";
+            showAbout = true;
+        }
+    }
+}

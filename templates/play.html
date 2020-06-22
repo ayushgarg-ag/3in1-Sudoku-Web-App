@@ -16,58 +16,67 @@
         <div id="content">
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
-                    
-                        <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
-                    
-                        <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits</div>
-                    
-                        <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box</div><br><br><br>
-                    
-                        <div id="changetheme" class="optiondivs">
-                            <div id="themebutton" onclick="themeOption()">Change Theme</div>
-                        </div>
-                    
-                        <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
-                    
-                        <div onclick="showAbout()" id="about" class="optiondivs">About</div> 
+
+                    <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
+
+                    <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits
+                    </div>
+
+                    <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box
+                    </div><br><br><br>
+
+                    <div id="changetheme" class="optiondivs">
+                        <div id="themebutton" onclick="themeOption()">Change Theme</div>
+                    </div>
+
+                    <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
+
+                    <div onclick="aboutDisplay()" id="about" class="optiondivs">About</div>
                 </div>
             </div>
 
             <div id="outsidegrid" class="inline">
                 <div id="instructionsdisplay">
                     <h3 id="top">How To Play Sudoku</h3>
-                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column, or block.</p>
+                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has
+                        to contain all the numbers 1-9 within its squares. Each number can only appear once in a row,
+                        column, or block.</p>
                     <h3>Features</h3>
                     <ul>
-                        <li>Change Themes: Click "Change Themes" and choose between dark, tan, light, and retro theme (from left to right)</li>
+                        <li>Change Themes: Click "Change Themes" and choose between dark, tan, light, and retro theme
+                            (from left to right)</li>
                         <li>Toggling Options</li>
-                        
+
                         <ul>
                             <li>Auto delete pencilmarks when inputting a normal number</li>
                             <li>Highlight all of the same normal/pencilmarked numbers</li>
                             <li>Highlight the respective row, column, and block</li>
                         </ul>
-                    <li>Input Options</li>
+                        <li>Input Options</li>
                         <ul>
                             <li>Press keyboard numbers or click numbers on the keypad</li>
-                            <li>Pencilmarks mode will input notes in the cells (double input the same number to delete)</li>
+                            <li>Pencilmarks mode will input notes in the cells (double input the same number to delete)
+                            </li>
                             <li>Color different cells on the grid (center color is the default)</li>
                         </ul>
-                    <li>Multiple Selections</li>
+                        <li>Multiple Selections</li>
                         <ul>
                             <li>Hold <i>Shift</i> and use arrow keys or click different cells</li>
                             <li>Drag your cursor around</li>
                             <li><i>"Control A"</i> to select all cells</li>
                             <li>To unselect, (1) click on any cell, or (2) press <i>Escape</i></li>
                         </ul>
-                    <li>Shortcuts</li>
+                        <li>Shortcuts</li>
                         <ul>
                             <li><i>"Control Z"</i> to undo previous changes</li>
                             <li>Click <i>Space</i> to change between "Normal", "Pencilmarks", and "Colors" mode</li>
                         </ul>
-                        
+
                     </ul>
                     <p></p>
+                </div>
+                <div id="aboutdisplay">
+                    <h3 id="top">About</h3>
                 </div>
                 <div id="grid-container">
                     {% for i in range(9) %}
@@ -136,7 +145,7 @@
                     <div class="buttoncontainers">
                         <!-- <button id="clear" formaction="/play" formmethod="GET" type="submit"
                             class="buttons">Restart</button> -->
-                            <button id="clear" onclick="restart()" type="button" class="buttons">Restart</button>
+                        <button id="clear" onclick="restart()" type="button" class="buttons">Restart</button>
                     </div>
                 </div>
             </div>
@@ -163,15 +172,16 @@
                         </table>
                     </div>
 
-                    
-                        <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
-                    
-                        <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks</div>
-                    
-                        <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
-                    
-                        <div onclick="undo()" id="pencilmarks" class="modedivs">Undo</div>
-                    
+
+                    <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
+
+                    <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks
+                    </div>
+
+                    <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
+
+                    <div onclick="undo()" id="pencilmarks" class="modedivs">Undo</div>
+
                 </div>
             </div>
 

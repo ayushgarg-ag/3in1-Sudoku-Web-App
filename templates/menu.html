@@ -15,6 +15,9 @@
         <div id="outsideplay" class="inline">
             <div id="floatright">
                 <div id="playimage" onclick="location.href='/input_play'"></div>
+                <div id="menuinstructionsdisplay">
+                    <h3 id="top">Instructions</h3>
+                </div>
                 <button id="menuplay" class="menubutton" onclick="location.href='/input_play'">Play a Sudoku</button>
             </div>
         </div>
@@ -24,16 +27,18 @@
                     <div onclick="themeOption()">Change Theme</div>
                 </div>
 
-                <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">
-                    Instructions
+                <div onclick="messagesDisplay()" id="messages" class="optiondivs">
+                    Instructions<br>and About
                 </div>
 
-                <div onclick="showAbout()" id="about" class="optiondivs">About</div>
             </div>
 
         </div>
         <div id="outsidesolve" class="inline">
                 <div id="solveimage" onclick="location.href='/input_solve'"></div>
+                <div id="menuaboutdisplay">
+                    <h3 id="top">About</h3>
+                </div>
                 <button id="menusolve" class="menubutton" onclick="location.href='/input_solve'">Solve a Sudoku</button>
 
         </div>

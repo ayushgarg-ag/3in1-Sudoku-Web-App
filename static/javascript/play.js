@@ -12,6 +12,7 @@ var isDeletePms = false;
 var isHighlightNums = false;
 var isHighlightRcb = false;
 var showInstructions = true;
+var showAbout = true;
 var lastNumEntered = "";
 var redirect = "check";
 var root = document.documentElement;
@@ -33,7 +34,7 @@ var numbersTable = `
         <tr>
             <td><button type="button" class="colors" onclick="tableInput('1')">1</button></td>
             <td><button type="button" class="colors" onclick="tableInput('2')">2</button></td>
-            <td><button type="button" class="colors" onclick="tableInput('3')">3</button></td>
+            <td><button class="colors" onclick="tableInput('3')">3</button></td>
         </tr>
         <tr>
             <td><button type="button" class="colors" onclick="tableInput('4')">4</button></td>
@@ -77,7 +78,6 @@ function createArray() {
 
 $(document).keydown(
     function (e) {
-        debugger;
         var keypressed = false;
 
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
@@ -909,17 +909,35 @@ function changeTheme() {
 
 // Overlays
 function instructionsDisplay() {
-    if (showInstructions) {
-        document.getElementById("instructionsdisplay").style.display = "block";
-        document.getElementById("grid-container").style.display = "none";
-        document.getElementById("instructions").innerHTML = "Close Instructions";
-        showInstructions = false;
+    if (showAbout) {
+        if (showInstructions) {
+            document.getElementById("instructionsdisplay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            document.getElementById("instructions").innerHTML = "Close Instructions";
+            showInstructions = false;
+        }
+        else {
+            document.getElementById("instructionsdisplay").style.display = "none";
+            document.getElementById("grid-container").style.display = "grid";
+            document.getElementById("instructions").innerHTML = "Instructions";
+            showInstructions = true;
+        }
     }
-    else {
-        document.getElementById("instructionsdisplay").style.display = "none";
-        document.getElementById("grid-container").style.display = "grid";
-        document.getElementById("instructions").innerHTML = "Instructions";
-        showInstructions = true;
+}
+function aboutDisplay() {
+    if (showInstructions) {
+        if (showAbout) {
+            document.getElementById("aboutdisplay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            document.getElementById("about").innerHTML = "Close About";
+            showAbout = false;
+        }
+        else {
+            document.getElementById("aboutdisplay").style.display = "none";
+            document.getElementById("grid-container").style.display = "grid";
+            document.getElementById("about").innerHTML = "About";
+            showAbout = true;
+        }
     }
 }
 
