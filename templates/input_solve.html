@@ -1,55 +1,56 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Sudoku Solver</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<title>Sudoku Solver Input</title>
 <script src="static/javascript/base.js" type="text/javascript"></script>
 {% endblock %}
-
 {% block body %}
 
 <body onload="changeTheme()">
-    <div class="content">
-        <h1 style="text-align: center">Sudoku Solver (Classic)</h1>
-        <form action="/solution" method="POST" onsubmit="return validate()">
+    <h1>Sudoku Solver Input</h1>
+    <form action="/solution" method="POST" onsubmit="return validate()">
+        <div id="content">
 
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
                     <div id="changetheme" class="optiondivs">
                         <div onclick="themeOption()">Change Theme</div>
                     </div>
-            
+
                     <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
-            
+
                     <div onclick="showAbout()" id="about" class="optiondivs">About</div>
                 </div>
             </div>
 
-            <div id="grid-container" class="grid-container">
-                {% for i in range(9) %}
-                {% for j in range(9) %}
-                <div class="grid-item move">
-                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1"
-                        onkeydown="return ( event.ctrlKey || event.altKey 
+            <div id="outsidegrid" class="inline">
+                <div id="grid-container">
+                    {% for i in range(9) %}
+                    {% for j in range(9) %}
+                    <div class="grid-item move">
+                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input"
+                            min="1" onkeydown="return ( event.ctrlKey || event.altKey 
                     || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
                     || (95<event.keyCode && event.keyCode<106)
                     || (event.keyCode==8) || (event.keyCode==9) 
                     || (event.keyCode>34 && event.keyCode<40) 
                     || (event.keyCode==46) )" autocomplete="off">
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                {% endfor %}
+                <div class="allbuttonscontainer">
+                    <div class="buttoncontainers">
+                        <button id="solve" type="submit" class="buttons">Solve</button>
+                    </div>
+                    <div class="buttoncontainers">
+                        <button id="clear" onclick="window.location.reload()" type="buttons"
+                            class="buttons">Clear</button>
+                    </div>
+                </div>
             </div>
-            <div class="allbuttonscontainer">
-            <div class="buttoncontainers">
-                <button id="solve" type="submit" class="buttons">Solve</button>
-            </div>
-            <div class="buttoncontainers">
-                <button id="clear" onclick="window.location.reload()" type="buttons" class="buttons">Clear</button>
-            </div>
+            <div id="spacefiller" style="width: 226px; float: left;"></div>
         </div>
-        </form>
-
-    </div>
+    </form>
 </body>
 {% endblock %}

@@ -241,7 +241,7 @@ input::selection {
 }
 
 /* Buttons CSS */
-.buttons, .menubutton, .optiondivs {
+.buttons, .menubutton, .optiondivs, .modedivs {
     background-color: var(--buttonBackground);
     color: var(--buttonText);
     border: none;
@@ -255,7 +255,7 @@ input::selection {
     font-family: 'Roboto', sans-serif;
     text-align: center;
 }
-.optiondivs {
+.optiondivs, .modedivs {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -268,10 +268,13 @@ input::selection {
     user-select: none;
     border: 3px solid var(--primaryColor);
     overflow: hidden;
-    /* box-shadow: 3px solid var(--primaryColor) inset; */
+}
+.modedivs {
+    width: 200px;
+    height: 45px;
 }
 
-.buttons:focus, .menubutton:focus, .optiondivs:focus {
+.buttons:focus, .menubutton:focus, .optiondivs:focus, .modedivs:focus {
     outline: none;
 }
 .menubutton {
@@ -279,32 +282,34 @@ input::selection {
     margin: 10px;
 }
 .modefocus, .focusdivs {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
     background-color: var(--primaryColor);
     color: var(--focusText);
     border: 3px solid var(--focusText);
     border-radius: 25px;
     font-size: 18px;
-    margin: 3px;
-    width: 200px;
-    height: 45px;
+    width: 164px;
+    height: 49px;
+    margin: 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     outline: none;
-}
-.focusdivs {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    width: 164px;
-    height: 49px;
-    margin: 8px;
-    user-select: none;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 3px solid var(--focusText);
     overflow: hidden;
+    user-select: none;
+}
+.modefocus {
+    width: 200px;
+    height: 45px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+    
     /* box-shadow: 3px solid var(--itemBackground) inset; */
 
     /* margin: 8px;

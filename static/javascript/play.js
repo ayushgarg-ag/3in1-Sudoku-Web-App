@@ -260,8 +260,8 @@ function changeMode(id) {
         isNormal = false;
         isColor = false;
         document.getElementById("pencilmarks").className = "modefocus";
-        document.getElementById("normal").className = "buttons";
-        document.getElementById("colors").className = "buttons";
+        document.getElementById("normal").className = "modedivs";
+        document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
     }
@@ -269,8 +269,8 @@ function changeMode(id) {
         isColor = true;
         isNormal = false;
         document.getElementById("colors").className = "modefocus";
-        document.getElementById("pencilmarks").className = "buttons";
-        document.getElementById("normal").className = "buttons";
+        document.getElementById("pencilmarks").className = "modedivs";
+        document.getElementById("normal").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = colorsTable;
         document.getElementById("color1").style.backgroundColor = root.style.getPropertyValue("--color1");
@@ -286,9 +286,9 @@ function changeMode(id) {
     else {
         isNormal = true;
         isColor = false;
-        document.getElementById("pencilmarks").className = "buttons";
+        document.getElementById("pencilmarks").className = "modedivs";
         document.getElementById("normal").className = "modefocus";
-        document.getElementById("colors").className = "buttons";
+        document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
 

@@ -163,21 +163,15 @@
                         </table>
                     </div>
 
-                    <div class="modebuttons">
-                        <button onclick="changeMode(this.id)" id="normal" value="normal" type="button"
-                            class="buttons">Normal</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" type="button"
-                            class="buttons">Pencilmarks</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="changeMode(this.id)" id="colors" value="colors" type="button"
-                            class="buttons">Colors</button>
-                    </div>
-                    <div class="modebuttons">
-                        <button onclick="undo()" id="pencilmarks" type="button" class="buttons">Undo</button>
-                    </div>
+                    
+                        <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
+                    
+                        <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks</div>
+                    
+                        <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
+                    
+                        <div onclick="undo()" id="pencilmarks" class="modedivs">Undo</div>
+                    
                 </div>
             </div>
 
