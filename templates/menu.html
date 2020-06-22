@@ -13,11 +13,10 @@
     <h1>Sudoku Menu</h1>
     <div id="content">
         <div id="outsideplay" class="inline">
-            <!-- <div class="buttoncontainers"> -->
-                <div id="playimage"></div>
-                <button id="menuplay" onclick="location.href='/input_play'">Play a Sudoku</button>
-            <!-- </div> -->
-
+            <div id="floatright">
+                <div id="playimage" onclick="location.href='/input_play'"></div>
+                <button id="menuplay" class="menubutton" onclick="location.href='/input_play'">Play a Sudoku</button>
+            </div>
         </div>
         <div id="outsidemenuoption" class="inline">
             <div id="optioncontainer">
@@ -25,17 +24,17 @@
                     <div onclick="themeOption()">Change Theme</div>
                 </div>
 
-                <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
+                <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">
+                    Instructions
+                </div>
 
                 <div onclick="showAbout()" id="about" class="optiondivs">About</div>
             </div>
 
         </div>
         <div id="outsidesolve" class="inline">
-            <!-- <div class="buttoncontainers"> -->
-                <div id="solveimage"></div>
-                <button id="menusolve" onclick="location.href='/input_solve'">Solve a Sudoku</button>
-            <!-- </div> -->
+                <div id="solveimage" onclick="location.href='/input_solve'"></div>
+                <button id="menusolve" class="menubutton" onclick="location.href='/input_solve'">Solve a Sudoku</button>
 
         </div>
     </div>

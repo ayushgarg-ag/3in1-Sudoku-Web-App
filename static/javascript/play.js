@@ -264,6 +264,16 @@ function changeMode(id) {
         document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
+
+        for (var i = 0; i < 81; i++) {
+            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
+                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                    || (95<event.keyCode && event.keyCode<106)
+                    || (event.keyCode==8) || (event.keyCode==9) 
+                    || (event.keyCode>34 && event.keyCode<40) 
+                    || (event.keyCode==46) )"`;
+        }
+        
     }
     else if (id == "colors") {
         isColor = true;
@@ -271,6 +281,15 @@ function changeMode(id) {
         document.getElementById("colors").className = "modefocus";
         document.getElementById("pencilmarks").className = "modedivs";
         document.getElementById("normal").className = "modedivs";
+
+        for (var i = 0; i < 81; i++) {
+            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
+                    || (event.shiftKey==false) 
+                    || (95<event.keyCode && event.keyCode<106)
+                    || (event.keyCode==8) || (event.keyCode==9) 
+                    || (event.keyCode>34 && event.keyCode<40) 
+                    || (event.keyCode==46) )"`;
+        }
 
         document.getElementById("tablecontainer").innerHTML = colorsTable;
         document.getElementById("color1").style.backgroundColor = root.style.getPropertyValue("--color1");
@@ -291,6 +310,15 @@ function changeMode(id) {
         document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
+
+        for (var i = 0; i < 81; i++) {
+            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
+                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                    || (95<event.keyCode && event.keyCode<106)
+                    || (event.keyCode==8) || (event.keyCode==9) 
+                    || (event.keyCode>34 && event.keyCode<40) 
+                    || (event.keyCode==46) )"`;
+        }
 
     }
     if (!isColor) {

@@ -39,6 +39,8 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#533e2d");
         root.style.setProperty('--focusText', "#f6f0e8");
         window.localStorage.setItem("storedTheme", "tan");
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/tan_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/tan_solve.png)";
     }
     else if (themeid == "dark") {
         root.style.setProperty('--primaryColor', "#1b262c");
@@ -54,6 +56,8 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#bbe1fa");
         root.style.setProperty('--focusText', "#226897");
         window.localStorage.setItem("storedTheme", "dark");
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/dark_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/dark_solve.png)";
     }
     else if (themeid == "retro") {
         root.style.setProperty('--primaryColor', "#111f4d");
@@ -69,6 +73,8 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#e43a19");
         root.style.setProperty('--focusText', "#F3ECE7");
         window.localStorage.setItem("storedTheme", "retro");
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/retro_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/retro_solve.png)";
     }
     else {
         root.style.setProperty('--primaryColor', "#add2c9");
@@ -83,6 +89,8 @@ function changeTheme() {
         root.style.setProperty('--shiftColor', "#a36f5e");
         root.style.setProperty('--messageTextColor', "#1b4857");
         root.style.setProperty('--focusText', "#28595c");
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/light_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/light_solve.png)";
 
         root.style.setProperty('--color1', "#a36f5e");
         root.style.setProperty('--color2', "#a3925e");

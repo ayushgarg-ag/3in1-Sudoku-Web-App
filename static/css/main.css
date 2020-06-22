@@ -80,6 +80,7 @@ h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 45px;
     margin: 8px 0px 8px 0px;
+    user-select: none;
 }
 #content {
     display: flex;
@@ -254,6 +255,7 @@ input::selection {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-align: center;
+    cursor: pointer;
 }
 .optiondivs, .modedivs {
     display: flex;
@@ -302,6 +304,7 @@ input::selection {
     outline: none;
     overflow: hidden;
     user-select: none;
+    cursor: pointer;
 }
 .modefocus {
     width: 200px;
@@ -344,6 +347,7 @@ table {
     font-weight: bold;
     color: var(--readOnlyColor);
     background-color: var(--tableItemBackground);
+    cursor: pointer;
 }
 
 /* Overlays */
@@ -412,39 +416,51 @@ h3 {
 
 
 
+#menuplay {
+    /* float: right; */
+}
+
 
 #playimage {
     background-image: url(tan_play.png);
-    margin-left: 10px;
-    width: 300px;
-    height: 300px;
+    width: 425px;
+    height: 425px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    cursor: pointer;
 }
 #solveimage {
     background-image: url(tan_solve.png);
-    margin-left: 10px;
-    width: 300px;
-    height: 300px;
+    width: 425px;
+    height: 425px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    cursor: pointer;
 }
 
 #outsideplay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
     float: left;
-    width: 40%;
-    height: 480px;
-    justify-content: right;
+    max-width: 500px;
+    max-height: 550px;
 }
 #outsidesolve {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
     float: left;
-    width: 40%;
-    height: 480px;
-    justify-content: left;
+    max-width: 500px;
+    max-height: 550px;
 }
 
 #outsidemenuoption {
@@ -454,7 +470,11 @@ h3 {
     align-content: center;
     flex-direction: column;
     float: left;
-    width: 20%;
+    padding: 20px;
     height: 480px;
     /* background-color: blue; */
+}
+
+#floatright {
+    justify-content: right;
 }
