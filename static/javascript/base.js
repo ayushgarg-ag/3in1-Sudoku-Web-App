@@ -15,8 +15,9 @@ function themeOption() {
 }
 
 function changeTheme() {
-    let root = document.documentElement;
     var themeid = window.localStorage.getItem("storedTheme");
+    let root = document.documentElement;
+    console.log(themeid);
     if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");

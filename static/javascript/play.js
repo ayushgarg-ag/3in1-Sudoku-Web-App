@@ -77,6 +77,7 @@ function createArray() {
 
 $(document).keydown(
     function (e) {
+        debugger;
         var keypressed = false;
 
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
@@ -146,62 +147,62 @@ $(document).keydown(
 
         }
 
-            // Escape
-            else if (e.keyCode == 27) {
-                isSelectMultiple = false;
+        // Escape
+        if (e.keyCode == 27) {
+            isSelectMultiple = false;
 
-                for (var i = 0; i < 81; i++) {
-                    if (selectArray[i]) {
-                        if (colorMap[i] == "") {
-                            document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
-                        }
-                        else {
-                            document.getElementById(i).style.backgroundColor = colorMap[i];
-                        }
-                        selectArray[i] = false;
+            for (var i = 0; i < 81; i++) {
+                if (selectArray[i]) {
+                    if (colorMap[i] == "") {
+                        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
                     }
+                    else {
+                        document.getElementById(i).style.backgroundColor = colorMap[i];
+                    }
+                    selectArray[i] = false;
                 }
-            }
-            
-            // Space bar
-            else if (e.keyCode == 32) {
-                if (isNormal && !isColor) {
-                    changeMode("pencilmarks");
-                }
-                else if (!isNormal && !isColor) {
-                    changeMode("colors");
-                }
-                else if (isColor && !isNormal) {
-                    changeMode("normal");
-                }
-            }
-                // Control/Command 'Z'
-            else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
-                undo();
-            }
-            
-            // Control/Command 'A'
-            else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
-                for (var i = 0; i < 81; i++) {
-                    selectArray[i] = true;
-                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-                }
-            }
-            
-            // If arrow key was pressed
-            if (keypressed == true && document.activeElement.id != "") {
-                document.getElementById(nextId).focus();
-            }
-
-            if (isNormal && document.getElementById(document.activeElement.id) != null) {
-                document.getElementById(document.activeElement.id).select();
-            }
-
-            if (document.activeElement.id != null) {
-                curId = document.activeElement.id;
-
             }
         }
+        
+        // Space bar
+        else if (e.keyCode == 32) {
+            if (isNormal && !isColor) {
+                changeMode("pencilmarks");
+            }
+            else if (!isNormal && !isColor) {
+                changeMode("colors");
+            }
+            else if (isColor && !isNormal) {
+                changeMode("normal");
+            }
+        }
+            // Control/Command 'Z'
+        else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
+            undo();
+        }
+        
+        // Control/Command 'A'
+        else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
+            for (var i = 0; i < 81; i++) {
+                selectArray[i] = true;
+                document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+            }
+        }
+        
+        // If arrow key was pressed
+        if (keypressed == true && document.activeElement.id != "") {
+            document.getElementById(nextId).focus();
+        }
+
+        if (isNormal && document.getElementById(document.activeElement.id) != null) {
+            document.getElementById(document.activeElement.id).select();
+        }
+
+        if (document.activeElement.id != null) {
+            curId = document.activeElement.id;
+
+        }
+    }
         
 );
 
