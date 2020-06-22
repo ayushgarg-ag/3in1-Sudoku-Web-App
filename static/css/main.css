@@ -16,7 +16,7 @@
     
 
     /* TAN COLOR THEME */
-    /* --primaryColor: #d2b48c;
+    --primaryColor: #d2b48c;
     --itemBackground: #f6f0e8;
     --textColor: #a87b00;
     --readOnlyColor: #533e2d; 
@@ -26,10 +26,13 @@
     --buttonBackground: #f6f0e8;
     --buttonText: #a87b00;
     --shiftColor: #fce17a;
-    --messageTextColor: #533e2d; */
+    --messageTextColor: #533e2d;
+    --highlightOpacity: "brightness(90%)";
+
+    /* --shiftColor: #6f818a; */
     
     /* LIGHT COLOR THEME */
-    --primaryColor: #add2c9;
+    /* --primaryColor: #add2c9;
     --itemBackground: #f1ebeb;
     --textColor: #5ea3a3;
     --readOnlyColor: #28595c;
@@ -40,9 +43,9 @@
     --buttonText: #3c4d85;
     --shiftColor: #919e56;
     --messageTextColor: #1b4857;
-    --focusText: #28595c;
+    --focusText: #28595c; */
 
-    --color1: #a36f5e;
+    --color1: #a3925e;
     --color2: #a3925e;
     --color3: #805ea3;
     --color4: #5e5ea3;
@@ -51,9 +54,7 @@
     --color7: #a36f5e;
     --color8: black;
     --color9: grey;
-    --color: #d2fff0;
-    -color: #4db492;
-    --color: #78ccb0;
+
     
 }
 /* Document CSS */
@@ -68,6 +69,7 @@ body {
     padding: 0;
     height: 50%;
     opacity: 0;
+    user-select: none;
     /* width: 100vw;
     height: 100vh; */
 }

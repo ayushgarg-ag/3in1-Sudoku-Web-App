@@ -99,4 +99,4 @@ def solution():
         return render_template('menu.html')
 
 if __name__ == "__main__":
-    app.run(debug=True, port=4200)
+    app.run(debug=True, port=4500)

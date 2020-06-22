@@ -80,6 +80,18 @@ $(document).keydown(
     function (e) {
         var keypressed = false;
 
+        if (isColor && e.keyCode >= 49 && e.keyCode <= 57) {
+            var inter = "color" + (e.keyCode - 48).toString();
+            for (var i = 0; i < 81; i++) {
+                if (selectArray[i]) {
+                    currentColor = root.style.getPropertyValue('--' + inter);
+                    colorMap[i] = currentColor;
+                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--'+inter);
+                }
+            }
+            document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--'+inter);
+            e.preventDefault();
+        }
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
             // Delete
             if (e.keyCode == 8 && document.activeElement.id != "") {
@@ -144,6 +156,9 @@ $(document).keydown(
             else if (48 < e.keyCode && e.keyCode < 58) {
                 lastNumEntered = String.fromCharCode(e.keyCode);
             }
+            if (document.activeElement.id != null) {
+                curId = document.activeElement.id;
+            }
 
         }
 
@@ -175,6 +190,7 @@ $(document).keydown(
             else if (isColor && !isNormal) {
                 changeMode("normal");
             }
+            
         }
             // Control/Command 'Z'
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
@@ -198,13 +214,11 @@ $(document).keydown(
             document.getElementById(document.activeElement.id).select();
         }
 
-        if (document.activeElement.id != null) {
-            curId = document.activeElement.id;
-
-        }
+        
     }
         
 );
+
 
 $(document).keyup(
     function (e) {
@@ -214,6 +228,7 @@ $(document).keyup(
         else if (e.keycode == 32) { }
     }
 );
+
 
 $(document).mousedown(
     function () {
@@ -264,15 +279,6 @@ function changeMode(id) {
         document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
-
-        for (var i = 0; i < 81; i++) {
-            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
-                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-                    || (95<event.keyCode && event.keyCode<106)
-                    || (event.keyCode==8) || (event.keyCode==9) 
-                    || (event.keyCode>34 && event.keyCode<40) 
-                    || (event.keyCode==46) )"`;
-        }
         
     }
     else if (id == "colors") {
@@ -281,15 +287,6 @@ function changeMode(id) {
         document.getElementById("colors").className = "modefocus";
         document.getElementById("pencilmarks").className = "modedivs";
         document.getElementById("normal").className = "modedivs";
-
-        for (var i = 0; i < 81; i++) {
-            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
-                    || (event.shiftKey==false) 
-                    || (95<event.keyCode && event.keyCode<106)
-                    || (event.keyCode==8) || (event.keyCode==9) 
-                    || (event.keyCode>34 && event.keyCode<40) 
-                    || (event.keyCode==46) )"`;
-        }
 
         document.getElementById("tablecontainer").innerHTML = colorsTable;
         document.getElementById("color1").style.backgroundColor = root.style.getPropertyValue("--color1");
@@ -300,7 +297,7 @@ function changeMode(id) {
         document.getElementById("color6").style.backgroundColor = root.style.getPropertyValue("--color6");
         document.getElementById("color7").style.backgroundColor = root.style.getPropertyValue("--color7");
         document.getElementById("color8").style.backgroundColor = root.style.getPropertyValue("--color8");
-        document.getElementById("color9").style.backgroundColor = root.style.getPropertyValue("--color9");
+        document.getElementById("color9").style.backgroundColor = root.style.getPropertyValue("--color9");        
     }
     else {
         isNormal = true;
@@ -310,15 +307,6 @@ function changeMode(id) {
         document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
-
-        for (var i = 0; i < 81; i++) {
-            document.getElementById(i).onkeydown = `"return ( event.ctrlKey || event.altKey 
-                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-                    || (95<event.keyCode && event.keyCode<106)
-                    || (event.keyCode==8) || (event.keyCode==9) 
-                    || (event.keyCode>34 && event.keyCode<40) 
-                    || (event.keyCode==46) )"`;
-        }
 
     }
     if (!isColor) {
@@ -444,7 +432,10 @@ function normalInput(id, value) {
 }
 
 function addToArray(id, value, isOnInput) {
-    if (isOnInput) {
+    if (isColor) {
+        
+    }
+    else if (isOnInput) {
         if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id, value);
 
@@ -673,7 +664,7 @@ function deletePms() {
 }
 
 function toggleDeletePms() {
-    debugger;
+    // debugger;
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -696,10 +687,12 @@ function highlightNums() {
     for (var i = 0; i < 81; i++) {
         if (conflictArray.includes(i) == false) {
             document.getElementById(i).style.filter = "brightness(100%)";
+            
         }
         if (document.getElementById(i).value.includes(num)) {
             if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
-                document.getElementById(i).style.filter = "brightness(75%)";
+                document.getElementById(i).style.filter = root.style.getPropertyValue('--highlightOpacity');
+                
             }
         }
     }
@@ -732,7 +725,7 @@ function highlightRcb() {
         document.getElementById(i).style.filter = "brightness(100%)";
     }
     for (var i = 0; i < conflictArray.length; i++) {
-        document.getElementById(conflictArray[i]).style.filter = "brightness(75%)";
+        document.getElementById(conflictArray[i]).style.filter = root.style.getPropertyValue('--highlightOpacity');
     }
     if (isHighlightNums) {
         highlightNums();
@@ -811,9 +804,26 @@ function themeOption() {
 }
 
 function changeTheme() {
-    var themeid = window.localStorage.getItem("storedTheme");
     let root = document.documentElement;
-    console.log(themeid);
+
+    var oldThemeColorMap = {};
+    for (var i = 0; i < 81; i++) {
+        if (colorMap[i] != "") {
+            for (var j = 1; j < 10; j++) {
+                var val = root.style.getPropertyValue('--color' + j);
+                if (val.includes(colorMap[i])) {
+                    oldThemeColorMap[i] = "color" + j;
+                    break;
+                }
+                else {
+                    oldThemeColorMap[i] = "";
+                }
+            }
+        }
+    }
+
+    var themeid = window.localStorage.getItem("storedTheme");
+    
     if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
@@ -827,7 +837,20 @@ function changeTheme() {
         root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#533e2d");
         root.style.setProperty('--focusText', "#f6f0e8");
+        root.style.setProperty('--highlightOpacity', "brightness(90%)");
+
+        root.style.setProperty('--color1', "#FFCCCC");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
+
         window.localStorage.setItem("storedTheme", "tan");
+
     }
     else if (themeid == "dark") {
         root.style.setProperty('--primaryColor', "#1b262c");
@@ -839,9 +862,21 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#a1c4db");
         root.style.setProperty('--buttonBackground', "#305a75");
         root.style.setProperty('--buttonText', "#bbe1fa");
-        root.style.setProperty('--shiftColor', "#978522");
+        root.style.setProperty('--shiftColor', "#6f818a");
         root.style.setProperty('--messageTextColor', "#bbe1fa");
         root.style.setProperty('--focusText', "#226897");
+        root.style.setProperty('--highlightOpacity', "brightness(75%)");
+
+        root.style.setProperty('--color1', "#990000");
+        root.style.setProperty('--color2', "#CC6600");
+        root.style.setProperty('--color3', "#009900");
+        root.style.setProperty('--color4', "#009999");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "darkslategrey");
+        root.style.setProperty('--color7', "mediumpurple");
+        root.style.setProperty('--color8', "#999900");
+        root.style.setProperty('--color9', "#CC0066");
+
         window.localStorage.setItem("storedTheme", "dark");
     }
     else if (themeid == "retro") {
@@ -854,9 +889,21 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#f2f4f7");
         root.style.setProperty('--buttonBackground', "#e43a19");
         root.style.setProperty('--buttonText', "#020205");
-        root.style.setProperty('--shiftColor', "#4ac286");
+        root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#e43a19");
         root.style.setProperty('--focusText', "#F3ECE7");
+        root.style.setProperty('--highlightOpacity', "brightness(75%)");
+
+        root.style.setProperty('--color1', "#FFCCCC");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
+
         window.localStorage.setItem("storedTheme", "retro");
     }
     else {
@@ -869,25 +916,50 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#62a7a1");
         root.style.setProperty('--buttonBackground', "#4db492");
         root.style.setProperty('--buttonText', "#d2fff0");
-        root.style.setProperty('--shiftColor', "#a36f5e");
+        root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#1b4857");
         root.style.setProperty('--focusText', "#28595c");
+        root.style.setProperty('--highlightOpacity', "brightness(90%)");
 
-        root.style.setProperty('--color1', "#a36f5e");
-        root.style.setProperty('--color2', "#a3925e");
-        root.style.setProperty('--color3', "#805ea3");
-        root.style.setProperty('--color4', "#5e5ea3");
-        root.style.setProperty('--color5', "#5ea35e");
-        root.style.setProperty('--color6', "#348a8a");
-        root.style.setProperty('--color7', "#a36f5e");
-        root.style.setProperty('--color8', "black");
-        root.style.setProperty('--color9', "grey");
+        root.style.setProperty('--color1', "#FF9999");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
 
         window.localStorage.setItem("storedTheme", "light");
     }
 
-    console.log(root.style.getPropertyValue('--color1'));
-    console.log(document.getElementById("color1"));
+    if (curId != null) {
+        document.getElementById(curId).focus();
+        if (isHighlightRcb) {
+            highlightRcb();
+        }
+        if (isHighlightNums) { 
+            highlightNums();           
+        }
+        
+    }
+
+
+    for (var i = 0; i < 81; i++) {
+        if (oldThemeColorMap[i] != "") {
+            for (var j = 1; j < 10; j++) {
+                if (oldThemeColorMap[i].includes(j)) {
+                    colorMap[i] = root.style.getPropertyValue('--color' + j);
+                }
+            }
+        }
+    }
+    
+    if (isColor) {
+        changeMode("colors");
+    }
+    
     for (var i = 0; i < 81; i++) {
         selectArray[i] = true;
     }
@@ -905,6 +977,21 @@ function changeTheme() {
         }
     }
 
+}
+
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? "rgb(" + [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+    ].join(', ') + ")" : null;
 }
 
 // Overlays
