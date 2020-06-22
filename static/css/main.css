@@ -410,7 +410,26 @@ h3 {
     background: linear-gradient(180deg, rgba(17,31,77,1) 0%, rgba(65,44,119,1) 30%, rgba(228,58,25,1) 60%, rgba(243,236,231,1) 100%);
 }
 
-/* #changetheme {
-    height: 100%;
-    width: 100%;
-} */
+
+
+
+
+
+#outsideplay, #outsidesolve {
+    float: left;
+    width: 40%;
+    height: 480px;
+    background-color: black
+}
+
+#outsidemenuoption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    float: left;
+    width: 20%;
+    height: 480px;
+    background-color: blue;
+}
