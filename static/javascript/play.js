@@ -149,26 +149,26 @@ $(document).keydown(
             else if (48 < e.keyCode && e.keyCode < 58) {
                 lastNumEntered = String.fromCharCode(e.keyCode);
             }
+
+            // Shift
+            if (e.keyCode == 16) {
+                document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
+
+                isSelectMultiple = true;
+                selectArray[document.activeElement.id] = true;
+                if (document.activeElement.id != "pencilmarks") {
+                    document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+                }
+                isShift = true;
+            }
+
             if (document.activeElement.id != null) {
                 curId = document.activeElement.id;
             }
-
-        }
-
-        // Shift
-        if (e.keyCode == 16) {
-            document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
-
-            isSelectMultiple = true;
-            selectArray[document.activeElement.id] = true;
-            if (document.activeElement.id != "pencilmarks") {
-                document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-            }
-            isShift = true;
         }
 
         // Escape
-        else if (e.keyCode == 27) {
+        if (e.keyCode == 27) {
             isShift = false;
             isSelectMultiple = false;
             document.getElementById("shiftIndication").style = "background-color: none";
@@ -206,6 +206,7 @@ $(document).keydown(
         
         // Control/Command 'A'
         else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
+            document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
             for (var i = 0; i < 81; i++) {
                 selectArray[i] = true;
                 document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -270,14 +271,6 @@ $(document).mouseup(
     }
 );
 
-function checkAlert() {
-    if (solved == "True") {
-        window.alert("You successfully finished the sudoku!");
-    }
-    else {
-        window.alert("Your answer is incorrect. The errors have been highlighted red.")
-    }
-}
 
 function changeMode(id) {
     if (id == "pencilmarks") {
@@ -511,21 +504,55 @@ function undo() {
 }
 
 function validateForm() {
-    window.localStorage.setItem("storedTheme", theme);
-    if (redirect == "clear") {
-        return true;
+    // if (redirect == "clear") {
+    //     return true;
+    // }
+    var isStillEmpty = false;
+    var isStillPm = false;
+    if (document.activeElement.id != null) {
+        curId = document.activeElement.id;
     }
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
-                alert("You cannot check since there are still pencilmarks on the board.");
-                return false;
+            if (document.getElementById(i * 9 + j).value == "") {
+                isStillEmpty = true;
             }
-            else if (document.getElementById(i * 9 + j).value == "") {
-                alert("You cannot check since there are still empty spaces on the board.");
-                return false;
+            else if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
+                isStillPm = true;
             }
         }
+    }
+    if (isStillEmpty) {
+        // alert("You cannot check since there are still empty spaces on the board.");
+        document.getElementById("checkoverlay").innerHTML = `
+        <div id="checkcenter">
+        You cannot check since there are still empty spaces on the board.
+        <br>
+        <div onclick="
+        document.getElementById('checkoverlay').style.display = 'none';
+        document.getElementById('grid-container').style.display = 'grid';
+        " class="optiondivs" id="close">Close</div>
+        </div>
+        `;
+        document.getElementById("checkoverlay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        return false;
+    }
+    else if (isStillPm) {
+        // alert("You cannot check since there are still pencilmarks on the board.");
+        document.getElementById("checkoverlay").innerHTML = `
+        <div id="checkcenter">
+        You cannot check since there are still pencilmarks on the board.
+        <br>
+        <div onclick="
+        document.getElementById('checkoverlay').style.display = 'none';
+        document.getElementById('grid-container').style.display = 'grid';
+        " class="optiondivs" id="close">Close</div>
+        </div>
+        `;
+        document.getElementById("checkoverlay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        return false;
     }
     return true;
 }
@@ -572,10 +599,32 @@ function selectClick(id) {
 function checkAlert() {
     if (solved != "None") {
         if (solved == "True") {
-            window.alert("You successfully finished the sudoku!");
+            document.getElementById("checkoverlay").innerHTML = `
+                <div id="checkcenter">
+                You successfully finished the sudoku!
+                <br>
+                <div onclick="
+                document.getElementById('checkoverlay').style.display = 'none';
+                document.getElementById('grid-container').style.display = 'grid';
+                " class="optiondivs" id="close">Close</div>
+                </div>
+                `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
         }
         else {
-            window.alert("Your answer is incorrect.")
+            document.getElementById("checkoverlay").innerHTML = `
+                <div id="checkcenter">
+                Your answer is incorrect. The errors have been highlighted red.
+                <br>
+                <div onclick="
+                document.getElementById('checkoverlay').style.display = 'none';
+                document.getElementById('grid-container').style.display = 'grid';
+                " class="optiondivs" id="close">Close</div>
+                </div>
+                `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
         }
     }
 }
@@ -834,6 +883,8 @@ function changeTheme() {
     }
 
     var themeid = window.localStorage.getItem("storedTheme");
+
+    document.getElementById("shiftIndication").style = "background-color: none";
     
     if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");

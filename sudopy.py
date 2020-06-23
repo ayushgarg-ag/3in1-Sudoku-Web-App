@@ -1,4 +1,5 @@
 from sudokus import *
+import random
 
 
 class Sudoku:
@@ -169,18 +170,33 @@ class Sudoku:
                     return (i, j)
         return None
 
-# s = Sudoku(list_hard)
-# s.solve()
-# s.input_num(0, 0, 5)
-# s.check_grid_items()
+class Generate():
+    def __init__(self, difficulty):
+        self.difficulty = difficulty
 
-# if orig != 0
-#     black readonly
-# else
-#     if play != 0
-#         if check
-#             input normal
-#         else:
-#             input red
-#     else:
-#         input red
+    def generate_sudoku(self):
+        sudoku = []
+        file_name = 'sudokus/sudokus_' + self.difficulty + '.txt'
+        file = open(file_name, 'r')
+        all_lines = file.readlines()
+        rand_num = random.randint(0, 400)
+        rand_line = all_lines[rand_num]
+        if len(rand_line) <= 2:
+            rand_line = all_lines[rand_num + 1]
+
+        for i in range(9):
+            grid_row = []
+            for j in range(9):
+                char = rand_line[i*9+j]
+                if char == '.':
+                    grid_row.append('0')
+                else:
+                    grid_row.append(char)
+            sudoku.append(grid_row)
+        
+        return sudoku
+
+        
+
+# g = Generate('medium')
+# print(g.generate_sudoku())

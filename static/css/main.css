@@ -83,7 +83,7 @@ h1 {
 }
 
 /* Grid CSS */
-#grid-container, #instructionsdisplay, #aboutdisplay {
+#grid-container, #instructionsdisplay, #aboutdisplay, #checkoverlay {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
     margin: 0;
@@ -91,14 +91,14 @@ h1 {
     justify-content: center;
     padding: 0;
 }
-#instructionsdisplay, #aboutdisplay, #menuinstructionsdisplay, #menuaboutdisplay {
+#instructionsdisplay, #aboutdisplay, #menuinstructionsdisplay, #menuaboutdisplay, #checkoverlay {
     display: none;
     width: 460px;
     height: 456px;
     left: 0%;
     margin: auto;
     border: 1px solid white;
-    font-size: 14px;
+    font-size: 13.5px;
     padding: 10px;
     color: var(--messageTextColor);
     text-align: left;
@@ -210,7 +210,7 @@ input::selection {
 }
 
 /* Buttons CSS */
-.buttons, .menubutton, .optiondivs, .modedivs {
+.buttons, .menubutton, .playbutton, .difficultybutton, .optiondivs, .modedivs {
     background-color: var(--buttonBackground);
     color: var(--buttonText);
     border: none;
@@ -224,6 +224,9 @@ input::selection {
     font-family: 'Roboto', sans-serif;
     text-align: center;
     cursor: pointer;
+}
+#playcontainer {
+    margin-top: 0px;
 }
 .optiondivs, .modedivs, #shiftIndication, #homesquare {
     display: flex;
@@ -244,12 +247,22 @@ input::selection {
     height: 45px;
 }
 
-.buttons:focus, .menubutton:focus, .optiondivs:focus, .modedivs:focus {
+.buttons:focus, .menubutton:focus, .optiondivs:focus, .modedivs:focus, .playbutton:focus, .difficultybutton:focus {
     outline: none;
 }
 .menubutton {
     width: 300px;
     margin: 10px;
+}
+.playbutton {
+    width: 175px;
+    margin: 10px;
+}
+.difficultybutton {
+    width: 88px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 8px;
 }
 .modefocus, .focusdivs {
     display: flex;
@@ -336,13 +349,14 @@ table {
     text-align: center;
     font-size: 30px;
 }
-h3 {
+#header {
     font-weight: bold;
     text-decoration: underline;
+    margin: 0px;
 }
-#top {
+/* #top {
     margin-top: 1px;
-}
+} */
 
 /* .themes {
     display: inline;
@@ -397,7 +411,7 @@ h3 {
 
 #playimage {
     display: block;
-    background-image: url(tan_play.png);
+    background-image: url(/static/css/images/tan_play.png);
     width: 425px;
     height: 425px;
     background-position: center;
@@ -408,7 +422,7 @@ h3 {
 }
 #solveimage {
     display: block;
-    background-image: url(tan_solve.png);
+    background-image: url(/static/css/images/tan_solve.png);
     width: 425px;
     height: 425px;
     background-position: center;
@@ -470,7 +484,7 @@ h3 {
 }
 #homesquare {
     display: inline-block;
-    background-image: url(homeTan.png);
+    background-image: url(/static/css/images/homeTan.png);
     width: 25px;
     height: 25px;
     background-position: center;
@@ -488,4 +502,26 @@ h3 {
     justify-content: center;
     /* align-content: center;
     flex-direction: column; */
+}
+
+#checkoverlay {
+    font-size: 35px;
+    text-align: center;
+}
+
+#close {
+    margin: auto;
+    margin-top: 8%;
+}
+#checkcenter {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 30%;
+}
+
+ul {
+  padding-left: 26px;
 }

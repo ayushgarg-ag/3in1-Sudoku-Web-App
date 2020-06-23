@@ -215,7 +215,19 @@ function validate() {
                 }
             }
             if (countR > 1 || countC > 1 || countB > 1) {
-                alert("The board you inputted is invalid.");
+                // alert("The board you inputted is invalid.");
+                document.getElementById("checkoverlay").innerHTML = `
+                <div id="checkcenter">
+                The board you inputted is invalid.
+                <br>
+                <div onclick="
+                document.getElementById('checkoverlay').style.display = 'none';
+                document.getElementById('grid-container').style.display = 'grid';
+                " class="optiondivs" id="close">Close</div>
+                </div>
+                `;
+                document.getElementById("checkoverlay").style.display = "block";
+                document.getElementById("grid-container").style.display = "none";
                 return false;
             }
         }
@@ -226,7 +238,7 @@ function validate() {
 $(document).keydown(
     function (e) {
         var keypressed = false;
-        if (document.activeElement.id >= 0 && document.activeElement.id < 81) {
+        if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
             document.getElementById(document.activeElement.id).select();
 
             if (event.keyCode == 39) {

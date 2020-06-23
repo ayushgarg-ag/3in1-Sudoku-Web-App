@@ -1,5 +1,30 @@
 var showMessages = true;
 
+// function revertChangePlay() {
+//     document.getElementById("changetheme").innerHTML = `
+//     <div onclick="playOption()">Change Theme</div>`;
+// }
+
+function playOption() {
+    document.getElementById("playcontainer").innerHTML = `
+    <button class="playbutton" onclick="chooseOption()">Choose a Sudoku</button>
+    <button class="playbutton" onclick="location.href='/input_play'">Input a Sudoku</button>
+    `;
+}
+
+function chooseOption() {
+    document.getElementById("playcontainer").innerHTML = `
+    <form action="/play" method="POST">
+    <button id="easy" name="easy" value="easy" type="submit" class="difficultybutton">Easy</button>
+    <button id="medium" name="medium" value="medium" type="submit" class="difficultybutton">Medium</button>
+    <button id="hard" name="hard" value="hard" type="submit" class="difficultybutton">Hard</button>
+    <button id="expert" name="expert" value="expert" type="submit" class="difficultybutton">Expert</button>
+    </form>
+    `;
+    // < !-- < button id = "clear" formaction = "/play" formmethod = "POST" type = "submit"
+    // class="buttons" > Restart</button > -->
+}
+
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
     <div onclick="themeOption()">Change Theme</div>`;
@@ -46,7 +71,9 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
-        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeTan.png)";
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/tan_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/tan_solve.png)";
+
 
         window.localStorage.setItem("storedTheme", "tan");
 
@@ -77,7 +104,9 @@ function changeTheme() {
         root.style.setProperty('--color8', "#999900");
         root.style.setProperty('--color9', "#CC0066");
 
-        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeDark.png)";
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/dark_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/dark_solve.png)";
+
 
         window.localStorage.setItem("storedTheme", "dark");
     }
@@ -107,7 +136,8 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
-        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeRetro.png)";
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/retro_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/retro_solve.png)";
 
         window.localStorage.setItem("storedTheme", "retro");
     }
@@ -136,8 +166,9 @@ function changeTheme() {
         root.style.setProperty('--color7', "#CC99FF");
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
-
-        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeLight.png)";
+        
+        document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/light_play.png)";
+        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/light_solve.png)";
 
         window.localStorage.setItem("storedTheme", "light");
     }

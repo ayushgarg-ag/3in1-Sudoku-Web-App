@@ -42,16 +42,15 @@
 
             <div id="outsidegrid" class="inline">
                 <div id="instructionsdisplay">
-                    <h3 id="top">How To Play Sudoku</h3>
+                    <div id="header">How To Play Sudoku</div>
                     <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has
                         to contain all the numbers 1-9 within its squares. Each number can only appear once in a row,
                         column, or block.</p>
-                    <h3>Features</h3>
+                    <div id="header">Features</div>
                     <ul>
-                        <li>Change Themes: Click "Change Themes" and choose between dark, tan, light, and retro theme
-                            (from left to right)</li>
+                        <li>Change Theme: Choose between dark, tan, light, and retro themes</li>
+                        <li>Click the home icon to return to the menu page</li>
                         <li>Toggling Options</li>
-
                         <ul>
                             <li>Auto delete pencilmarks when inputting a normal number</li>
                             <li>Highlight all of the same normal/pencilmarked numbers</li>
@@ -62,24 +61,27 @@
                             <li>Press keyboard numbers or click numbers on the keypad</li>
                             <li>Pencilmarks mode will input notes in the cells (double input the same number to delete)
                             </li>
-                            <li>Color different cells on the grid (center color is the default)</li>
+                            <li>Color different cells on the grid (center color is the default) by clicking the color or using the corresponding keyboard number</li>
                         </ul>
                         <li>Multiple Selections</li>
                         <ul>
                             <li>Hold <i>Shift</i> and use arrow keys or click different cells</li>
-                            <li>Drag your cursor around</li>
+                            <li>Drag the cursor around</li>
                             <li><i>"Control A"</i> to select all cells</li>
                             <li>To unselect, (1) click on any cell, or (2) press <i>Escape</i></li>
+                            <li>The indicator next to the home icon will turn on if there are multiple selections on the grid</li>
                         </ul>
                         <li>Shortcuts</li>
                         <ul>
                             <li><i>"Control Z"</i> to undo previous changes</li>
-                            <li>Click <i>Space</i> to change between "Normal", "Pencilmarks", and "Colors" mode</li>
+                            <li>Click <i>Space</i> to switch between "Normal", "Pencilmarks", and "Colors" mode</li>
                         </ul>
 
                     </ul>
-                    <p></p>
                 </div>
+
+                <div id="checkoverlay"></div>
+
                 <div id="aboutdisplay">
                     <h3 id="top">About</h3>
                 </div>
@@ -93,8 +95,7 @@
                             min="1" value="{{ input_array[i][j] }}"
                             onkeydown="return ( event.ctrlKey || event.altKey 
                                         || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)"
-                            readonly>
+                            autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" readonly>
                     </div>
                     {% else %}
                     <div class="grid-item move">
