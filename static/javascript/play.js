@@ -241,7 +241,7 @@ $(document).keyup(
 
 $(document).mousedown(
     function () {
-        if (document.activeElement.id != "" && !isShift) {
+        if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81 && !isShift) {
             drag = true;
             isSelectMultiple = false;
         }

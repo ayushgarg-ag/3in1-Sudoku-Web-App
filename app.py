@@ -6,10 +6,12 @@ app = Flask(__name__)
 
 sudoku_grid_list = []
 play_list = []
-
+has_gen = False
 
 @app.route('/')
 def menu():
+    global has_gen
+    has_gen = False
     return render_template('menu.html')
 
 
@@ -26,6 +28,7 @@ def input_solve():
 @app.route('/play', methods=['POST', 'GET'])
 def play():
     global play_list
+    global has_gen
     sudoku_grid_list = []
     if request.method == 'POST':
         if 'play' in request.referrer:
@@ -45,7 +48,7 @@ def play():
                 return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
             elif '/play' in request.referrer:
                 return render_template('play.html', is_solved=s.check_grid(), check_array=s.check_grid_items(), play_array=s.return_array(), input_array=play_list)
-        else:
+        elif '/' in request.referrer:
             if request.form.get('easy') != None:
                 content = request.form.get('easy')
             elif request.form.get('medium') != None:
@@ -54,8 +57,10 @@ def play():
                 content = request.form.get('hard')
             else:
                 content = request.form.get('expert')
-            g = Generate(content)
-            play_list = g.generate_sudoku()
+            if not has_gen:
+                g = Generate(content)
+                play_list = g.generate_sudoku()
+                has_gen = True
             return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
     else:
         return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)

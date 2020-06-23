@@ -14,9 +14,18 @@
     <div id="content">
         <div id="outsideplay" class="inline">
             <div id="floatright">
-                <div id="playimage" onclick="location.href='/input_play'"></div>
+                <div id="playimage" onclick="playOption()"></div>
                 <div id="menuinstructionsdisplay">
-                    <h3 id="top">Instructions</h3>
+                    <div id="header">How To Play Sudoku</div>
+                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has
+                        to contain all the numbers 1-9 within its squares. Each number can only appear once in a row,
+                        column, or block.</p>
+                    <div id="header">Features</div>
+                    <ul>
+                        <li>Click on "Play a Sudoku" to either play a Sudoku of a certain difficulty (easy, medium, hard, or expert) or input your own Sudoku</li>
+                        <li>Click on "Solve a Sudoku" to enter the Sudoku Solver, which allows you to input any Sudoku and see the finished solution</li>
+                        <li>Change Theme: Choose between dark, tan, light, and retro themes</li>
+                    </ul>
                 </div>
                 
                 <div id="playcontainer">
@@ -46,29 +55,5 @@
 
         </div>
     </div>
-
-
-
-    <!-- <div class="allbuttonscontainer">
-        <div class="buttoncontainers">
-            <button class="menubutton" onclick="location.href='/input_play'">Play a Sudoku</button>
-        </div>
-        <div class="buttoncontainers">
-            <button class="menubutton" onclick="location.href='/input_solve'">Solve a Sudoku</button>
-        </div>
-
-        <div style="justify-content: center;" id="outsideoption" class="inline">
-            <div style="display: inline-block" id="optioncontainer">
-                <div id="changetheme" class="optiondivs">
-                    <div onclick="themeOption()">Change Theme</div>
-                </div>
-
-                <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
-
-                <div onclick="showAbout()" id="about" class="optiondivs">About</div>
-            </div>
-        </div>
-
-    </div> -->
 </body>
 {% endblock %}
