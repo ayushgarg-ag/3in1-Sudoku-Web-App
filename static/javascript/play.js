@@ -11,6 +11,7 @@ var drag = false;
 var isDeletePms = false;
 var isHighlightNums = false;
 var isHighlightRcb = false;
+var isShift = false;
 var showInstructions = true;
 var showAbout = true;
 var lastNumEntered = "";
@@ -143,15 +144,7 @@ $(document).keydown(
                 }
                 keypressed = true;
             }
-            // Shift
-            else if (e.keyCode == 16) {
-
-                isSelectMultiple = true;
-                selectArray[document.activeElement.id] = true;
-                if (document.activeElement.id != "pencilmarks") {
-                    document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-                }
-            }
+            
             // Numbers
             else if (48 < e.keyCode && e.keyCode < 58) {
                 lastNumEntered = String.fromCharCode(e.keyCode);
@@ -162,9 +155,23 @@ $(document).keydown(
 
         }
 
+        // Shift
+        if (e.keyCode == 16) {
+            document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
+
+            isSelectMultiple = true;
+            selectArray[document.activeElement.id] = true;
+            if (document.activeElement.id != "pencilmarks") {
+                document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+            }
+            isShift = true;
+        }
+
         // Escape
-        if (e.keyCode == 27) {
+        else if (e.keyCode == 27) {
+            isShift = false;
             isSelectMultiple = false;
+            document.getElementById("shiftIndication").style = "background-color: none";
 
             for (var i = 0; i < 81; i++) {
                 if (selectArray[i]) {
@@ -224,6 +231,7 @@ $(document).keyup(
     function (e) {
         if (e.keyCode == 16) {
             isSelectMultiple = false;
+            isShift = false;
         }
         else if (e.keycode == 32) { }
     }
@@ -232,7 +240,7 @@ $(document).keyup(
 
 $(document).mousedown(
     function () {
-        if (document.activeElement.id != "") {
+        if (document.activeElement.id != "" && !isShift) {
             drag = true;
             isSelectMultiple = false;
         }
@@ -241,6 +249,7 @@ $(document).mousedown(
 
 function selectDrag(id) {
     if (drag && document.activeElement.id != "" && id != null) {
+        document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
         isSelectMultiple = true;
         selectArray[document.activeElement.id] = true;
         document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -555,6 +564,8 @@ function selectClick(id) {
             }
         }
         document.activeElement.focus();
+        document.getElementById("shiftIndication").style = "background-color: none";
+        isShift = false;
     }
 }
 
@@ -789,7 +800,7 @@ function restart() {
 
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
-    <div onclick="themeOption()">Change Theme</div>`;
+    <div id="themebutton" onclick="themeOption()">Change Theme</div>`;
 }
 
 function themeOption() {
@@ -808,7 +819,7 @@ function changeTheme() {
 
     var oldThemeColorMap = {};
     for (var i = 0; i < 81; i++) {
-        if (colorMap[i] != "") {
+        if (colorMap[i] != "" && colorMap[i] != undefined && colorMap[i] != null) {
             for (var j = 1; j < 10; j++) {
                 var val = root.style.getPropertyValue('--color' + j);
                 if (val.includes(colorMap[i])) {
@@ -838,6 +849,7 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#533e2d");
         root.style.setProperty('--focusText', "#f6f0e8");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
+        root.style.setProperty('--shiftIndication', "#533e2d");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -848,6 +860,8 @@ function changeTheme() {
         root.style.setProperty('--color7', "#CC99FF");
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeTan.png)";
 
         window.localStorage.setItem("storedTheme", "tan");
 
@@ -866,6 +880,7 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#bbe1fa");
         root.style.setProperty('--focusText', "#226897");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
+        root.style.setProperty('--shiftIndication', "#bbe1fa");
 
         root.style.setProperty('--color1', "#990000");
         root.style.setProperty('--color2', "#CC6600");
@@ -876,6 +891,8 @@ function changeTheme() {
         root.style.setProperty('--color7', "mediumpurple");
         root.style.setProperty('--color8', "#999900");
         root.style.setProperty('--color9', "#CC0066");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeDark.png)";
 
         window.localStorage.setItem("storedTheme", "dark");
     }
@@ -893,6 +910,7 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#e43a19");
         root.style.setProperty('--focusText', "#F3ECE7");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
+        root.style.setProperty('--shiftIndication', "#e43a19");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -903,6 +921,8 @@ function changeTheme() {
         root.style.setProperty('--color7', "#CC99FF");
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeRetro.png)";
 
         window.localStorage.setItem("storedTheme", "retro");
     }
@@ -920,6 +940,7 @@ function changeTheme() {
         root.style.setProperty('--messageTextColor', "#1b4857");
         root.style.setProperty('--focusText', "#28595c");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
+        root.style.setProperty('--shiftIndication', "#28595c");
 
         root.style.setProperty('--color1', "#FF9999");
         root.style.setProperty('--color2', "lightsalmon");
@@ -930,6 +951,8 @@ function changeTheme() {
         root.style.setProperty('--color7', "#CC99FF");
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeLight.png)";
 
         window.localStorage.setItem("storedTheme", "light");
     }
@@ -947,7 +970,7 @@ function changeTheme() {
 
 
     for (var i = 0; i < 81; i++) {
-        if (oldThemeColorMap[i] != "") {
+        if (oldThemeColorMap[i] != "" && oldThemeColorMap[i] != undefined && oldThemeColorMap[i] != null) {
             for (var j = 1; j < 10; j++) {
                 if (oldThemeColorMap[i].includes(j)) {
                     colorMap[i] = root.style.getPropertyValue('--color' + j);
@@ -977,21 +1000,6 @@ function changeTheme() {
         }
     }
 
-}
-
-function hexToRgb(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-        return r + r + g + g + b + b;
-    });
-
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? "rgb(" + [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16)
-    ].join(', ') + ")" : null;
 }
 
 // Overlays

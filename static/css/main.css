@@ -1,25 +1,10 @@
 /* Color Variables */
 :root {
-    /* DARK COLOR THEME */
-    /* --primaryColor: #1b262c;
-    --itemBackground: #226897;
-    --textColor: #bbe1fa;
-    --readOnlyColor: #000000;
-    --tableColor: #3282b8;
-    --headerColor: #3282b8;
-    --tableItemBackground: #a1c4db;
-    --buttonBackground: #305a75;
-    -buttonText: #bbe1fa;
-    --shiftColor: #978522;
-    --messageTextColor: #bbe1fa; */
-
-    
-
-    /* TAN COLOR THEME */
+    /* Tan Color Theme */
     --primaryColor: #d2b48c;
-    --itemBackground: #f6f0e8;
+    --itemBackgroun: #f6f0e8;
     --textColor: #a87b00;
-    --readOnlyColor: #533e2d; 
+    --readOnlyColor: #533e2d;
     --tableColor: #ac8048;
     --headerColor: #ffffff;
     --tableItemBackground: #f6f0e8;
@@ -27,35 +12,9 @@
     --buttonText: #a87b00;
     --shiftColor: #fce17a;
     --messageTextColor: #533e2d;
-    --highlightOpacity: "brightness(90%)";
-
-    /* --shiftColor: #6f818a; */
-    
-    /* LIGHT COLOR THEME */
-    /* --primaryColor: #add2c9;
-    --itemBackground: #f1ebeb;
-    --textColor: #5ea3a3;
-    --readOnlyColor: #28595c;
-    --tableColor: #5ea3a3;
-    --headerColor: #5ea3a3;
-    --tableItemBackground: #62a7a1;
-    --buttonBackground: #8f9eaf;
-    --buttonText: #3c4d85;
-    --shiftColor: #919e56;
-    --messageTextColor: #1b4857;
-    --focusText: #28595c; */
-
-    --color1: #a3925e;
-    --color2: #a3925e;
-    --color3: #805ea3;
-    --color4: #5e5ea3;
-    --color5: #5ea35e;
-    --color6: #348a8a;
-    --color7: #a36f5e;
-    --color8: black;
-    --color9: grey;
-
-    
+    --focusText: #f6f0e8;
+    --highlightOpacity: brightness(90%);
+    --shiftIndication: #533e2d;
 }
 /* Document CSS */
 body, html {
@@ -101,21 +60,20 @@ h1 {
     float: left;
     top: 50%;
     position: relative;
-    margin-right: 20px;
-    margin-left: 18px;
-    /* margin-top: 85px; */
+    width: 242px;
 }
 #outsidegrid {
-    /* width: auto;
-    height: auto; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
     float: left;
 }
 #outsidemode {
     display: flex;
     vertical-align: middle;
     float: left;
-    /* width: auto;
-    height: auto; */
     position: relative;
     margin-left: 20px;
     margin-top: 40px;
@@ -147,8 +105,12 @@ h1 {
     overflow: hidden;
 }
 #menuinstructionsdisplay, #menuaboutdisplay {
-    width: 400px;
-    height: 400px;
+    width: 403px;
+    height: 403px;
+    margin: 0;
+    left: 0%;
+    justify-content: center;
+    padding: 10px;
 }
 .grid-item {
     background-color: var(--itemBackground);
@@ -263,7 +225,7 @@ input::selection {
     text-align: center;
     cursor: pointer;
 }
-.optiondivs, .modedivs {
+.optiondivs, .modedivs, #shiftIndication, #homesquare {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -388,6 +350,16 @@ h3 {
     float: left;
 } */
 
+#themebutton {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    z-index: 4;
+}
+
 #themescontainer {
   display: flex;
 }
@@ -476,13 +448,44 @@ h3 {
     float: left;
     padding: 20px;
     height: 480px;
-    /* background-color: blue; */
 }
 
 #floatright {
     justify-content: right;
 }
 
-/* #menuplay, #menusolve {
+#shiftIndication {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    width: 15px;
+    height: 15px;
+    opacity: 1;
+    border: 2px solid var(--shiftIndication);
+    border-radius: 50%;
+    margin-bottom: 4px;
     
-} */
+}
+#homesquare {
+    display: inline-block;
+    background-image: url(homeTan.png);
+    width: 25px;
+    height: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    /* margin-top: 100px; */
+}
+
+#optionicons {
+    /* display: inline-block;
+    align-items: center; */
+    justify-content: center;
+    /* align-content: center;
+    flex-direction: column; */
+}

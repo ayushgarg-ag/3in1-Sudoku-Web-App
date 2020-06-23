@@ -17,14 +17,9 @@ function themeOption() {
 }
 
 function changeTheme() {
-    let root = document.getElementsByTagName('html')[0];
-    var themeid;
-    if (window.localStorage.getItem("storedTheme") == null) {
-        themeid = "light";
-    }
-    else {
-        themeid = window.localStorage.getItem("storedTheme");
-    }
+    let root = document.documentElement;
+    var themeid = window.localStorage.getItem("storedTheme");
+
     if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
@@ -38,9 +33,23 @@ function changeTheme() {
         root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#533e2d");
         root.style.setProperty('--focusText', "#f6f0e8");
+        root.style.setProperty('--highlightOpacity', "brightness(90%)");
+        root.style.setProperty('--shiftIndication', "#533e2d");
+
+        root.style.setProperty('--color1', "#FFCCCC");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeTan.png)";
+
         window.localStorage.setItem("storedTheme", "tan");
-        document.getElementById("playimage").style.backgroundImage = "url(/static/css/tan_play.png)";
-        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/tan_solve.png)";
+
     }
     else if (themeid == "dark") {
         root.style.setProperty('--primaryColor', "#1b262c");
@@ -52,12 +61,25 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#a1c4db");
         root.style.setProperty('--buttonBackground', "#305a75");
         root.style.setProperty('--buttonText', "#bbe1fa");
-        root.style.setProperty('--shiftColor', "#978522");
+        root.style.setProperty('--shiftColor', "#6f818a");
         root.style.setProperty('--messageTextColor', "#bbe1fa");
         root.style.setProperty('--focusText', "#226897");
+        root.style.setProperty('--highlightOpacity', "brightness(75%)");
+        root.style.setProperty('--shiftIndication', "#bbe1fa");
+
+        root.style.setProperty('--color1', "#990000");
+        root.style.setProperty('--color2', "#CC6600");
+        root.style.setProperty('--color3', "#009900");
+        root.style.setProperty('--color4', "#009999");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "darkslategrey");
+        root.style.setProperty('--color7', "mediumpurple");
+        root.style.setProperty('--color8', "#999900");
+        root.style.setProperty('--color9', "#CC0066");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeDark.png)";
+
         window.localStorage.setItem("storedTheme", "dark");
-        document.getElementById("playimage").style.backgroundImage = "url(/static/css/dark_play.png)";
-        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/dark_solve.png)";
     }
     else if (themeid == "retro") {
         root.style.setProperty('--primaryColor', "#111f4d");
@@ -69,12 +91,25 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#f2f4f7");
         root.style.setProperty('--buttonBackground', "#e43a19");
         root.style.setProperty('--buttonText', "#020205");
-        root.style.setProperty('--shiftColor', "#4ac286");
+        root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#e43a19");
         root.style.setProperty('--focusText', "#F3ECE7");
+        root.style.setProperty('--highlightOpacity', "brightness(75%)");
+        root.style.setProperty('--shiftIndication', "#e43a19");
+
+        root.style.setProperty('--color1', "#FFCCCC");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeRetro.png)";
+
         window.localStorage.setItem("storedTheme", "retro");
-        document.getElementById("playimage").style.backgroundImage = "url(/static/css/retro_play.png)";
-        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/retro_solve.png)";
     }
     else {
         root.style.setProperty('--primaryColor', "#add2c9");
@@ -86,21 +121,23 @@ function changeTheme() {
         root.style.setProperty('--tableItemBackground', "#62a7a1");
         root.style.setProperty('--buttonBackground', "#4db492");
         root.style.setProperty('--buttonText', "#d2fff0");
-        root.style.setProperty('--shiftColor', "#a36f5e");
+        root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#1b4857");
         root.style.setProperty('--focusText', "#28595c");
-        document.getElementById("playimage").style.backgroundImage = "url(/static/css/light_play.png)";
-        document.getElementById("solveimage").style.backgroundImage = "url(/static/css/light_solve.png)";
+        root.style.setProperty('--highlightOpacity', "brightness(90%)");
+        root.style.setProperty('--shiftIndication', "#28595c");
 
-        root.style.setProperty('--color1', "#a36f5e");
-        root.style.setProperty('--color2', "#a3925e");
-        root.style.setProperty('--color3', "#805ea3");
-        root.style.setProperty('--color4', "#5e5ea3");
-        root.style.setProperty('--color5', "#5ea35e");
-        root.style.setProperty('--color6', "#348a8a");
-        root.style.setProperty('--color7', "#a36f5e");
-        root.style.setProperty('--color8', "black");
-        root.style.setProperty('--color9', "grey");
+        root.style.setProperty('--color1', "#FF9999");
+        root.style.setProperty('--color2', "lightsalmon");
+        root.style.setProperty('--color3', "#99FF99");
+        root.style.setProperty('--color4', "#99FFFF");
+        root.style.setProperty('--color5', root.style.getPropertyValue('--itemBackground'));
+        root.style.setProperty('--color6', "#99CCFF");
+        root.style.setProperty('--color7', "#CC99FF");
+        root.style.setProperty('--color8', "lightsteelblue");
+        root.style.setProperty('--color9', "#FF99CC");
+
+        document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeLight.png)";
 
         window.localStorage.setItem("storedTheme", "light");
     }
@@ -111,7 +148,7 @@ $(window).load(function () {
 });
 
 function messagesDisplay() {
-    debugger;
+    // debugger;
     if (showMessages) {
         document.getElementById("playimage").style.display = "none";
         document.getElementById("solveimage").style.display = "none";
