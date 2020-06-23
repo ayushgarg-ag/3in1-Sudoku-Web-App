@@ -189,7 +189,7 @@ class Generate():
             for j in range(9):
                 char = rand_line[i*9+j]
                 if char == '.':
-                    grid_row.append('0')
+                    grid_row.append(0)
                 else:
                     grid_row.append(char)
             sudoku.append(grid_row)

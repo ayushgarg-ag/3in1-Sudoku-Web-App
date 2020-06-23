@@ -46,9 +46,16 @@ def play():
             elif '/play' in request.referrer:
                 return render_template('play.html', is_solved=s.check_grid(), check_array=s.check_grid_items(), play_array=s.return_array(), input_array=play_list)
         else:
-            content = request.data
-            print(content)
-            play_list = Generate(content)
+            if request.form.get('easy') != None:
+                content = request.form.get('easy')
+            elif request.form.get('medium') != None:
+                content = request.form.get('medium')
+            elif request.form.get('hard') != None:
+                content = request.form.get('hard')
+            else:
+                content = request.form.get('expert')
+            g = Generate(content)
+            play_list = g.generate_sudoku()
             return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
     else:
         return render_template('play.html', is_solved="None", input_array=play_list, play_array=None)
