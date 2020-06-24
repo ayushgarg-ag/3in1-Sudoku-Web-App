@@ -15,6 +15,7 @@
     --focusText: #f6f0e8;
     --highlightOpacity: brightness(90%);
     --shiftIndication: #533e2d;
+    --linkColor: white;
 }
 /* Document CSS */
 body, html {
@@ -28,7 +29,6 @@ body {
     padding: 0;
     height: 50%;
     opacity: 0;
-    user-select: none;
     /* width: 100vw;
     height: 100vh; */
 }
@@ -349,7 +349,7 @@ table {
     text-align: center;
     font-size: 30px;
 }
-#header {
+.header {
     font-weight: bold;
     text-decoration: underline;
     margin: 0px;
@@ -524,4 +524,8 @@ table {
 
 ul {
   padding-left: 26px;
+}
+
+a, a:visited {
+    color: var(--linkColor)
 }

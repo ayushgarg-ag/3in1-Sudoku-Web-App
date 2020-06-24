@@ -35,7 +35,7 @@ var numbersTable = `
         <tr>
             <td><button type="button" class="colors" onclick="tableInput('1')">1</button></td>
             <td><button type="button" class="colors" onclick="tableInput('2')">2</button></td>
-            <td><button class="colors" onclick="tableInput('3')">3</button></td>
+            <td><button type="button" class="colors" onclick="tableInput('3')">3</button></td>
         </tr>
         <tr>
             <td><button type="button" class="colors" onclick="tableInput('4')">4</button></td>
@@ -80,6 +80,8 @@ function createArray() {
 $(document).keydown(
     function (e) {
         var keypressed = false;
+
+
 
         if (isColor && e.keyCode >= 49 && e.keyCode <= 57) {
             var inter = "color" + (e.keyCode - 48).toString();
@@ -148,10 +150,14 @@ $(document).keydown(
             // Numbers
             else if (48 < e.keyCode && e.keyCode < 58) {
                 lastNumEntered = String.fromCharCode(e.keyCode);
+                // if (isNormal && !isColor) {
+                //     changeMode("normal");
+                //     changeMode("pencilmarks");
+                // }
             }
 
             // Shift
-            if (e.keyCode == 16) {
+            else if (e.keyCode == 16) {
                 document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
 
                 isSelectMultiple = true;
@@ -199,7 +205,7 @@ $(document).keydown(
             }
             
         }
-            // Control/Command 'Z'
+        // Control/Command 'Z'
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
             undo();
         }
@@ -221,8 +227,6 @@ $(document).keydown(
         if (isNormal && document.getElementById(document.activeElement.id) != null) {
             document.getElementById(document.activeElement.id).select();
         }
-
-        
     }
         
 );
@@ -410,6 +414,7 @@ function normalInput(id, value) {
                 historyIndex++;
             }
         }
+        debugger;
         if (isMultiple == false) {
             history[historyIndex] = [id, idValue, "normal"];
             historyIndex++;
@@ -434,37 +439,37 @@ function normalInput(id, value) {
 }
 
 function addToArray(id, value, isOnInput) {
-    if (isColor) {
-        
-    }
-    else if (isOnInput) {
-        if (isNormal == false && document.getElementById(id).className != "txt-input") {
-            pmInput(id, value);
+    console.log("addtoarray bruh");
+    if (!isColor) {
+        if (isOnInput) {
+            if (isNormal == false && document.getElementById(id).className != "txt-input") {
+                pmInput(id, value);
 
-            // recursive step
-            for (var i = 0; i < 81; i++) {
-                if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false && document.getElementById(i).className.includes("txt-input") == false) {
-                    if (i != id) {
-                        addToArray(i, lastNumEntered, false);
+                // recursive step
+                for (var i = 0; i < 81; i++) {
+                    if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false && document.getElementById(i).className.includes("txt-input") == false) {
+                        if (i != id) {
+                            addToArray(i, lastNumEntered, false);
+                        }
                     }
                 }
             }
+            else {
+                normalInput(id, null);
+            }
         }
         else {
-            normalInput(id, null);
-        }
-    }
-    else {
-        if (isNormal == false && document.getElementById(id).className != "txt-input") {
-            if (document.getElementById(id).value != null) {
-                pmInput(id, document.getElementById(id).value + value);
+            if (isNormal == false && document.getElementById(id).className != "txt-input") {
+                if (document.getElementById(id).value != null) {
+                    pmInput(id, document.getElementById(id).value + value);
+                }
+                else {
+                    pmInput(id, value);
+                }
             }
             else {
-                pmInput(id, value);
+                normalInput(id, null);
             }
-        }
-        else {
-            normalInput(id, null);
         }
     }
 }
@@ -574,6 +579,9 @@ function selectFocus(id) {
 
 function selectClick(id) {
     curId = id;
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -594,6 +602,43 @@ function selectClick(id) {
         document.getElementById("shiftIndication").style = "background-color: none";
         isShift = false;
     }
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    document.activeElement.select();
+}
+
+function tableInput(num) {
+    
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+    // var isMultiple = false;
+    // if (!isColor) {
+    //     for (var i = 0; i < 81; i++) {
+    //         if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+    //             isMultiple = true;
+    //             if (isNormal) {
+    //                 normalInput(i, num);
+    //             }
+    //             else {
+    //                 lastNumEntered = num;
+    //                 pmInput(i, num);
+    //             }
+    //         }
+    //     }
+    //     if (isMultiple == false) {
+    //         if (isNormal) {
+    //             normalInput(document.activeElement.id, num);
+    //         }
+    //         else {
+    //             lastNumEntered = num;
+    //             pmInput(document.activeElement.id, num);
+    //         }
+    //     }
+    // }
+    lastNumEntered = num;
+    addToArray(curId, int(lastNumEntered), true);
 }
 
 function checkAlert() {
@@ -629,35 +674,7 @@ function checkAlert() {
     }
 }
 
-function tableInput(num) {
-    if (document.getElementById(curId) != null) {
-        document.getElementById(curId).focus();
-    }
-    var isMultiple = false;
-    if (!isColor) {
-        for (var i = 0; i < 81; i++) {
-            if (selectArray[i]) {
-                isMultiple = true;
-                if (isNormal) {
-                    normalInput(i, num);
-                }
-                else {
-                    lastNumEntered = num;
-                    pmInput(i, num);
-                }
-            }
-        }
-        if (isMultiple == false) {
-            if (isNormal) {
-                normalInput(document.activeElement.id, num);
-            }
-            else {
-                lastNumEntered = num;
-                pmInput(document.activeElement.id, num);
-            }
-        }
-    }
-}
+
 
 
 
@@ -901,6 +918,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#f6f0e8");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
         root.style.setProperty('--shiftIndication', "#533e2d");
+        root.style.setProperty('--linkColor', "white");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -932,6 +950,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#226897");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
         root.style.setProperty('--shiftIndication', "#bbe1fa");
+        root.style.setProperty('--linkColor', "orange");
 
         root.style.setProperty('--color1', "#990000");
         root.style.setProperty('--color2', "#CC6600");
@@ -958,10 +977,11 @@ function changeTheme() {
         root.style.setProperty('--buttonBackground', "#e43a19");
         root.style.setProperty('--buttonText', "#020205");
         root.style.setProperty('--shiftColor', "#fce17a");
-        root.style.setProperty('--messageTextColor', "#e43a19");
+        root.style.setProperty('--messageTextColor', "#f6f0e8");
         root.style.setProperty('--focusText', "#F3ECE7");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
         root.style.setProperty('--shiftIndication', "#e43a19");
+        root.style.setProperty('--linkColor', "#e43a19");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -992,6 +1012,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#28595c");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
         root.style.setProperty('--shiftIndication', "#28595c");
+        root.style.setProperty('--linkColor', "#b266ff");
 
         root.style.setProperty('--color1', "#FF9999");
         root.style.setProperty('--color2', "lightsalmon");

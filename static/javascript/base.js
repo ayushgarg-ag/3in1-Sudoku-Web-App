@@ -36,6 +36,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#f6f0e8");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
         root.style.setProperty('--shiftIndication', "#533e2d");
+        root.style.setProperty('--linkColor', "white");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -67,6 +68,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#226897");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
         root.style.setProperty('--shiftIndication', "#bbe1fa");
+        root.style.setProperty('--linkColor', "orange");
 
         root.style.setProperty('--color1', "#990000");
         root.style.setProperty('--color2', "#CC6600");
@@ -93,10 +95,11 @@ function changeTheme() {
         root.style.setProperty('--buttonBackground', "#e43a19");
         root.style.setProperty('--buttonText', "#020205");
         root.style.setProperty('--shiftColor', "#fce17a");
-        root.style.setProperty('--messageTextColor', "#e43a19");
+        root.style.setProperty('--messageTextColor', "#f6f0e8");
         root.style.setProperty('--focusText', "#F3ECE7");
         root.style.setProperty('--highlightOpacity', "brightness(75%)");
         root.style.setProperty('--shiftIndication', "#e43a19");
+        root.style.setProperty('--linkColor', "#e43a19");
 
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
@@ -127,6 +130,7 @@ function changeTheme() {
         root.style.setProperty('--focusText', "#28595c");
         root.style.setProperty('--highlightOpacity', "brightness(90%)");
         root.style.setProperty('--shiftIndication', "#28595c");
+        root.style.setProperty('--linkColor', "#b266ff");
 
         root.style.setProperty('--color1', "#FF9999");
         root.style.setProperty('--color2', "lightsalmon");
@@ -275,6 +279,7 @@ $(document).keydown(
                 }
                 keypressed = true;
             }
+            
             if (keypressed) {
                 document.getElementById(nextId).focus();
             }
