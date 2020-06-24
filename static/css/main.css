@@ -31,6 +31,7 @@ body {
     opacity: 0;
     /* width: 100vw;
     height: 100vh; */
+    user-select: none;
 }
 body.all-loaded {
     opacity: 1;
@@ -329,6 +330,7 @@ table {
     color: var(--readOnlyColor);
     background-color: var(--tableItemBackground);
     cursor: pointer;
+    outline: none;
 }
 
 /* Overlays */
