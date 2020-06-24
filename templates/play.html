@@ -36,7 +36,7 @@
 
                     <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
 
-                    <div onclick="aboutDisplay()" id="about" class="optiondivs">About</div>
+                    <div onclick="aboutDisplay()" id="about" class="optiondivs">About Us</div>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                             Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a>
                             
                         <p>Learn more about us on our Linkedin pages</p>
-                        <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-a03052169/" target="_blank">LinkedIn</a></span>
+                        <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
                             Suchit Sharma: <a href="" target="_blank">LinkedIn</a>
                     </p><br>
                     <p>
@@ -173,6 +173,14 @@
 
             <div id="outsidemode" class="inline">
                 <div id="modecontainer">
+
+                    <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
+
+                    <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks
+                    </div>
+
+                    <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
+
                     <div id="tablecontainer">
                         <table>
                             <tr>
@@ -194,14 +202,9 @@
                     </div>
 
 
-                    <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
-
-                    <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks
-                    </div>
-
-                    <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
-
-                    <div onclick="undo()" id="pencilmarks" class="modedivs">Undo</div>
+                    
+                    <div onclick="fillAllPms()" class="modedivs">Auto Fill Pencilmarks</div>
+                    <div onclick="undo()" class="modedivs">Undo</div>
 
                 </div>
             </div>

@@ -77,7 +77,7 @@ h1 {
     float: left;
     position: relative;
     margin-left: 20px;
-    margin-top: 40px;
+    margin-top: 0px;
 }
 .inline {
     display: inline-block;
@@ -291,18 +291,12 @@ input::selection {
 .modefocus {
     width: 200px;
     height: 45px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    
-    
-    /* box-shadow: 3px solid var(--itemBackground) inset; */
-
-    /* margin: 8px;
     margin-top: 1px;
     margin-bottom: 1px;
-    user-select: none;
-    border: 3px solid var(--primaryColor);
-    overflow: visible; */
+}
+.modedivs {
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 .inline {
     display: inline-block;
@@ -530,4 +524,8 @@ ul {
 
 a, a:visited {
     color: var(--linkColor)
+}
+
+#tablecontainer {
+    margin: 20px;
 }

@@ -3,6 +3,7 @@ var selectArray = [];
 var history = [];
 var colorMap = {};
 var historyIndex = 0;
+var autoFillCount = 0;
 var curId = null;
 var isNormal = true;
 var isColor = false;
@@ -12,6 +13,7 @@ var isDeletePms = false;
 var isHighlightNums = false;
 var isHighlightRcb = false;
 var isShift = false;
+var isAutoFill = false;
 var showInstructions = true;
 var showAbout = true;
 var lastNumEntered = "";
@@ -87,10 +89,10 @@ $(document).keydown(
                 if (selectArray[i]) {
                     currentColor = root.style.getPropertyValue('--' + inter);
                     colorMap[i] = currentColor;
-                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--'+inter);
+                    document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--' + inter);
                 }
             }
-            document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--'+inter);
+            document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--' + inter);
             e.preventDefault();
         }
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
@@ -98,13 +100,30 @@ $(document).keydown(
             if (e.keyCode == 8 && document.activeElement.id != "") {
                 document.getElementById(document.activeElement.id).value = [];
                 pmArray[document.activeElement.id] = [];
+
+                if (document.getElementById(document.activeElement.id).className.includes("txt-input")) {
+                    history[historyIndex] = [document.activeElement.id, document.getElementById(document.activeElement.id).value, "normal"];
+                }
+                else {
+                    history[historyIndex] = [document.activeElement.id, document.getElementById(document.activeElement.id).value, "pencilmarks"];
+                }
+                historyIndex++;
+
                 for (var i = 0; i < 81; i++) {
-                    if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+                    if (selectArray[i] && document.activeElement.id != i && document.getElementById(i).className.includes("readonly") == false) {
                         document.getElementById(i).value = [];
                         pmArray[i] = [];
+                        if (document.getElementById(i).className.includes("txt-input")) {
+                            history[historyIndex] = [i, document.getElementById(i).value, "normal"];
+                        }
+                        else {
+                            history[historyIndex] = [i, document.getElementById(i).value, "pencilmarks"];
+                        }
+                        historyIndex++;
                     }
                 }
                 changeClassName();
+
             }
             // Right Arrow
             else if (e.keyCode == 39) {
@@ -144,7 +163,7 @@ $(document).keydown(
                 }
                 keypressed = true;
             }
-            
+
             // Numbers
             else if (48 < e.keyCode && e.keyCode < 58) {
                 lastNumEntered = String.fromCharCode(e.keyCode);
@@ -153,8 +172,7 @@ $(document).keydown(
                 }
                 for (var i = 0; i < 81; i++) {
                     if (selectArray[i] && i != document.activeElement.id && document.getElementById(i).className.includes("readonly") == false) {
-                        console.log(i);
-                        addToArray(i);
+                        addToArray(i.toString());
                     }
                 }
             }
@@ -194,7 +212,7 @@ $(document).keydown(
                 }
             }
         }
-        
+
         // Space bar
         else if (e.keyCode == 32) {
             if (isNormal && !isColor) {
@@ -206,13 +224,13 @@ $(document).keydown(
             else if (isColor && !isNormal) {
                 changeMode("normal");
             }
-            
+
         }
         // Control/Command 'Z'
         else if (((e.keyCode == 90 && e.ctrlKey) || (e.keyCode == 90 && e.metaKey))) {
             undo();
         }
-        
+
         // Control/Command 'A'
         else if ((e.keyCode == 65 && e.ctrlKey) || (e.keyCode == 65 && e.metaKey)) {
             document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
@@ -221,7 +239,7 @@ $(document).keydown(
                 document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
             }
         }
-        
+
         // If arrow key was pressed
         if (keypressed == true && document.activeElement.id != "") {
             document.getElementById(nextId).focus();
@@ -231,7 +249,7 @@ $(document).keydown(
             document.getElementById(document.activeElement.id).select();
         }
     }
-        
+
 );
 
 
@@ -288,7 +306,7 @@ function changeMode(id) {
         document.getElementById("colors").className = "modedivs";
 
         document.getElementById("tablecontainer").innerHTML = numbersTable;
-        
+
     }
     else if (id == "colors") {
         isColor = true;
@@ -306,7 +324,7 @@ function changeMode(id) {
         document.getElementById("color6").style.backgroundColor = root.style.getPropertyValue("--color6");
         document.getElementById("color7").style.backgroundColor = root.style.getPropertyValue("--color7");
         document.getElementById("color8").style.backgroundColor = root.style.getPropertyValue("--color8");
-        document.getElementById("color9").style.backgroundColor = root.style.getPropertyValue("--color9");        
+        document.getElementById("color9").style.backgroundColor = root.style.getPropertyValue("--color9");
     }
     else {
         isNormal = true;
@@ -383,19 +401,23 @@ function pmInput(id) {
     // }
     // deleting from pmCellArray
     if (pmCellArray.length != 0) {
-    pmCellArray = delPmArrayInput(id, lastNumEntered);
+        pmCellArray = delPmArrayInput(id, lastNumEntered);
     }
     // sort and write
     sortAndWriteCellValue(id, pmCellArray);
 
     // add to undo stack
     var idValue = pmCellArray.join("");
-
     history[historyIndex] = [id, idValue, "pencilmarks"];
     historyIndex++;
+
+    if (isAutoFill) {
+        autoFillCount++;
+    }
 }
 
 function normalInput(id) {
+    debugger;
     pmArray[id] = [];
     document.getElementById(id).className = "txt-input";
     document.getElementById(id).maxLength = 1;
@@ -403,7 +425,7 @@ function normalInput(id) {
     history[historyIndex] = [id, lastNumEntered, "normal"];
     historyIndex++;
     if (isDeletePms) {
-        deletePms();
+        deletePms(id);
     }
     if (isHighlightNums) {
         highlightNums();
@@ -411,7 +433,7 @@ function normalInput(id) {
 }
 
 function addToArray(id) {
-    if (!isColor){
+    if (!isColor) {
         if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id);
         }
@@ -420,6 +442,7 @@ function addToArray(id) {
         }
     }
 }
+
 
 function undo() {
     if (document.getElementById(curId) != null) {
@@ -430,29 +453,46 @@ function undo() {
     }
     historyIndex--;
     var lastChange = history[historyIndex];
-    var id = lastChange[0];
-    for (var i = historyIndex - 1; i >= 0; i--) {
-        if (history[i][0] == id) {
-            if (history[i][2] == "normal") {
-                document.getElementById(id).className = "txt-input";
-                if (document.getElementById(id).className != "pm-input") {
-                    document.getElementById(id).maxLength = 1;
-                }
-            }
-            else {
-                document.getElementById(id).className = "pm-input";
-                if (document.getElementById(id).className != "txt-input") {
-                    document.getElementById(id).maxLength = 10;
-                }
-            }
-            document.getElementById(id).value = history[i][1];
-            pmArray[id] = [];
-            return;
+
+    if (lastChange == "autofill start") {
+        undo();
+        return;
+    }
+    else if (lastChange[0] == "autofill end") {
+        for (var i = 0; i < lastChange[1]; i++) {
+            undo();
         }
     }
-    pmArray[id] = [];
-    document.getElementById(id).value = "";
-
+    else {
+        var id = lastChange[0];
+        document.getElementById(id).focus();
+        for (var i = historyIndex - 1; i >= 0; i--) {
+            if (history[i][0] == id) {
+                if (history[i][2] == "normal") {
+                    document.getElementById(id).className = "txt-input";
+                    if (document.getElementById(id).className != "pm-input") {
+                        document.getElementById(id).maxLength = 1;
+                    }
+                }
+                else {
+                    document.getElementById(id).className = "pm-input";
+                    if (document.getElementById(id).className != "txt-input") {
+                        document.getElementById(id).maxLength = 10;
+                    }
+                }
+                document.getElementById(id).value = history[i][1];
+                if (history[i][2] == "normal") {
+                    pmArray[id] = [];
+                }
+                else {
+                    pmArray[id] = history[i][1].split("");
+                }
+                return;
+            }
+        }
+        pmArray[id] = [];
+        document.getElementById(id).value = "";
+    }
 }
 
 function validateForm() {
@@ -556,7 +596,7 @@ function selectClick(id) {
 }
 
 function tableInput(num) {
-    
+
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -566,7 +606,7 @@ function tableInput(num) {
     }
     for (var i = 0; i < 81; i++) {
         if (selectArray[i] && i != document.activeElement.id && document.getElementById(i).className.includes("readonly") == false) {
-            addToArray(i);
+            addToArray(i.toString());
         }
     }
 }
@@ -612,11 +652,11 @@ function pageRedirect(id) {
     redirect = id;
 }
 
-function createConflictArray() {
-    if (isNaN(document.activeElement.id)) {
-        return [];
-    }
-    var id = parseInt(document.activeElement.id);
+function createConflictArray(id) {
+    // if (isNaN(id)) {
+    //     return [];
+    // }
+    var id = parseInt(id);
     var conflictArray = [];
     for (var i = id - id % 9; i < (9 - id % 9) + id; i++) {
         conflictArray.push(parseInt(i));
@@ -661,12 +701,14 @@ function createConflictArray() {
     return conflictArray;
 }
 
-function deletePms() {
-    var conflictArray = createConflictArray();
-    for (var id = 0; id < conflictArray.length; id++) {
-        if (pmArray[conflictArray[id]].includes(lastNumEntered)) {
-            pmInput(conflictArray[id], lastNumEntered);
+function deletePms(id) {
+    // curId = document.activeElement.id;
+    var conflictArray = createConflictArray(id);
+    for (var i = 0; i < conflictArray.length; i++) {
+        if (pmArray[conflictArray[i]].includes(lastNumEntered)) {
+            pmInput(conflictArray[i], lastNumEntered);
         }
+
     }
 }
 
@@ -688,18 +730,18 @@ function toggleDeletePms() {
 function highlightNums() {
     var conflictArray = []
     if (isHighlightRcb) {
-        conflictArray = createConflictArray();
+        conflictArray = createConflictArray(document.activeElement.id);
     }
     var num = document.activeElement.value;
     for (var i = 0; i < 81; i++) {
         if (conflictArray.includes(i) == false) {
             document.getElementById(i).style.filter = "brightness(100%)";
-            
+
         }
         if (document.getElementById(i).value.includes(num)) {
             if (num != "" && (document.activeElement.className.includes("txt-input") || document.activeElement.className.includes("readonly"))) {
                 document.getElementById(i).style.filter = root.style.getPropertyValue('--highlightOpacity');
-                
+
             }
         }
     }
@@ -727,7 +769,7 @@ function toggleHighlightNums() {
 }
 
 function highlightRcb() {
-    var conflictArray = createConflictArray();
+    var conflictArray = createConflictArray(document.activeElement.id);
     for (var i = 0; i < 81; i++) {
         document.getElementById(i).style.filter = "brightness(100%)";
     }
@@ -835,7 +877,7 @@ function changeTheme() {
     var themeid = window.localStorage.getItem("storedTheme");
 
     document.getElementById("shiftIndication").style = "background-color: none";
-    
+
     if (themeid == "tan") {
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
@@ -912,7 +954,7 @@ function changeTheme() {
         root.style.setProperty('--shiftColor', "#fce17a");
         root.style.setProperty('--messageTextColor', "#f6f0e8");
         root.style.setProperty('--focusText', "#F3ECE7");
-        root.style.setProperty('--highlightOpacity', "brightness(75%)");
+        root.style.setProperty('--highlightOpacity', "brightness(80%)");
         root.style.setProperty('--shiftIndication', "#e43a19");
         root.style.setProperty('--linkColor', "#e43a19");
 
@@ -967,10 +1009,10 @@ function changeTheme() {
         if (isHighlightRcb) {
             highlightRcb();
         }
-        if (isHighlightNums) { 
-            highlightNums();           
+        if (isHighlightNums) {
+            highlightNums();
         }
-        
+
     }
 
 
@@ -983,11 +1025,11 @@ function changeTheme() {
             }
         }
     }
-    
+
     if (isColor) {
         changeMode("colors");
     }
-    
+
     for (var i = 0; i < 81; i++) {
         selectArray[i] = true;
     }
@@ -1059,4 +1101,34 @@ function setColor(id) {
     }
     document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
     colorMap[document.activeElement.id] = currentColor;
+}
+
+function fillAllPms() {
+    changeMode("pencilmarks");
+    isAutoFill = true;
+    autoFillCount = 0;
+    history[historyIndex] = "autofill start";
+    historyIndex++;
+    for (var cell = 0; cell < 81; cell++) {
+        pmArray[cell] = [];
+        var conflictArray = createConflictArray(cell);
+        var normalList = [];
+        for (var i = 0; i < conflictArray.length; i++) {
+            if (document.getElementById(conflictArray[i]).className != "pm-input") {
+                normalList.push(document.getElementById(conflictArray[i]).value)
+            }
+        }
+        for (var num = 1; num < 10; num++) {
+            if (!normalList.includes(num.toString())) {
+                if (document.getElementById(cell).className == "pm-input") {
+                    lastNumEntered = num.toString();
+                    addToArray(cell);
+                }
+
+            }
+        }
+    }
+    history[historyIndex] = ["autofill end", autoFillCount];
+    historyIndex++;
+    isAutoFill = false;
 }
