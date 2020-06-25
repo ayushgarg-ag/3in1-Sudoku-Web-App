@@ -97,7 +97,7 @@ $(document).keydown(
         }
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
             // Delete
-            if (e.keyCode == 8 && document.activeElement.id != "") {
+            if (e.keyCode == 8 && document.activeElement.id != "" && document.getElementById(document.activeElement.id).className.includes("readonly") == false) {
                 document.getElementById(document.activeElement.id).value = [];
                 pmArray[document.activeElement.id] = [];
 
@@ -499,54 +499,60 @@ function validateForm() {
     // if (redirect == "clear") {
     //     return true;
     // }
-    var isStillEmpty = false;
-    var isStillPm = false;
-    if (document.activeElement.id != null) {
-        curId = document.activeElement.id;
-    }
-    for (var i = 0; i < 9; i++) {
-        for (var j = 0; j < 9; j++) {
-            if (document.getElementById(i * 9 + j).value == "") {
-                isStillEmpty = true;
-            }
-            else if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
-                isStillPm = true;
+    if (showInstructions && showAbout) {
+        var isStillEmpty = false;
+        var isStillPm = false;
+        if (document.activeElement.id != null) {
+            curId = document.activeElement.id;
+        }
+        for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+                if (document.getElementById(i * 9 + j).value == "") {
+                    isStillEmpty = true;
+                }
+                else if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
+                    isStillPm = true;
+                }
             }
         }
+        if (isStillEmpty) {
+            // alert("You cannot check since there are still empty spaces on the board.");
+            document.getElementById("checkoverlay").innerHTML = `
+            <div id="checkcenter">
+            You cannot check since there are still empty spaces on the board.
+            <br>
+            <div onclick="
+            document.getElementById('checkoverlay').style.display = 'none';
+            document.getElementById('grid-container').style.display = 'grid';
+            " class="optiondivs" id="close">Close</div>
+            </div>
+            `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            return false;
+        }
+        else if (isStillPm) {
+            // alert("You cannot check since there are still pencilmarks on the board.");
+            document.getElementById("checkoverlay").innerHTML = `
+            <div id="checkcenter">
+            You cannot check since there are still pencilmarks on the board.
+            <br>
+            <div onclick="
+            document.getElementById('checkoverlay').style.display = 'none';
+            document.getElementById('grid-container').style.display = 'grid';
+            " class="optiondivs" id="close">Close</div>
+            </div>
+            `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+            return false;
+        }
+        return true;
     }
-    if (isStillEmpty) {
-        // alert("You cannot check since there are still empty spaces on the board.");
-        document.getElementById("checkoverlay").innerHTML = `
-        <div id="checkcenter">
-        You cannot check since there are still empty spaces on the board.
-        <br>
-        <div onclick="
-        document.getElementById('checkoverlay').style.display = 'none';
-        document.getElementById('grid-container').style.display = 'grid';
-        " class="optiondivs" id="close">Close</div>
-        </div>
-        `;
-        document.getElementById("checkoverlay").style.display = "block";
-        document.getElementById("grid-container").style.display = "none";
+    else {
         return false;
     }
-    else if (isStillPm) {
-        // alert("You cannot check since there are still pencilmarks on the board.");
-        document.getElementById("checkoverlay").innerHTML = `
-        <div id="checkcenter">
-        You cannot check since there are still pencilmarks on the board.
-        <br>
-        <div onclick="
-        document.getElementById('checkoverlay').style.display = 'none';
-        document.getElementById('grid-container').style.display = 'grid';
-        " class="optiondivs" id="close">Close</div>
-        </div>
-        `;
-        document.getElementById("checkoverlay").style.display = "block";
-        document.getElementById("grid-container").style.display = "none";
-        return false;
-    }
-    return true;
+    
 }
 
 function selectFocus(id) {

@@ -3,14 +3,13 @@
 {% block head %}
 <title>Sudoku Solver</title>
 <script src="static/javascript/base.js" type="text/javascript"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
+
 {% block body %}
 
 <body onload="changeTheme()">
     <h1>Sudoku Solver</h1>
     <div id="content">
-
         <div id="outsideoption" class="inline">
             <div id="homesquare" onclick="location.href='/'"></div>
             <div id="optioncontainer">
@@ -21,38 +20,52 @@
                 <div onclick="aboutDisplay()" id="about" class="optiondivs">About Us</div>
             </div>
         </div>
+
         <div id="outsidegrid">
-           
             <div id="aboutdisplay">
                 <div class="header">About Us</div>
-                    <p>Hello! This website was co-created and designed from scratch by Ayush Garg and Suchit Sharma in the summer of 2020.</p>
-                    <p>As Sudoku fanatics ourselves, we sought to create a website that combines all of our favorite features when completing challenging Sudokus. We tried to incorporate functionality that promotes ease of movement throughout the Sudoku, options to increase speed while solving, and aesthetic characteristics to promote visual appeal.</p>
-                    <p>
-                        <p><a href="https://github.com/ssharma919/Sudoku_app" target="_blank">View our GitHub repository here</a></p>
-                        <p>Check out some of our other projects on Github</p>
-                        <span style="margin-left: 30px; margin-right: 75px;">Ayush Garg: <a href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span>
-                            Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a>
-                            
-                        <p>Learn more about us on our Linkedin pages</p>
-                        <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
-                            Suchit Sharma: <a href="" target="_blank">LinkedIn</a>
-                    </p><br>
-                    <p>
-                        We encourage you to input a Sudoku and try some of the features that will hopefully improve your Sudoku experience as it
-                        has for us!
-                    </p>
+                <p>Hello! This website was co-created and designed from scratch by Ayush Garg and Suchit Sharma in the
+                    summer of 2020.</p>
+
+                <p>As Sudoku fanatics ourselves, we sought to create a website that combines all of our favorite
+                    features when completing challenging Sudokus. We tried to incorporate functionality that promotes
+                    ease of movement throughout the Sudoku, options to increase speed while solving, and aesthetic
+                    characteristics to promote visual appeal.</p>
+
+                <p>
+                <p><a href="https://github.com/ssharma919/Sudoku_app" target="_blank">View our GitHub repository
+                        here</a></p>
+                <p>Check out some of our other projects on Github</p>
+                <span style="margin-left: 30px; margin-right: 75px;">Ayush Garg: <a
+                        href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span>
+                Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a>
+
+                <p>Learn more about us on our Linkedin pages</p>
+                <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a
+                        href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
+                Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/"
+                    target="_blank">LinkedIn</a>
+                </p><br>
+
+                <p>
+                    We encourage you to input a Sudoku and try some of the features that will hopefully improve your
+                    Sudoku experience as it
+                    has for us!
+                </p>
             </div>
+
             <div id="grid-container">
                 {% for i in range(9) %}
-                {% for j in range(9) %}
-                <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
-                    <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1"
-                        value="{{ solved_array[i][j] }}" readonly>
-                </div>
-                {% endfor %}
+                    {% for j in range(9) %}
+                    <div id="{{ i*9 + j }}" onclick="focused(this.id)" class="grid-item">
+                        <input name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input" min="1"
+                            value="{{ solved_array[i][j] }}" readonly>
+                    </div>
+                    {% endfor %}
                 {% endfor %}
             </div>
         </div>
+        
         <div id="spacefiller" style="width: 226px; float: left;"></div>
     </div>
 </body>

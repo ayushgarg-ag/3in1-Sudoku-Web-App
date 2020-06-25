@@ -3,24 +3,24 @@
 {% block head %}
 <title>Sudoku Menu</title>
 <script src="static/javascript/menu.js" type="text/javascript"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
 {% endblock %}
 
 {% block body %}
-
 <body onload="changeTheme()">
     <h1>Sudoku Menu</h1>
     <div id="content">
         <div id="outsideplay" class="inline">
-            <div id="floatright">
+            <div style="justify-content: right;">
                 <div id="playimage" onclick="playOption()"></div>
+
                 <div id="menuinstructionsdisplay">
                     <div class="header">How To Play Sudoku</div>
                     <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has
                         to contain all the numbers 1-9 within its squares. Each number can only appear once in a row,
                         column, or block.</p>
+
                     <div class="header">Features</div>
+
                     <ul>
                         <li>Click on "Play a Sudoku" to either play a Sudoku of a certain difficulty (easy, medium, hard, or expert) or input your own Sudoku</li>
                         <li>Click on "Solve a Sudoku" to enter the Sudoku Solver, which allows you to input any Sudoku and see the finished solution</li>
@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+
         <div id="outsidemenuoption" class="inline">
             <div id="optioncontainer">
                 <div id="changetheme" class="optiondivs">
@@ -42,10 +43,9 @@
                 <div onclick="messagesDisplay()" id="messages" class="optiondivs">
                     Instructions<br>and About
                 </div>
-
             </div>
-
         </div>
+        
         <div id="outsidesolve" class="inline">
                 <div id="solveimage" onclick="location.href='/input_solve'"></div>
                 <div id="menuaboutdisplay">
@@ -60,15 +60,15 @@
                             
                         <p>Learn more about us on our Linkedin pages</p>
                         <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
-                            Suchit Sharma: <a href="" target="_blank">LinkedIn</a>
+                            Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/" target="_blank">LinkedIn</a>
                     </p><br>
+
                     <p>
                         We encourage you to input a Sudoku and try some of the features that will hopefully improve your Sudoku experience as it
                         has for us!
                     </p>
                 </div>
                 <button id="menusolve" class="menubutton" onclick="location.href='/input_solve'">Solve a Sudoku</button>
-
         </div>
     </div>
 </body>

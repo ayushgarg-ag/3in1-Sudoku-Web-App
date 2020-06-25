@@ -3,33 +3,30 @@
 {% block head %}
 <title>Sudoku</title>
 <meta id="my-data" data-name="{{is_solved}}">
-<meta name="viewport" content="initial-scale=1">
-<link id="stylesheet" name="style" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <script src="static/javascript/play.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
 
-<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()" scroll="no">
+<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()">
     <h1>Sudoku</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
-
                     <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
 
                     <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits
                     </div>
 
                     <div onclick="toggleHighlightRcb()" id="highlightrcb" class="optiondivs">Highlight Row, Column, Box
-                    </div>
-                    <br>
+                    </div><br>
+
                     <div id="optionicons">
-                    <div id="homesquare" onclick="location.href='/'"></div>
-                    <div id="shiftIndication"></div>
-                    </div>
-                    <br>
+                        <div id="homesquare" onclick="location.href='/'"></div>
+                        <div id="shiftIndication"></div>
+                    </div><br>
+
                     <div id="changetheme" class="optiondivs">
                         <div id="themebutton" onclick="themeOption()">Change Theme</div>
                     </div>
@@ -42,11 +39,11 @@
 
             <div id="outsidegrid" class="inline">
                 <div id="instructionsdisplay">
-                    <div id="header">How To Play Sudoku</div>
-                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has
-                        to contain all the numbers 1-9 within its squares. Each number can only appear once in a row,
-                        column, or block.</p>
-                    <div id="header">Features</div>
+                    <div class="header">How To Play Sudoku</div>
+                    <p>The grid is divided into nine blocks, each containing nine squares. Each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column, or block.</p>
+
+                    <div class="header">Features</div>
+
                     <ul>
                         <li>Change Theme: Choose between dark, tan, light, and retro themes</li>
                         <li>Click the home icon to return to the menu page</li>
@@ -61,7 +58,8 @@
                             <li>Press keyboard numbers or click numbers on the keypad</li>
                             <li>Pencilmarks mode will input notes in the cells (double input the same number to delete)
                             </li>
-                            <li>Color different cells on the grid (center color is the default) by clicking the color or using the corresponding keyboard number</li>
+                            <li>Color different cells on the grid (center color is the default) by clicking the color or
+                                using the corresponding keyboard number</li>
                         </ul>
                         <li>Multiple Selections</li>
                         <ul>
@@ -69,14 +67,14 @@
                             <li>Drag the cursor around</li>
                             <li><i>"Control A"</i> to select all cells</li>
                             <li>To unselect, (1) click on any cell, or (2) press <i>Escape</i></li>
-                            <li>The indicator next to the home icon will turn on if there are multiple selections on the grid</li>
+                            <li>The indicator next to the home icon will turn on if there are multiple selections on the
+                                grid</li>
                         </ul>
                         <li>Shortcuts</li>
                         <ul>
                             <li><i>"Control Z"</i> to undo previous changes</li>
                             <li>Click <i>Space</i> to switch between "Normal", "Pencilmarks", and "Colors" mode</li>
                         </ul>
-
                     </ul>
                 </div>
 
@@ -85,77 +83,60 @@
                 <div id="aboutdisplay">
                     <div class="header">About Us</div>
                     <p>Hello! This website was co-created and designed from scratch by Ayush Garg and Suchit Sharma in the summer of 2020.</p>
+
                     <p>As Sudoku fanatics ourselves, we sought to create a website that combines all of our favorite features when completing challenging Sudokus. We tried to incorporate functionality that promotes ease of movement throughout the Sudoku, options to increase speed while solving, and aesthetic characteristics to promote visual appeal.</p>
+
                     <p>
-                        <p><a href="https://github.com/ssharma919/Sudoku_app" target="_blank">View our GitHub repository here</a></p>
-                        <p>Check out some of our other projects on Github</p>
-                        <span style="margin-left: 30px; margin-right: 75px;">Ayush Garg: <a href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span>
-                            Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a>
-                            
-                        <p>Learn more about us on our Linkedin pages</p>
-                        <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
-                            Suchit Sharma: <a href="" target="_blank">LinkedIn</a>
+                    <p><a href="https://github.com/ssharma919/Sudoku_app" target="_blank">View our GitHub repository
+                            here</a></p>
+                    <p>Check out some of our other projects on Github</p>
+                    <span style="margin-left: 30px; margin-right: 75px;">Ayush Garg: <a
+                            href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span>
+                    Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a>
+
+                    <p>Learn more about us on our Linkedin pages</p>
+                    <span style="margin-left: 30px; margin-right: 68px;">Ayush Garg: <a
+                            href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
+                    Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/"
+                        target="_blank">LinkedIn</a>
                     </p><br>
+
                     <p>
-                        We encourage you to input a Sudoku and try some of the features that will hopefully improve your Sudoku experience as it
+                        We encourage you to input a Sudoku and try some of the features that will hopefully improve your
+                        Sudoku experience as it
                         has for us!
                     </p>
                 </div>
+
                 <div id="grid-container">
                     {% for i in range(9) %}
-                    {% for j in range(9) %}
-                    {% if play_array == None %}
-                    {% if input_array[i][j] != 0 %}
-                    <div class="grid-item">
-                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="1" class="readonly"
-                            min="1" value="{{ input_array[i][j] }}"
-                            onkeydown="return ( event.ctrlKey || event.altKey 
-                                        || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
-                    </div>
-                    {% else %}
-                    <div class="grid-item move">
-                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class=""
-                            onkeydown="return ( event.ctrlKey || event.altKey 
-                                        || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off"
-                            onfocus="selectFocus(this.id)" onclick="selectClick(this.id)"
-                            onmouseover="selectDrag(this.id)" readonly>
-                    </div>
-                    {% endif %}
-                    {% else %}
-                    {% if input_array[i][j] != 0 %}
-                    <div class="grid-item">
-                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="1" class="readonly"
-                            min="1" value="{{ input_array[i][j] }}"
-                            onkeydown="return ( event.ctrlKey || event.altKey 
-                                        || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
-                    </div>
-                    {% elif check_array[i][j] %}
-                    <div class="grid-item move">
-                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="txt-input"
-                            value="{{ play_array[i][j] }}"
-                            onkeydown="return ( event.ctrlKey || event.altKey 
-                                        || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off"
-                            onfocus="selectFocus(this.id)" onclick="selectClick(this.id)"
-                            onmouseover="selectDrag(this.id)" readonly>
-                    </div>
-                    {% else %}
-                    <div class="grid-item move">
-                        <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1"
-                            class="txt-input errors" value="{{ play_array[i][j] }}"
-                            onkeydown="return ( event.ctrlKey || event.altKey 
-                                        || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46))"
-                            autocomplete="off"
-                            onfocus="selectFocus(this.id)" onclick="selectClick(this.id)"
-                            onmouseover="selectDrag(this.id)" readonly>
-                    </div>
-                    {% endif %}
-
-                    {% endif %}
-                    {% endfor %}
+                        {% for j in range(9) %}
+                            {% if play_array == None %}
+                                {% if input_array[i][j] != 0 %}
+                                <div class="grid-item">
+                                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="1" class="readonly" min="1" value="{{ input_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
+                                </div>
+                                {% else %}
+                                <div class="grid-item move">
+                                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                {% if input_array[i][j] != 0 %}
+                                <div class="grid-item">
+                                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" class="readonly" maxlength="1" min="1" value="{{ input_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
+                                </div>
+                                {% elif check_array[i][j] %}
+                                <div class="grid-item move">
+                                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="txt-input" value="{{ play_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
+                                </div>
+                                {% else %}
+                                <div class="grid-item move">
+                                    <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="txt-input errors" value="{{ play_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </div>
 
@@ -163,9 +144,8 @@
                     <div class="buttoncontainers">
                         <button id="solve" type="submit" class="buttons">Check</button>
                     </div>
+
                     <div class="buttoncontainers">
-                        <!-- <button id="clear" formaction="/play" formmethod="GET" type="submit"
-                            class="buttons">Restart</button> -->
                         <button id="clear" onclick="restart()" type="button" class="buttons">Restart</button>
                     </div>
                 </div>
@@ -173,11 +153,9 @@
 
             <div id="outsidemode" class="inline">
                 <div id="modecontainer">
-
                     <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
 
-                    <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks
-                    </div>
+                    <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks</div>
 
                     <div onclick="changeMode(this.id)" id="colors" value="colors" class="modedivs">Colors</div>
 
@@ -201,16 +179,13 @@
                         </table>
                     </div>
 
-
-                    
                     <div onclick="fillAllPms()" class="modedivs">Auto Fill Pencilmarks</div>
+
                     <div onclick="undo()" class="modedivs">Undo</div>
 
                 </div>
             </div>
-
+        </div>
     </form>
-
-    </div>
 </body>
 {% endblock %}

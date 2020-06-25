@@ -1,6 +1,6 @@
 /* Color Variables */
 :root {
-    /* Tan Color Theme */
+    /* Tan Color Theme - Set as the default theme */
     --primaryColor: #d2b48c;
     --itemBackgroun: #f6f0e8;
     --textColor: #a87b00;
@@ -17,6 +17,7 @@
     --shiftIndication: #533e2d;
     --linkColor: white;
 }
+
 /* Document CSS */
 body, html {
     margin: 0;
@@ -29,8 +30,6 @@ body {
     padding: 0;
     height: 50%;
     opacity: 0;
-    /* width: 100vw;
-    height: 100vh; */
     user-select: none;
 }
 body.all-loaded {
@@ -48,9 +47,12 @@ h1 {
     display: flex;
     justify-content: center;
     text-align: center;
-    /* width: auto;
-    height: auto; */
 }
+.inline {
+    display: inline-block;
+}
+
+/* Main Div Containers */
 #outsideoption {
     display: flex;
     align-items: center;
@@ -79,9 +81,6 @@ h1 {
     margin-left: 20px;
     margin-top: 0px;
 }
-.inline {
-    display: inline-block;
-}
 
 /* Grid CSS */
 #grid-container, #instructionsdisplay, #aboutdisplay, #checkoverlay {
@@ -92,6 +91,18 @@ h1 {
     justify-content: center;
     padding: 0;
 }
+.grid-item {
+    background-color: var(--itemBackground);
+    border: 1px solid var(--primaryColor);
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    height: 50px;
+    width: 50px;
+}
+
+/* Instructions and About Overlays */
 #instructionsdisplay, #aboutdisplay, #menuinstructionsdisplay, #menuaboutdisplay, #checkoverlay {
     display: none;
     width: 460px;
@@ -104,6 +115,7 @@ h1 {
     color: var(--messageTextColor);
     text-align: left;
     overflow: hidden;
+    margin-bottom: 4px;
 }
 #menuinstructionsdisplay, #menuaboutdisplay {
     width: 403px;
@@ -113,15 +125,16 @@ h1 {
     justify-content: center;
     padding: 10px;
 }
-.grid-item {
-    background-color: var(--itemBackground);
-    border: 1px solid var(--primaryColor);
-    padding: 0;
-    font-size: 20px;
-    text-align: center;
-    margin: 0;
-    height: 50px;
-    width: 50px;
+.header {
+    font-weight: bold;
+    text-decoration: underline;
+    margin: 0px;
+}
+ul {
+    padding-left: 26px;
+}
+a, a:visited {
+    color: var(--linkColor)
 }
 
 /* Column Borders CSS */
@@ -136,7 +149,8 @@ h1 {
 }
 #grid-container .grid-item:nth-child(n):nth-last-child(9n+1){
     border-right: 5px var(--primaryColor) solid;
-} */
+}
+
 /* Row Borders CSS */
 #grid-container .grid-item:nth-child(n):nth-last-child(n+73){
     border-top: 5px var(--primaryColor) solid;
@@ -150,7 +164,6 @@ h1 {
 #grid-container .grid-item:nth-child(n+73):nth-last-child(n){
     border-bottom: 5px var(--primaryColor) solid;
 }
-
 
 /* Inputs CSS */
 input {
@@ -210,7 +223,7 @@ input::selection {
     text-align: center;
 }
 
-/* Buttons CSS */
+/* Option/Mode Divs and Buttons CSS */
 .buttons, .menubutton, .playbutton, .difficultybutton, .optiondivs, .modedivs {
     background-color: var(--buttonBackground);
     color: var(--buttonText);
@@ -226,9 +239,7 @@ input::selection {
     text-align: center;
     cursor: pointer;
 }
-#playcontainer {
-    margin-top: 0px;
-}
+
 .optiondivs, .modedivs, #shiftIndication, #homesquare {
     display: flex;
     justify-content: center;
@@ -243,28 +254,11 @@ input::selection {
     border: 3px solid var(--primaryColor);
     overflow: hidden;
 }
-.modedivs {
-    width: 200px;
-    height: 45px;
-}
 
 .buttons:focus, .menubutton:focus, .optiondivs:focus, .modedivs:focus, .playbutton:focus, .difficultybutton:focus {
     outline: none;
 }
-.menubutton {
-    width: 300px;
-    margin: 10px;
-}
-.playbutton {
-    width: 175px;
-    margin: 10px;
-}
-.difficultybutton {
-    width: 88px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 8px;
-}
+
 .modefocus, .focusdivs {
     display: flex;
     justify-content: center;
@@ -295,12 +289,12 @@ input::selection {
     margin-bottom: 1px;
 }
 .modedivs {
+    width: 200px;
+    height: 45px;
     margin-top: 1px;
     margin-bottom: 1px;
 }
-.inline {
-    display: inline-block;
-}
+
 
 /* Color Table CSS */
 table {
@@ -326,40 +320,11 @@ table {
     cursor: pointer;
     outline: none;
 }
-
-/* Overlays */
-#insoverlay {
-    background-color: var(--primaryColor);
-    opacity: 0.85;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    height: 80%;
-    width: 80%;
-    left: 10%;
-    /* top: 10%; */
-    display: none;
+#tablecontainer {
+    margin: 20px;
 }
-#ins {
-    color: var(--readOnlyColor);
-    text-align: center;
-    font-size: 30px;
-}
-.header {
-    font-weight: bold;
-    text-decoration: underline;
-    margin: 0px;
-}
-/* #top {
-    margin-top: 1px;
-} */
 
-/* .themes {
-    display: inline;
-    border: 1px solid black;
-    float: left;
-} */
-
+/* Themes and Theme Button CSS */
 #themebutton {
     height: 100%;
     width: 100%;
@@ -369,16 +334,13 @@ table {
     flex-direction: column;
     z-index: 4;
 }
-
 #themescontainer {
-  display: flex;
+    display: flex;
 }
-#themescontainer > div {
-  flex: 1; /*grow*/
-  /* height: 100%; */
+.themes {
+    flex: 1; 
     width: 41;
     height: 49px;
-
     display: flex;
     justify-content: center;
     align-content: center;
@@ -402,9 +364,24 @@ table {
     background: linear-gradient(180deg, rgba(17,31,77,1) 0%, rgba(65,44,119,1) 30%, rgba(228,58,25,1) 60%, rgba(243,236,231,1) 100%);
 }
 
-
-
-
+/* Menu CSS */
+.menubutton {
+    width: 300px;
+    margin: 10px;
+}
+.playbutton {
+    width: 175px;
+    margin: 10px;
+}
+.difficultybutton {
+    width: 88px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 8px;
+}
+#playcontainer {
+    margin-top: 0px;
+}
 #playimage {
     display: block;
     background-image: url(/static/css/images/tan_play.png);
@@ -427,7 +404,6 @@ table {
     position: relative;
     cursor: pointer;
 }
-
 #outsideplay {
     display: flex;
     align-items: center;
@@ -448,7 +424,6 @@ table {
     max-width: 500px;
     max-height: 550px;
 }
-
 #outsidemenuoption {
     display: flex;
     align-items: center;
@@ -460,10 +435,7 @@ table {
     height: 480px;
 }
 
-#floatright {
-    justify-content: right;
-}
-
+/* Icons CSS */
 #shiftIndication {
     display: inline-block;
     align-items: center;
@@ -489,22 +461,16 @@ table {
     position: relative;
     cursor: pointer;
     border: none;
-    /* margin-top: 100px; */
 }
-
 #optionicons {
-    /* display: inline-block;
-    align-items: center; */
     justify-content: center;
-    /* align-content: center;
-    flex-direction: column; */
 }
 
+/* Check Overlay */
 #checkoverlay {
     font-size: 35px;
     text-align: center;
 }
-
 #close {
     margin: auto;
     margin-top: 8%;
@@ -516,16 +482,4 @@ table {
     align-content: center;
     flex-direction: column;
     margin-top: 30%;
-}
-
-ul {
-  padding-left: 26px;
-}
-
-a, a:visited {
-    color: var(--linkColor)
-}
-
-#tablecontainer {
-    margin: 20px;
 }
