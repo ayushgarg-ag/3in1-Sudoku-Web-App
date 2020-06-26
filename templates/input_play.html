@@ -64,7 +64,7 @@
                 <div id="grid-container">
                     {% for i in range(9) %}
                         {% for j in range(9) %}
-                        <div class="grid-item move">
+                        <div class="grid-item">
                             <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="num" maxlength="1" class="txt-input"
                                 min="1" onkeydown="return ( event.ctrlKey || event.altKey 
                                 || (48<event.keyCode && event.keyCode<58 && event.shiftKey==false) 

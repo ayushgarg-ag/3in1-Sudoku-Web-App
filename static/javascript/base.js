@@ -1,11 +1,92 @@
+// global variable (boolean) that indicates if the instructions message should be opened or closed
 var showInstructions = true;
+
+// global variable (boolean) that indicates if the about message should be opened or closed
 var showAbout = true;
 
-function revertChangeTheme() {
-    document.getElementById("changetheme").innerHTML = `
-    <div onclick="themeOption()">Change Theme</div>`;
-}
+// global variable (Element) that represents the highest HTML element in the document tree
+var root = document.documentElement;
 
+$(window).load(
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    function () {
+        $("body").addClass('all-loaded');
+    }
+);
+
+
+$(document).keydown(
+    /**
+    * Event handling function for the keydown event 
+    * @param {Event} e  Keyboard event object handler
+    */
+    function (e) {
+
+        // true if one of the arrow keys is pressed; false otherwise
+        var arrowKeyPressed = false;
+
+        // if the active element is valid and the id is between 0-80
+        if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+
+            // select the cell in order to easily replace the number
+            document.getElementById(document.activeElement.id).select();
+
+            // if the key is the "RIGHT ARROW", move the focus to the cell after it
+            if (event.keyCode == 39) {
+                currentId = document.activeElement.id;
+                if (currentId != 80) {
+                    nextId = parseInt(currentId) + 1;
+                }
+                arrowKeyPressed = true;
+            }
+
+            // if the key is the "LEFT ARROW", move the focus to the cell before it
+            if (e.keyCode == 37) {
+                currentId = document.activeElement.id;
+                if (currentId != 0) {
+                    nextId = parseInt(currentId) - 1;
+                }
+                arrowKeyPressed = true;
+            }
+
+            // if the key is the "DOWN ARROW", move the focus to the cell below it
+            if (e.keyCode == 40) {
+                currentId = document.activeElement.id;
+                if (currentId < 72) {
+                    nextId = parseInt(currentId) + 9;
+                }
+                else if (currentId != 80) {
+                    nextId = parseInt(currentId) - 71;
+                }
+                arrowKeyPressed = true;
+            }
+
+            // if the key is the "UP ARROW", move the focus to the cell above it
+            if (e.keyCode == 38) {
+                currentId = document.activeElement.id;
+                if (currentId > 8) {
+                    nextId = parseInt(currentId) - 9;
+                }
+                else if (currentId != 0) {
+                    nextId = parseInt(currentId) + 71;
+                }
+                arrowKeyPressed = true;
+            }
+
+            // if one of the "ARROW" keys was pressed, focus on the cell that was set by "nextId"
+            if (arrowKeyPressed) {
+                document.getElementById(nextId).focus();
+            }
+        }
+    }
+);
+
+
+/**
+ * Changes the inner HTML of the "Change Theme" div to display the theme options the user can select from 
+ */
 function themeOption() {
     document.getElementById("changetheme").innerHTML = `
     <div id="themescontainer">
@@ -17,11 +98,27 @@ function themeOption() {
     `;
 }
 
+/**
+ * If a theme has been selected, reverts the "Change Theme" div back to its original HTML
+ */
+function revertChangeTheme() {
+    document.getElementById("changetheme").innerHTML = `
+    <div onclick="themeOption()">Change Theme</div>`;
+}
+
+
+/**
+ * Changes theme based on user specified selection
+ */
 function changeTheme() {
-    let root = document.documentElement;
+
+    // obtain the theme in cache and assign it to "themeid"
     var themeid = window.localStorage.getItem("storedTheme");
 
+    // if the desired theme change is "tan", change CSS variables to the corresponding color palette
     if (themeid == "tan") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
         root.style.setProperty('--textColor', "#a87b00");
@@ -38,6 +135,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#533e2d");
         root.style.setProperty('--linkColor', "white");
 
+        // change table colors
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -48,12 +146,18 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
+        // change home icon color
         document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeTan.png)";
 
+        // store the theme "tan" in local cache
         window.localStorage.setItem("storedTheme", "tan");
 
     }
+
+    // else if the desired theme change is "dark", change CSS variables to the corresponding color palette
     else if (themeid == "dark") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#1b262c");
         root.style.setProperty('--itemBackground', "#226897");
         root.style.setProperty('--textColor', "#bbe1fa");
@@ -70,6 +174,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#bbe1fa");
         root.style.setProperty('--linkColor', "orange");
 
+        // change table colors
         root.style.setProperty('--color1', "#990000");
         root.style.setProperty('--color2', "#CC6600");
         root.style.setProperty('--color3', "#009900");
@@ -80,11 +185,17 @@ function changeTheme() {
         root.style.setProperty('--color8', "#999900");
         root.style.setProperty('--color9', "#CC0066");
 
+        // change home icon color
         document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeDark.png)";
 
+        // store the theme "dark" in local cache
         window.localStorage.setItem("storedTheme", "dark");
     }
+
+    // else if the desired theme change is "retro", change CSS variables to the corresponding color palette
     else if (themeid == "retro") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#111f4d");
         root.style.setProperty('--itemBackground', "#F3ECE7");
         root.style.setProperty('--textColor', "#e43a19");
@@ -101,6 +212,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#e43a19");
         root.style.setProperty('--linkColor', "#e43a19");
 
+        // change table colors
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -111,11 +223,17 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
+        // change home icon color
         document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeRetro.png)";
 
+        // store the theme "retro" in local cache
         window.localStorage.setItem("storedTheme", "retro");
     }
+
+    // else the desired theme change is "light", change CSS variables to the corresponding color palette
     else {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#add2c9");
         root.style.setProperty('--itemBackground', "#f1ebeb");
         root.style.setProperty('--textColor', "#5ea3a3");
@@ -132,6 +250,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#28595c");
         root.style.setProperty('--linkColor', "#b266ff");
 
+        // change table colors
         root.style.setProperty('--color1', "#FF9999");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -142,36 +261,137 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
+        // change home icon color
         document.getElementById("homesquare").style.backgroundImage = "url(/static/css/images/homeLight.png)";
 
+        // store the theme "light" in local cache
         window.localStorage.setItem("storedTheme", "light");
     }
 }
 
+/**
+ * Displays "Instructions" message
+ */
+function instructionsDisplay() {
+
+    // close check message if it is open
+    if (document.getElementById("checkoverlay").style.display != "none") {
+        document.getElementById("checkoverlay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+    }
+
+    // close "About Us" message if it is open
+    if (!showAbout) {
+        document.getElementById("aboutdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("about").innerHTML = "About";
+        showAbout = true;
+    }
+
+    // display "Instructions" message
+    if (showInstructions) {
+        document.getElementById("instructionsdisplay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        document.getElementById("instructions").innerHTML = "Close Instructions";
+        showInstructions = false;
+    }
+
+    // close "Instructions" message
+    else {
+        document.getElementById("instructionsdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("instructions").innerHTML = "Instructions";
+        showInstructions = true;
+    }
+}
+
+/**
+ * Displays "About Us" message
+ */
+function aboutDisplay() {
+    
+    // close check message if it is open
+    if (document.getElementById("checkoverlay").style.display != "none") {
+        document.getElementById("checkoverlay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+    }
+
+    // close "Instructions" message if it is open 
+    if (!showInstructions) {
+        document.getElementById("instructionsdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("instructions").innerHTML = "Instructions";
+        showInstructions = true;
+    }
+
+    // display "About Us" message
+    if (showAbout) {
+        document.getElementById("aboutdisplay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        document.getElementById("about").innerHTML = "Close About Us";
+        showAbout = false;
+    }
+    
+    // close "About Us" message
+    else {
+        document.getElementById("aboutdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("about").innerHTML = "About Us";
+        showAbout = true;
+    }
+
+}
+
+/**
+ * Ensures that the inputted sudoku is valid
+ * @return {boolean}  True if the inputted sudoku is valid; false otherwise
+ */
 function validate() {
+
+    // initialize variable "grid" as an array; this will hold all numbers from the sudoku
     var grid = [];
+
+    // loop through 0-8; this will serve as the row number
     for (i = 0; i < 9; i++) {
+
+        // initialize variable "gridRow" in order to create a 2D array
         var gridRow = [];
+
+        // loop through 0-8; this will serve as the column number
         for (j = 0; j < 9; j++) {
+
+            // if the there is no inputted value in a cell, add a 0 to "gridRow"
             if (document.getElementById(i * 9 + j).value == "") {
                 gridRow.push(0);
             }
+
+            // else add the inputted value to "gridRow"
             else {
                 gridRow.push(parseInt(document.getElementById(i * 9 + j).value));
             }
         }
+
+        // add "gridRow" to "grid"
         grid.push(gridRow);
     }
+
+    // loop through all 81 positions in "grid" using a nested for loop
     for (x = 0; x < 9; x++) {
         for (y = 0; y < 9; y++) {
+
+            // "listR" contains all the numbers in a given row "x"
             var listR = grid[x];
+
+            // "listC" contains all the numbers in a given column "y"
             var listC = [];
-            var listMR = [];
-            var listMC = [];
             for (i = 0; i < 9; i++) {
                 listC.push(grid[i][y])
             }
+
+            // "listB" contains all the numbers in a given cell's box
             var listB = [];
+            var listMR = [];
+            var listMC = [];
             var modR = (x + 1) % 3;
             var modC = (y + 1) % 3;
             if (modR == 0) {
@@ -199,10 +419,16 @@ function validate() {
                     listB.push(grid[listMR[i]][listMC[j]]);
                 }
             }
+
+            // obtain the number in a specific cell
             num = grid[x][y];
+
+            // reset the counts of each list to 0
             var countR = 0;
             var countC = 0;
             var countB = 0;
+
+            // loop through lists "listR", "listC", and "listB"; count how many times num appears in each list
             for (i = 0; i < listR.length; i++) {
                 if (listR[i] != 0 && num == listR[i]) {
                     countR += 1;
@@ -218,8 +444,27 @@ function validate() {
                     countB += 1;
                 }
             }
+
+            // if any count is greater than 1, the sudoku is invalid
             if (countR > 1 || countC > 1 || countB > 1) {
-                // alert("The board you inputted is invalid.");
+
+                // close "Instructions" message if open
+                if (!showInstructions) {
+                    document.getElementById("instructionsdisplay").style.display = "none";
+                    document.getElementById("grid-container").style.display = "grid";
+                    document.getElementById("instructions").innerHTML = "Instructions";
+                    showInstructions = true;
+                }
+
+                // close "About Us" message if open
+                if (!showAbout) {
+                    document.getElementById("aboutdisplay").style.display = "none";
+                    document.getElementById("grid-container").style.display = "grid";
+                    document.getElementById("about").innerHTML = "About Us";
+                    showAbout = true;
+                }
+
+                // show message that the sudoku is invalid
                 document.getElementById("checkoverlay").innerHTML = `
                 <div id="checkcenter">
                 The board you inputted is invalid.
@@ -236,90 +481,7 @@ function validate() {
             }
         }
     }
+
+    // the sudoku is valid
     return true;
-}
-
-$(document).keydown(
-    function (e) {
-        var keypressed = false;
-        if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
-            document.getElementById(document.activeElement.id).select();
-
-            if (event.keyCode == 39) {
-                currentId = document.activeElement.id;
-                if (currentId != 80) {
-                    nextId = parseInt(currentId) + 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 37) {
-                currentId = document.activeElement.id;
-                if (currentId != 0) {
-                    nextId = parseInt(currentId) - 1;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 40) {
-                currentId = document.activeElement.id;
-                if (currentId < 72) {
-                    nextId = parseInt(currentId) + 9;
-                }
-                else if (currentId != 80) {
-                    nextId = parseInt(currentId) - 71;
-                }
-                keypressed = true;
-            }
-            if (e.keyCode == 38) {
-                currentId = document.activeElement.id;
-                if (currentId > 8) {
-                    nextId = parseInt(currentId) - 9;
-                }
-                else if (currentId != 0) {
-                    nextId = parseInt(currentId) + 71;
-                }
-                keypressed = true;
-            }
-            
-            if (keypressed) {
-                document.getElementById(nextId).focus();
-            }
-        }
-    }
-);
-
-$(window).load(function () {
-    $("body").addClass('all-loaded');
-});
-
-function instructionsDisplay() {
-    if (showAbout) {
-        if (showInstructions) {
-            document.getElementById("instructionsdisplay").style.display = "block";
-            document.getElementById("grid-container").style.display = "none";
-            document.getElementById("instructions").innerHTML = "Close Instructions";
-            showInstructions = false;
-        }
-        else {
-            document.getElementById("instructionsdisplay").style.display = "none";
-            document.getElementById("grid-container").style.display = "grid";
-            document.getElementById("instructions").innerHTML = "Instructions";
-            showInstructions = true;
-        }
-    }
-}
-function aboutDisplay() {
-    if (showInstructions) {
-        if (showAbout) {
-            document.getElementById("aboutdisplay").style.display = "block";
-            document.getElementById("grid-container").style.display = "none";
-            document.getElementById("about").innerHTML = "Close About";
-            showAbout = false;
-        }
-        else {
-            document.getElementById("aboutdisplay").style.display = "none";
-            document.getElementById("grid-container").style.display = "grid";
-            document.getElementById("about").innerHTML = "About";
-            showAbout = true;
-        }
-    }
 }

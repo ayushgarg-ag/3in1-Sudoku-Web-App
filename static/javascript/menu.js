@@ -1,10 +1,21 @@
+// global variable (boolean) that indicates if the instructions/about us message should be opened or closed
 var showMessages = true;
 
-// function revertChangePlay() {
-//     document.getElementById("changetheme").innerHTML = `
-//     <div onclick="playOption()">Change Theme</div>`;
-// }
+// global variable (Element) that represents the highest HTML element in the document tree
+var root = document.documentElement;
 
+$(window).load(
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    function () {
+        $("body").addClass('all-loaded');
+    }
+);
+
+/**
+ * Changes the inner HTML of the "Play a Sudoku" div to display the two options the user can select from
+ */
 function playOption() {
     document.getElementById("playcontainer").innerHTML = `
     <button class="playbutton" onclick="chooseOption()">Choose a Sudoku</button>
@@ -12,6 +23,9 @@ function playOption() {
     `;
 }
 
+/**
+ * Changes the inner HTML of the "Choose a Sudoku" div to display the four options the user can select from
+ */
 function chooseOption() {
     document.getElementById("playcontainer").innerHTML = `
     <form action="/play" method="POST">
@@ -21,15 +35,11 @@ function chooseOption() {
     <button id="expert" name="expert" value="expert" type="submit" class="difficultybutton">Expert</button>
     </form>
     `;
-    // < !-- < button id = "clear" formaction = "/play" formmethod = "POST" type = "submit"
-    // class="buttons" > Restart</button > -->
 }
 
-function revertChangeTheme() {
-    document.getElementById("changetheme").innerHTML = `
-    <div onclick="themeOption()">Change Theme</div>`;
-}
-
+/**
+ * Changes the inner HTML of the "Change Theme" div to display the theme options the user can select from
+ */
 function themeOption() {
     document.getElementById("changetheme").innerHTML = `
     <div id="themescontainer">
@@ -41,17 +51,36 @@ function themeOption() {
     `;
 }
 
+/**
+ * If a theme has been selected, reverts the "Change Theme" div back to its original HTML
+ */
+function revertChangeTheme() {
+    document.getElementById("changetheme").innerHTML = `
+    <div onclick="themeOption()">Change Theme</div>`;
+}
+
+/**
+ * Changes theme based on user specified selection
+ */
 function changeTheme() {
-    let root = document.documentElement;
+
+    // create a local variable "themeid" that stores which theme to set
     var themeid;
+
+    // if there is no theme stored in cache yet, set the default to the "tan" theme
     if (window.localStorage.getItem("storedTheme") == null) {
         themeid = "tan";
     }
+
+    // else set the theme to the stored theme
     else {
         themeid = window.localStorage.getItem("storedTheme");
     }
 
+    // if the desired theme change is "tan", change CSS variables to the corresponding color palette
     if (themeid == "tan") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#d2b48c");
         root.style.setProperty('--itemBackground', "#f6f0e8");
         root.style.setProperty('--textColor', "#a87b00");
@@ -68,6 +97,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#533e2d");
         root.style.setProperty('--linkColor', "white");
 
+        // change table colors
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -78,14 +108,18 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
+        // change play and solve images to the "tan" version
         document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/tan_play.png)";
         document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/tan_solve.png)";
 
-
+        // store the theme "tan" in local cache
         window.localStorage.setItem("storedTheme", "tan");
-
     }
+
+    // else if the desired theme change is "dark", change CSS variables to the corresponding color palette
     else if (themeid == "dark") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#1b262c");
         root.style.setProperty('--itemBackground', "#226897");
         root.style.setProperty('--textColor', "#bbe1fa");
@@ -102,6 +136,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#bbe1fa");
         root.style.setProperty('--linkColor', "orange");
 
+        // change table colors
         root.style.setProperty('--color1', "#990000");
         root.style.setProperty('--color2', "#CC6600");
         root.style.setProperty('--color3', "#009900");
@@ -112,13 +147,18 @@ function changeTheme() {
         root.style.setProperty('--color8', "#999900");
         root.style.setProperty('--color9', "#CC0066");
 
+        // change play and solve images to the "dark" version
         document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/dark_play.png)";
         document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/dark_solve.png)";
 
-
+        // store the theme "dark" in local cache
         window.localStorage.setItem("storedTheme", "dark");
     }
+
+    // else if the desired theme change is "retro", change CSS variables to the corresponding color palette
     else if (themeid == "retro") {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#111f4d");
         root.style.setProperty('--itemBackground', "#F3ECE7");
         root.style.setProperty('--textColor', "#e43a19");
@@ -135,6 +175,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#e43a19");
         root.style.setProperty('--linkColor', "#e43a19");
 
+        // change table colors
         root.style.setProperty('--color1', "#FFCCCC");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -145,12 +186,18 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
 
+        // change play and solve images to the "retro" version
         document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/retro_play.png)";
         document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/retro_solve.png)";
 
+        // store the theme "retro" in local cache
         window.localStorage.setItem("storedTheme", "retro");
     }
+
+    // else the desired theme change is "light", change CSS variables to the corresponding color palette
     else {
+
+        // change document CSS colors
         root.style.setProperty('--primaryColor', "#add2c9");
         root.style.setProperty('--itemBackground', "#f1ebeb");
         root.style.setProperty('--textColor', "#5ea3a3");
@@ -167,6 +214,7 @@ function changeTheme() {
         root.style.setProperty('--shiftIndication', "#28595c");
         root.style.setProperty('--linkColor', "#b266ff");
 
+        // change table colors
         root.style.setProperty('--color1', "#FF9999");
         root.style.setProperty('--color2', "lightsalmon");
         root.style.setProperty('--color3', "#99FF99");
@@ -177,33 +225,53 @@ function changeTheme() {
         root.style.setProperty('--color8', "lightsteelblue");
         root.style.setProperty('--color9', "#FF99CC");
         
+        // change play and solve images to the "light" version
         document.getElementById("playimage").style.backgroundImage = "url(/static/css/images/light_play.png)";
         document.getElementById("solveimage").style.backgroundImage = "url(/static/css/images/light_solve.png)";
 
+        // store the theme "light" in local cache
         window.localStorage.setItem("storedTheme", "light");
     }
 }
 
-$(window).load(function () {
-    $("body").addClass('all-loaded');
-});
-
+/**
+ * Displays "Instructions" and "About Us" messages
+ */
 function messagesDisplay() {
-    // debugger;
+
+    // if "showMessages" is true
     if (showMessages) {
+
+        // hide the play and solve images
         document.getElementById("playimage").style.display = "none";
         document.getElementById("solveimage").style.display = "none";
+
+        // display the "instructions" and "about us" divs
         document.getElementById("menuinstructionsdisplay").style.display = "block";
         document.getElementById("menuaboutdisplay").style.display = "block";
-        document.getElementById("messages").innerHTML = "Close Instructions<br>and About";
+
+        // change the inner HTML to show a close option
+        document.getElementById("messages").innerHTML = "Close Instructions<br>and About Us";
+
+        // set "showMessages" to false
         showMessages = false;
     }
+
+    // else "showMessages" is false
     else {
+
+        // hide the "instructions" and "about us" divs
         document.getElementById("menuinstructionsdisplay").style.display = "none";
         document.getElementById("menuaboutdisplay").style.display = "none";
+
+        // display the play and solve images
         document.getElementById("playimage").style.display = "block";
         document.getElementById("solveimage").style.display = "block";
-        document.getElementById("messages").innerHTML = "Instructions<br>and About";
+
+        // change the inner HTML to show an open option
+        document.getElementById("messages").innerHTML = "Instructions<br>and About Us";
+
+        // set "showMessages" to true
         showMessages = true;
     }
 }

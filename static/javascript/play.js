@@ -16,7 +16,7 @@ var historyIndex = 0;
 // global variable (number) that counts the number of pencilmarks added to the grid when fillAllPms() is called
 var autoFillCount = 0;
 
-// global variable (String) that indicates the most current focused cell in the grid
+// global variable (String) that indicates the most recent focused cell in the grid
 var curId = null;
 
 // global variable (boolean) for if the user is currently selecting multiple cells, either through shifting and using arrow keys, shifting and clicking different cells, or dragging
@@ -49,7 +49,7 @@ var isAutoFill = false;
 // global variable (boolean) that indicates if the instructions message should be opened or closed
 var showInstructions = true;
 
-// // global variable (boolean) that indicates if the about message should be opened or closed
+// global variable (boolean) that indicates if the about message should be opened or closed
 var showAbout = true;
 
 // global variable (String) for the number that the user just inputted through the keyboard or numbers table
@@ -63,7 +63,6 @@ var root = document.documentElement;
 
 // global variable (boolean) that indicates if the current grid is solved
 var solved = $('#my-data').data().name;
-
 
 // global variables (String) that hold the CSS colors for different themes
 var color1 = root.style.getPropertyValue('--color1');
@@ -119,48 +118,61 @@ var colorsTable = `
 `;
 
  
-/**
- * Initializes global array variables during body onload
- */
-function createArray() {
-    for (var i = 0; i < 81; i++) {
-        pmArray[i] = [];
-        selectArray[i] = false;
-        colorMap[i] = "";
+$(window).load(
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    function () {
+        $("body").addClass('all-loaded');
     }
-}
+);
 
 $(document).keydown(
-
     /**
     * Event handling function for the keydown event 
     * @param {Event} e  Keyboard event object handler
     */
     function (e) {
         
-        // local scope variable; true if one of the arrow keys is pressed
+        // true if one of the arrow keys is pressed; false otherwise
         var arrowKeyPressed = false;
 
         // if in "Colors" mode, prevent "Normal" or "Pencilmarks" numbers from being inputted and use the numbers as colors instead
         if (isColor && e.keyCode >= 49 && e.keyCode <= 57) {
             var inter = "color" + (e.keyCode - 48).toString();
+
+            // loop through all 81 cells
             for (var i = 0; i < 81; i++) {
+
+                // if the cell is selected
                 if (selectArray[i]) {
+
+                    // get the current color and set the value of "colorMap" to that color
                     currentColor = root.style.getPropertyValue('--' + inter);
                     colorMap[i] = currentColor;
+
+                    // set the background color of the cell
                     document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--' + inter);
                 }
             }
-            document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--' + inter);
+
+            // if the active element is a cell, change its background color to the corresponding color
+            if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+                document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--' + inter);
+            }
+
+            // prevent the user from inputting a number if in the "Colors" mode
             e.preventDefault();
         }
         
-        // if the active element is one of the 81 grid items
+        // if the active element is one of the 81 cells
         if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
 
             // if the key is "DELETE/BACKSPACE" and the element is not a starting number
             if (e.keyCode == 8 && document.activeElement.id != "" && document.getElementById(document.activeElement.id).className.includes("readonly") == false) {
-                document.getElementById(document.activeElement.id).value = [];
+
+                // set the focused cell's value and pencilmark array to empty states
+                document.getElementById(document.activeElement.id).value = "";
                 pmArray[document.activeElement.id] = [];
 
                 // add the deleted element to the history array (for a single selection)
@@ -187,11 +199,11 @@ $(document).keydown(
                     }
                 }
 
-                // ensures the grid is in the correct mode
+                // ensure the grid is in the correct mode
                 changeClassName();
             }
 
-            // else if the key is the "RIGHT ARROW", move the focus to the element after it
+            // else if the key is the "RIGHT ARROW", move the focus to the cell after it
             else if (e.keyCode == 39) {
                 currentId = document.activeElement.id;
                 if (currentId != 80) {
@@ -200,7 +212,7 @@ $(document).keydown(
                 arrowKeyPressed = true;
             }
             
-            // else if the key is the "LEFT ARROW", move the focus to the element before it
+            // else if the key is the "LEFT ARROW", move the focus to the cell before it
             else if (e.keyCode == 37) {
                 currentId = document.activeElement.id;
                 if (currentId != 0) {
@@ -209,7 +221,7 @@ $(document).keydown(
                 arrowKeyPressed = true;
             }
 
-            // else if the key is the "DOWN ARROW", move the focus to the element below it
+            // else if the key is the "DOWN ARROW", move the focus to the cell below it
             else if (e.keyCode == 40) {
                 currentId = document.activeElement.id;
                 if (currentId < 72) {
@@ -221,7 +233,7 @@ $(document).keydown(
                 arrowKeyPressed = true;
             }
 
-            // else if the key is the "UP ARROW", move the focus to the element above it
+            // else if the key is the "UP ARROW", move the focus to the cell above it
             else if (e.keyCode == 38) {
                 currentId = document.activeElement.id;
                 if (currentId > 8) {
@@ -261,10 +273,10 @@ $(document).keydown(
                 // make the global variable that indicates if multiple elements are selected true
                 isSelectMultiple = true;
 
-                // make the focused element true in the "selectArray" variable
+                // make the focused cell true in the "selectArray" variable
                 selectArray[document.activeElement.id] = true;
 
-                // change the background color of the focused element to the "shiftColor" CSS variable
+                // change the background color of the focused cell to the "shiftColor" CSS variable
                 if (document.activeElement.id != "pencilmarks") {
                     document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
                 }
@@ -287,7 +299,11 @@ $(document).keydown(
 
             // loop through the entire grid; for all items that were selected, revert the background color to either the item background or its associated color in the "colorMap" variable
             for (var i = 0; i < 81; i++) {
+
+                // if the cell is selected
                 if (selectArray[i]) {
+
+                    // if there is no color on that cell, set its background color back to the item background
                     if (colorMap[i] == "") {
                         document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
                     }
@@ -332,7 +348,7 @@ $(document).keydown(
             }
         }
 
-        // if one of the "ARROW" keys was pressed, focus on the element that was set by "nextId"
+        // if one of the "ARROW" keys was pressed, focus on the cell that was set by "nextId"
         if (arrowKeyPressed == true && document.activeElement.id != "") {
             document.getElementById(nextId).focus();
         }
@@ -342,9 +358,7 @@ $(document).keydown(
             document.getElementById(document.activeElement.id).select();
         }
     }
-
 );
-
 
 $(document).keyup(
 
@@ -353,15 +367,17 @@ $(document).keyup(
     * @param {Event} e  Keyboard event object handler
     */
     function (e) {
+
+        // if the key is "SHIFT"
         if (e.keyCode == 16) {
+
+            // set "isSelectMultiple" and "isShift" to false because the user has stopped selecting multiple cells
             isSelectMultiple = false;
             isShift = false;
         }
-        else if (e.keycode == 32) { }
     }
 );
 
-    
 $(document).mousedown(
 
     /**
@@ -392,28 +408,13 @@ $(document).mouseup(
 );
 
 /**
- * Gets called if the user mouses over any grid item
- * @param {String} id  The id (from 0-80) of the grid item that was moused over
+ * Initializes global array/map variables during body onload
  */
-function selectDrag(id) {
-
-    // if the global variable drag is true and the user is mousing over a grid item
-    if (drag && document.activeElement.id != "" && id != null) {
-
-        // turn on the shift indication circle next to the home icon, make "isSelectMultiple" true, and change the id of the active element in selectArray to true because the user is selecting multiple through dragging
-        document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
-        isSelectMultiple = true;
-        selectArray[document.activeElement.id] = true;
-        document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-        selectArray[id] = true;
-        document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-
-        // change the focus on the board to the element being dragged over to make it clear to the user where on the board they are
-        curId = id;
-        if (document.getElementById(curId) != null) {
-            document.getElementById(curId).focus();
-        }
-
+function createArray() {
+    for (var i = 0; i < 81; i++) {
+        pmArray[i] = [];
+        selectArray[i] = false;
+        colorMap[i] = "";
     }
 }
 
@@ -495,14 +496,14 @@ function changeMode(modeId) {
 function changeClassName() {
 
     // loop through all 81 items in the grid
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
 
-            // if the class name of the element does not include readonly and the element is not empty
+            // if the class name of the cell does not include readonly and the cell is not empty
             if (((document.getElementById(i * 9 + j)).className != "txt-input readonly")
                 && (document.getElementById(i * 9 + j).value == "")) {
 
-                // if in "Normal" mode, change the class name of the element to a normal text input and makes the maxlength for the input one
+                // if in "Normal" mode, change the class name of the cell to a normal text input and makes the maxlength for the input one
                 if (isNormal) {
                     document.getElementById(i * 9 + j).className = "txt-input";
                     if (document.getElementById(i * 9 + j).className != "pm-input") {
@@ -510,7 +511,7 @@ function changeClassName() {
                     }
                 }
 
-                // else (in "Pencilmarks" mode), change the class name of the element to a pencilmarks input and makes the maxlength for the input one
+                // else (in "Pencilmarks" mode), change the class name of the cell to a pencilmarks input and makes the maxlength for the input one
                 else {
                     document.getElementById(i * 9 + j).className = "pm-input";
                     if (document.getElementById(i * 9 + j).className != "txt-input") {
@@ -519,6 +520,31 @@ function changeClassName() {
                 }
             }
         }
+    }
+}
+
+/**
+ * Sorts the pencilmarks array at the specified id and writes the array into the grid
+ * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
+ * @param {Array} pmCellArray  The array that should be turned into a string and written into the cell
+ */
+function sortAndWriteCellValue(id, pmCellArray) {
+
+    // if the length of the array to be added is 0, set "pmArray" at the passed id to a blank array and set the value of the input to a blank string
+    if (pmCellArray.length == 0) {
+        document.getElementById(id).value = "";
+        pmArray[id] = pmCellArray;
+    }
+
+    // sort the array, turn it into a string, and change the value of the input to that string
+    else {
+        pmArray[id] = pmCellArray;
+        pmCellArray.sort();
+        var idValue = "";
+        for (var i = 0; i < pmCellArray.length; i++) {
+            idValue += pmCellArray[i];
+        }
+        document.getElementById(id).value = idValue;
     }
 }
 
@@ -532,37 +558,12 @@ function delPmArrayInput(id, diff) {
     var pmCellArray = pmArray[id].concat(diff);
     var firstIndex = pmCellArray.indexOf(diff);
 
-    // if pmArray at the specified id already included the number, eliminate both instances of the number
+    // if "pmArray" at the specified id already included the number, eliminate both instances of the number
     if (pmArray[id].includes(diff)) {
         pmCellArray.pop();
         pmCellArray.splice(firstIndex, 1);
     }
     return pmCellArray;
-}
-
-/**
- * Sorts the pencilmarks array at the specified id and writes the array into the grid
- * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
- * @param {Array} pmCellArray  The array that should be turned into a string and written into the cell
- */
-function sortAndWriteCellValue(id, pmCellArray) {
-
-    // if the length of the array to be added is 0, set pmArray[id] to a blank array and set the value of the input to a blank string
-    if (pmCellArray.length == 0) {
-        document.getElementById(id).value = "";
-        pmArray[id] = pmCellArray;
-    }
-
-    // sort the array, turn it into a string, and change the value of the input to that string
-    else {
-        pmArray[id] = pmCellArray;
-        pmCellArray.sort();
-        var idValue = "";
-        for (i = 0; i < pmCellArray.length; i++) {
-            idValue += pmCellArray[i];
-        }
-        document.getElementById(id).value = idValue;
-    }
 }
 
 /**
@@ -597,10 +598,10 @@ function pmInput(id) {
  */
 function normalInput(id) {
 
-    // Clear the pmArray for that id
+    // clear the pmArray for that id
     pmArray[id] = [];
 
-    // Turn the element at that id into a normal text input with a maxlength of one and input the last number entered as the value
+    // turn the cell at that id into a normal text input with a maxlength of one and input the last number entered as the value
     document.getElementById(id).className = "txt-input";
     document.getElementById(id).maxLength = 1;
     document.getElementById(id).value = lastNumEntered;
@@ -629,7 +630,7 @@ function addToArray(id) {
     // if not in "Colors" mode
     if (!isColor) {
         
-        // if in "Pencilmarks" mode and the element at the id is not already a normal text input
+        // if in "Pencilmarks" mode and if the cell is not already a normal text input
         if (isNormal == false && document.getElementById(id).className != "txt-input") {
             pmInput(id);
         }
@@ -642,11 +643,43 @@ function addToArray(id) {
 }
 
 /**
- * Undoes the last move made by the user; recursive if the history encounters autofill
+ * Inputs the number that was selected from the numbers table
+  * @param {String} num  The number that should be added
+ */
+function tableInput(num) {
+
+    // focus onto "curId" if it is valid
+    if (document.getElementById(curId) != null) {
+        document.getElementById(curId).focus();
+    }
+
+    // set the global variable "lastNumEntered" to num
+    lastNumEntered = num;
+
+    // if the active element is a cell and does not have a class name of readonly, call addToArray
+    if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+        if (document.getElementById(document.activeElement.id).className.includes("readonly") == false) {
+            addToArray(document.activeElement.id);
+        }
+    }
+    
+
+    // loop through all 81 cells
+    for (var i = 0; i < 81; i++) {
+
+        // if the cell is selected and does not have a class name of readonly, call addToArray
+        if (selectArray[i] && i != document.activeElement.id && document.getElementById(i).className.includes("readonly") == false) {
+            addToArray(i.toString());
+        }
+    }
+}
+
+/**
+ * Undoes the last move made by the user; recursive if the history encounters the String "autofill"
  */
 function undo() {
 
-    // if "curId" is valid, focus onto the element with id "curId"
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -674,7 +707,7 @@ function undo() {
             undo();
         }
     }
-    
+
     // else if "lastChange" does not include anything with autofill
     else {
 
@@ -686,10 +719,10 @@ function undo() {
 
         // loop through the entirety of "history" in reverse
         for (var i = historyIndex - 1; i >= 0; i--) {
-            
+
             // if there is a previous change in "history" with the same id as "id"
             if (history[i][0] == id) {
-                
+
                 // if the previous change was conducted in "normal" mode, change the attributes of the cell to reflect "normal" mode
                 if (history[i][2] == "normal") {
                     document.getElementById(id).className = "txt-input";
@@ -706,12 +739,12 @@ function undo() {
 
                 // set the value of the cell to the previous changed value in "history"
                 document.getElementById(id).value = history[i][1];
-                
+
                 // exit the function
                 return;
             }
         }
-        
+
         // set the pencilmark array and value of the cell to blank
         pmArray[id] = [];
         document.getElementById(id).value = "";
@@ -719,98 +752,61 @@ function undo() {
 }
 
 /**
- * Validates the form when the user clicks "Check"
- * @return {boolean}  True if the form passes all validation; False otherwise
+ * Inputs all possible pencilmarks into each cell in the grid
  */
-function validateForm() {
+function fillAllPms() {
 
-    // close "Instructions" message if it is open 
-    if (!showInstructions) {
-        document.getElementById("instructionsdisplay").style.display = "none";
-        document.getElementById("grid-container").style.display = "grid";
-        document.getElementById("instructions").innerHTML = "Instructions";
-        showInstructions = true;
-    }
+    changeMode("pencilmarks");
 
-    // close "About Us" message if it is open
-    if (!showAbout) {
-        document.getElementById("aboutdisplay").style.display = "none";
-        document.getElementById("grid-container").style.display = "grid";
-        document.getElementById("about").innerHTML = "About";
-        showAbout = true;
-    }
+    // set "isAutoFill" to true and start a new count of "autoFillCount"
+    isAutoFill = true;
+    autoFillCount = 0;
 
-    // initialize two local variable booleans to test if the grid is still empty or if it still contains pencilmarks
-    var isStillEmpty = false;
-    var isStillPm = false;
+    // indicate in "history" that autofill has started
+    history[historyIndex] = "autofill start";
+    historyIndex++;
 
-    // set the curId
-    if (document.activeElement.id != null) {
-        curId = document.activeElement.id;
-    }
-    
-    // loop through all 81 cells
-    for (var i = 0; i < 9; i++) {
-        for (var j = 0; j < 9; j++) {
+    // loop through all 81 cells and input all possible pencilmarks
+    for (var cell = 0; cell < 81; cell++) {
 
-            // if the cell is empty, set "isStillEmpty" to true
-            if (document.getElementById(i * 9 + j).value == "") {
-                isStillEmpty = true;
+        // reset pmArray in each cell position to overwrite current pencilmarks
+        pmArray[cell] = [];
+
+        // create an array of all cells that the focused cell "sees"
+        var conflictArray = createConflictArray(cell);
+
+        // create an array that holds all the "normal" and starting numbers within the cells inside "conflictArray"
+        var normalList = [];
+
+        // loop through all cells in "conflictArray" and add the number to "normalList" if the cell has a "normal" or starting number
+        for (var i = 0; i < conflictArray.length; i++) {
+            if (document.getElementById(conflictArray[i]).className != "pm-input") {
+                normalList.push(document.getElementById(conflictArray[i]).value)
             }
+        }
 
-            // else if the cell contains pencilmarks, set "isStillPm" to true
-            else if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
-                isStillPm = true;
+        // loop through all digits 1-9 and if the digit does not appear in "normalList", input that digit to the cell as a pencilmark
+        for (var num = 1; num < 10; num++) {
+            if (!normalList.includes(num.toString())) {
+                if (document.getElementById(cell).className == "pm-input") {
+                    lastNumEntered = num.toString();
+                    addToArray(cell);
+                }
+
             }
         }
     }
 
-    // if "isStillEmpty" is true
-    if (isStillEmpty) {
-        
-        // change the innerHTML to the appropriate error message
-        document.getElementById("checkoverlay").innerHTML = `
-        <div id="checkcenter">
-        You cannot check since there are still empty spaces on the board.
-        <br>
-        <div onclick="
-        document.getElementById('checkoverlay').style.display = 'none';
-        document.getElementById('grid-container').style.display = 'grid';
-        " class="optiondivs" id="close">Close</div>
-        </div>
-        `;
+    // indicate in "history" that autofill has ended
+    history[historyIndex] = ["autofill end", autoFillCount];
+    historyIndex++;
 
-        // hide the grid and display the message
-        document.getElementById("checkoverlay").style.display = "block";
-        document.getElementById("grid-container").style.display = "none";
-        return false;
-    }
-
-    // else if "isStillPm" is true
-    else if (isStillPm) {
-        
-        // change the innerHTML to the appropriate error message
-        document.getElementById("checkoverlay").innerHTML = `
-        <div id="checkcenter">
-        You cannot check since there are still pencilmarks on the board.
-        <br>
-        <div onclick="
-        document.getElementById('checkoverlay').style.display = 'none';
-        document.getElementById('grid-container').style.display = 'grid';
-        " class="optiondivs" id="close">Close</div>
-        </div>
-        `;
-
-        // hide the grid and display the message
-        document.getElementById("checkoverlay").style.display = "block";
-        document.getElementById("grid-container").style.display = "none";
-        return false;
-    }
-    return true;
+    // indicate that autofill has finished
+    isAutoFill = false;
 }
 
 /**
- * Gives the focused element the shift background color if "isSelectMultiple" is true
+ * Gives the focused cell the shift background color if "isSelectMultiple" is true
   * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
  */
 function selectFocus(id) {
@@ -824,7 +820,7 @@ function selectFocus(id) {
         highlightNums();
     }
 
-    // if the user is focusing and isSelectMultiple is true, change the background color to the shift color for that cell
+    // if the user is focusing and "isSelectMultiple" is true, change the background color to the shift color for that cell
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -832,18 +828,18 @@ function selectFocus(id) {
 }
 
 /**
- * Gives the selected element the shift background color if "isSelectMultiple" is true
+ * Gives the selected cell the shift background color if "isSelectMultiple" is true
   * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
  */
 function selectClick(id) {
 
-    // set and focus on curId
+    // focus onto "curId" if it is valid
     curId = id;
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
 
-    // if the user is selecting and isSelectMultiple is true, change the background color to the shift color for that cell
+    // if the user is selecting and "isSelectMultiple" is true, change the background color to the shift color for that cell
     if (isSelectMultiple) {
         selectArray[id] = true;
         document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
@@ -855,7 +851,7 @@ function selectClick(id) {
         // loop through all 81 cells
         for (var i = 0; i < 81; i++) {
 
-            // if the element is currently selected
+            // if the cell is currently selected
             if (selectArray[i]) {
                 
                 // if no color is set for that cell
@@ -870,7 +866,7 @@ function selectClick(id) {
                     document.getElementById(i).style.backgroundColor = colorMap[i];
                 }
                 
-                // unselect the cell
+                // deselect the cell
                 selectArray[i] = false;
             }
         }
@@ -881,92 +877,78 @@ function selectClick(id) {
         isShift = false;
     }
     
-    // focus onto "curId"
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
 }
 
 /**
- * Inputs the number that was selected from the numbers table
-  * @param {String} num  The number that should be added
+ * Gives the moused over cell the shift background color if "drag" is true
+ * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
  */
-function tableInput(num) {
+function selectDrag(id) {
 
-    // focus onto the curId
+    // if the global variable drag is true and the user is mousing over a grid item
+    if (drag && document.activeElement.id != "" && id != null) {
+
+        // turn on the shift indication circle next to the home icon, make "isSelectMultiple" true, and change the id of the active element in selectArray to true because the user is selecting multiple through dragging
+        document.getElementById("shiftIndication").style.backgroundColor = root.style.getPropertyValue('--shiftIndication');
+        isSelectMultiple = true;
+        selectArray[document.activeElement.id] = true;
+        document.getElementById(document.activeElement.id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+        selectArray[id] = true;
+        document.getElementById(id).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+
+        // change the focus on the board to the cells being dragged over to make it clear to the user where on the board they are
+        curId = id;
+        if (document.getElementById(curId) != null) {
+            document.getElementById(curId).focus();
+        }
+
+    }
+}
+
+/**
+ * Sets the background color of the selected cells to the color chosen by the user in the "colorsTable"
+ * @param {String} colorId  An id from the table input (color1, color2, etc.)
+ */
+function setColor(colorId) {
+
+    // get the color that the user selected
+    var color = document.getElementById(colorId).style.backgroundColor;
+
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
-    
-    // set the global variable "lastNumEntered" to num
-    lastNumEntered = num;
 
-    // if the active element does not have a class name of readonly, call addToArray
-    if (document.getElementById(document.activeElement.id).className.includes("readonly") == false) {
-        addToArray(document.activeElement.id);
-    }
+    // set the global variable "curentColor" to the selected colo
+    currentColor = color;
 
     // loop through all 81 cells
     for (var i = 0; i < 81; i++) {
 
-        // if the cell is selected and does not have a class name of readonly, call addToArray
-        if (selectArray[i] && i != document.activeElement.id && document.getElementById(i).className.includes("readonly") == false) {
-            addToArray(i.toString());
+        // if the cell is in "selectArray"
+        if (selectArray[i]) {
+
+            // change the cell's background color and set the value in the "colorMap"
+            document.getElementById(i).style.backgroundColor = currentColor;
+            colorMap[i] = currentColor;
         }
+    }
+
+    // if the active element is a cell, change its background color and set the value in the "colorMap"
+    if (document.activeElement.id != "" && document.activeElement.id >= 0 && document.activeElement.id < 81) {
+        document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
+        colorMap[document.activeElement.id] = currentColor;
     }
 }
 
 /**
- * Notifies user if they successfully finished the Sudoku
- */
-function checkAlert() {
-
-    // if the user has clicked "Check"
-    if (solved != "None") {
-
-        // if the sudoku is correctly solved
-        if (solved == "True") {
-
-            // change the innerHTML of the grid to display a message of success
-            document.getElementById("checkoverlay").innerHTML = `
-                <div id="checkcenter">
-                You successfully finished the sudoku!
-                <br>
-                <div onclick="
-                document.getElementById('checkoverlay').style.display = 'none';
-                document.getElementById('grid-container').style.display = 'grid';
-                " class="optiondivs" id="close">Close</div>
-                </div>
-                `;
-            document.getElementById("checkoverlay").style.display = "block";
-            document.getElementById("grid-container").style.display = "none";
-        }
-
-        // else the sudoku is not correctly solved
-        else {
-
-            // change the innerHTML of the grid to display a message of failure
-            document.getElementById("checkoverlay").innerHTML = `
-                <div id="checkcenter">
-                Your answer is incorrect. The errors have been highlighted red.
-                <br>
-                <div onclick="
-                document.getElementById('checkoverlay').style.display = 'none';
-                document.getElementById('grid-container').style.display = 'grid';
-                " class="optiondivs" id="close">Close</div>
-                </div>
-                `;
-            document.getElementById("checkoverlay").style.display = "block";
-            document.getElementById("grid-container").style.display = "none";
-        }
-    }
-}
-
-
-/**
- * Creates an array of cell ids that are "seen" from the passed id
+ * Creates an array of cell id's that are in the same row, column, and box as the passed id
   * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
-  * @return  An array of cell ids
+  * @return {Array}  An array of cell ids
  */
 function createConflictArray(id) {
     
@@ -976,19 +958,19 @@ function createConflictArray(id) {
     // initialize an array called "conflictArray"
     var conflictArray = [];
 
-    // loop through a series of ids in the grid that exist in the same row as "id" and add those ids to "conflictArray"
+    // loop through a series of cells in the grid that exist in the same row as "id" and add those to "conflictArray"
     for (var i = id - id % 9; i < (9 - id % 9) + id; i++) {
         conflictArray.push(parseInt(i));
     }
 
-    // loop through a series of ids in the grid that exist in the same column as "id" and add those ids to "conflictArray"
+    // loop through a series of cells in the grid that exist in the same column as "id" and add those to "conflictArray"
     for (var i = 0; i < 81; i++) {
         if (i % 9 == id % 9) {
             conflictArray.push(parseInt(i));
         }
     }
     
-    // form a series of ids that exist in the same box as "id"
+    // form a series of cells that exist in the same box as "id"
     var x = parseInt(id / 9);
     var y = id % 9;
     var listMR = [];
@@ -1015,7 +997,7 @@ function createConflictArray(id) {
         listMC = [y - 1, y, y + 1];
     }
 
-    // from the series of ids in the same box, loop through all of them and add them to "conflictArray"
+    // from the series of id's in the same box, loop through all of them and add them to "conflictArray"
     for (var i = 0; i < listMR.length; i++) {
         for (var j = 0; j < listMC.length; j++) {
             if (conflictArray.includes(9 * listMR[i] + listMC[j]) == false) {
@@ -1029,12 +1011,12 @@ function createConflictArray(id) {
 }
 
 /**
- * Deletes all pencilmark instances of a number in the same row, box, or column once a normal number is inputted
+ * Deletes all pencilmark instances of a number in the same row, column, and box once a normal number is inputted
  * @param {String} id  An id from 0-80 that maps to a specific cell in the grid
  */
 function deletePms(id) {
 
-    // create an array of all cells that the focused cell "sees"
+    // create an array of all cells that are in the same row, column, or box as the focused cell
     var conflictArray = createConflictArray(id);
     
     // loop through all cells in conflictArray
@@ -1049,11 +1031,11 @@ function deletePms(id) {
 }
 
 /**
- * Toggle on/off the option to automatically delete pencilmarks in the same row, box, or column
+ * Toggles on/off the option to automatically delete pencilmarks in the same row, column, and box
  */
 function toggleDeletePms() {
     
-    // focus onto "curId"
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -1075,16 +1057,15 @@ function toggleDeletePms() {
     }
 }
 
-
 /**
- * Highlight all instances of the focused number, including pencilmarks, in the grid
+ * Highlights all instances of the focused number, including pencilmarks, in the grid
  */
 function highlightNums() {
 
     // initialize variable "conflictArray" to use only if isHighlightRcb is true
     var conflictArray = []
 
-    // if isHighlightRcb is true, assign "conflictArray" to an array of all cells that the focused cell "sees"
+    // if isHighlightRcb is true, assign "conflictArray" to an array of all cells that are in the same row, column, or box as the focused cell
     if (isHighlightRcb) {
         conflictArray = createConflictArray(document.activeElement.id);
     }
@@ -1112,13 +1093,12 @@ function highlightNums() {
     }
 }
 
-
 /**
- * Toggle on/off the option to highlight the row, column, and box of a given cell 
+ * Toggles on/off the option to highlight the row, column, and box of a given cell 
  */
 function toggleHighlightNums() {
 
-    // if "curId" is valid, focus onto the element with id "curId"
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -1137,7 +1117,7 @@ function toggleHighlightNums() {
             document.getElementById(i).style.filter = "brightness(100%)";
         }
         
-        // if isHighlightRcb is true, call highlightNums to rehighlight those cells
+        // if isHighlightRcb is true, call highlightRcb() to rehighlight those cells
         if (isHighlightRcb) {
             highlightRcb();
         }
@@ -1158,13 +1138,12 @@ function toggleHighlightNums() {
     }
 }
 
-
 /**
- * Highlight the entire row, column, and box that the focused cell "sees"
+ * Highlights the cells in the same row, column, and box as the focused cell
  */
 function highlightRcb() {
 
-    // create an array of all cells that the focused cell "sees"
+    // create an array of all cells in the same row, column, and box as the focused cell
     var conflictArray = createConflictArray(document.activeElement.id);
 
     // loop through all 81 cells and unhighlight each cell
@@ -1183,13 +1162,12 @@ function highlightRcb() {
     }
 }
 
-
 /**
- * Toggle on/off the option to highlight the row, column, and box of a given cell 
+ * Toggles on/off the option to highlight the row, column, and box of a given cell 
  */
 function toggleHighlightRcb() {
 
-    // if "curId" is valid, focus onto the element with id "curId"
+    // focus onto "curId" if it is valid
     if (document.getElementById(curId) != null) {
         document.getElementById(curId).focus();
     }
@@ -1229,69 +1207,7 @@ function toggleHighlightRcb() {
 }
 
 /**
- * Reset the grid back to its original state with only the starting numbers
- */
-function restart() {
-    
-    // loop through all 81 cells
-    for (var i = 0; i < 81; i++) {
-
-        // select the cell
-        selectArray[i] = true;
-        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
-
-    }
-
-    // delete the focused element's value 
-    document.getElementById(document.activeElement.id).value = "";
-
-    // reset the pencilmarks array at the focused element
-    pmArray[document.activeElement.id] = [];
-    
-    // loop through all 81 cells 
-    for (var i = 0; i < 81; i++) {
-
-        // if the cell is selected and is not a starting number
-        if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
-            
-            // delete the value and reset the pencilmarks array at the selected cell
-            document.getElementById(i).value = "";
-            pmArray[i] = [];
-
-        }
-    }
-
-    // ensure grid is in the correct mode
-    changeClassName();
-
-    // reset each cell's background color to the default color and deselect all cells
-
-    // indicate that cells are no longer being selected
-    isSelectMultiple = false;
-    
-    // loop through all 81 cells
-    for (var i = 0; i < 81; i++) {
-        
-        // set each cell's background color to the default
-        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
-        
-        // deselect each cell
-        selectArray[i] = false;
-    }
-    
-    // reset "history"
-    history = [];
-    historyIndex = 0;
-
-    // reset the shift indicator
-    document.getElementById("shiftIndication").style = "background-color: none";
-    
-    // indicate that shift is not pressed
-    isShift = false;
-}
-
-/**
- * Change the inner HTML of the "Change Theme" div to display the theme options the user can select from 
+ * Changes the inner HTML of the "Change Theme" div to display the theme options the user can select from 
  */
 function themeOption() {
     document.getElementById("changetheme").innerHTML = `
@@ -1305,7 +1221,7 @@ function themeOption() {
 }
 
 /**
- * If a theme has been selected, revert the "Change Theme" div back to its original HTML
+ * If a theme has been selected, reverts the "Change Theme" div back to its original HTML
  */
 function revertChangeTheme() {
     document.getElementById("changetheme").innerHTML = `
@@ -1316,9 +1232,6 @@ function revertChangeTheme() {
  * Changes theme based on user specified selection
  */
 function changeTheme() {
-
-    // assign the root element of the document tree
-    let root = document.documentElement;
 
     // if grid contains colors, obtain the position and color and store it in a map named "oldThemeColorMap"
     var oldThemeColorMap = {};
@@ -1393,7 +1306,7 @@ function changeTheme() {
 
     }
 
-    // if the desired theme change is "dark", change CSS variables to the corresponding color palette
+    // else if the desired theme change is "dark", change CSS variables to the corresponding color palette
     else if (themeid == "dark") {
 
         // change document CSS colors
@@ -1431,7 +1344,7 @@ function changeTheme() {
         window.localStorage.setItem("storedTheme", "dark");
     }
     
-    // if the desired theme change is "retro", change CSS variables to the corresponding color palette
+    // else if the desired theme change is "retro", change CSS variables to the corresponding color palette
     else if (themeid == "retro") {
 
         // change document CSS colors
@@ -1469,7 +1382,7 @@ function changeTheme() {
         window.localStorage.setItem("storedTheme", "retro");
     }
 
-    // if the desired theme change is "light", change CSS variables to the corresponding color palette
+    // else the desired theme change is "light", change CSS variables to the corresponding color palette
     else {
 
         // change document CSS colors
@@ -1614,7 +1527,6 @@ function instructionsDisplay() {
     }
 }
 
-
 /**
  * Displays "About Us" message
  */
@@ -1638,7 +1550,7 @@ function aboutDisplay() {
     if (showAbout) {
         document.getElementById("aboutdisplay").style.display = "block";
         document.getElementById("grid-container").style.display = "none";
-        document.getElementById("about").innerHTML = "Close About";
+        document.getElementById("about").innerHTML = "Close About Us";
         showAbout = false;
     }
     
@@ -1646,103 +1558,207 @@ function aboutDisplay() {
     else {
         document.getElementById("aboutdisplay").style.display = "none";
         document.getElementById("grid-container").style.display = "grid";
-        document.getElementById("about").innerHTML = "About";
+        document.getElementById("about").innerHTML = "About Us";
         showAbout = true;
     }
 
 }
 
-// once the body has finished loading, alter the class of the body
-$(window).load(function () {
-    $("body").addClass('all-loaded');
-});
+/**
+ * Validates the form when the user clicks "Check"
+ * @return {boolean}  True if the form passes all validation; false otherwise
+ */
+function validateForm() {
 
+    // close "Instructions" message if it is open 
+    if (!showInstructions) {
+        document.getElementById("instructionsdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("instructions").innerHTML = "Instructions";
+        showInstructions = true;
+    }
+
+    // close "About Us" message if it is open
+    if (!showAbout) {
+        document.getElementById("aboutdisplay").style.display = "none";
+        document.getElementById("grid-container").style.display = "grid";
+        document.getElementById("about").innerHTML = "About Us";
+        showAbout = true;
+    }
+
+    // initialize two local variable booleans to test if the grid is still empty or if it still contains pencilmarks
+    var isStillEmpty = false;
+    var isStillPm = false;
+
+    // set the curId
+    if (document.activeElement.id != null) {
+        curId = document.activeElement.id;
+    }
+
+    // loop through all 81 cells
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+
+            // if the cell is empty, set "isStillEmpty" to true
+            if (document.getElementById(i * 9 + j).value == "") {
+                isStillEmpty = true;
+            }
+
+            // else if the cell contains pencilmarks, set "isStillPm" to true
+            else if (document.getElementById(i * 9 + j).className.includes("pm-input")) {
+                isStillPm = true;
+            }
+        }
+    }
+
+    // if "isStillEmpty" is true
+    if (isStillEmpty) {
+
+        // change the innerHTML to the appropriate error message
+        document.getElementById("checkoverlay").innerHTML = `
+        <div id="checkcenter">
+        You cannot check since there are still empty spaces on the board.
+        <br>
+        <div onclick="
+        document.getElementById('checkoverlay').style.display = 'none';
+        document.getElementById('grid-container').style.display = 'grid';
+        " class="optiondivs" id="close">Close</div>
+        </div>
+        `;
+
+        // hide the grid and display the message
+        document.getElementById("checkoverlay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        return false;
+    }
+
+    // else if "isStillPm" is true
+    else if (isStillPm) {
+
+        // change the innerHTML to the appropriate error message
+        document.getElementById("checkoverlay").innerHTML = `
+        <div id="checkcenter">
+        You cannot check since there are still pencilmarks on the board.
+        <br>
+        <div onclick="
+        document.getElementById('checkoverlay').style.display = 'none';
+        document.getElementById('grid-container').style.display = 'grid';
+        " class="optiondivs" id="close">Close</div>
+        </div>
+        `;
+
+        // hide the grid and display the message
+        document.getElementById("checkoverlay").style.display = "block";
+        document.getElementById("grid-container").style.display = "none";
+        return false;
+    }
+    return true;
+}
 
 /**
- * Sets the background color of the selected cells to the color chosen by the user in the "colorsTable"
- * @param {String} colorId  An id from the table input (color1, color2, etc.)
+ * Notifies user if they successfully finished the Sudoku
  */
-function setColor(colorId) {
+function checkAlert() {
 
-    // get the color that the user selected
-    var color = document.getElementById(colorId).style.backgroundColor;
-    
-    // focus onto curId
-    if (document.getElementById(curId) != null) {
-        document.getElementById(curId).focus();
+    // if the user has clicked "Check"
+    if (solved != "None") {
+
+        // if the sudoku is correctly solved
+        if (solved == "True") {
+
+            // change the innerHTML of the grid to display a message of success
+            document.getElementById("checkoverlay").innerHTML = `
+                <div id="checkcenter">
+                You successfully finished the sudoku!
+                <br>
+                <div onclick="
+                document.getElementById('checkoverlay').style.display = 'none';
+                document.getElementById('grid-container').style.display = 'grid';
+                " class="optiondivs" id="close">Close</div>
+                </div>
+                `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+        }
+
+        // else the sudoku is not correctly solved
+        else {
+
+            // change the innerHTML of the grid to display a message of failure
+            document.getElementById("checkoverlay").innerHTML = `
+                <div id="checkcenter">
+                Your answer is incorrect. The errors have been highlighted red.
+                <br>
+                <div onclick="
+                document.getElementById('checkoverlay').style.display = 'none';
+                document.getElementById('grid-container').style.display = 'grid';
+                " class="optiondivs" id="close">Close</div>
+                </div>
+                `;
+            document.getElementById("checkoverlay").style.display = "block";
+            document.getElementById("grid-container").style.display = "none";
+        }
     }
-    
-    // set the global variable "curentColor" to the selected colo
-    currentColor = color;
+}
+
+/**
+ * Resets the grid back to its original state with only the starting numbers
+ */
+function restart() {
 
     // loop through all 81 cells
     for (var i = 0; i < 81; i++) {
-        
-        // if the cell is in "selectArray"
-        if (selectArray[i]) {
 
-            // change the cell's background color and set the value in the "colorMap"
-            document.getElementById(i).style.backgroundColor = currentColor;
-            colorMap[i] = currentColor;
+        // select the cell
+        selectArray[i] = true;
+        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--shiftColor');
+
+    }
+
+    // delete the focused element's value 
+    document.getElementById(document.activeElement.id).value = "";
+
+    // reset the pencilmarks array at the focused element
+    pmArray[document.activeElement.id] = [];
+
+    // loop through all 81 cells 
+    for (var i = 0; i < 81; i++) {
+
+        // if the cell is selected and is not a starting number
+        if (selectArray[i] && document.getElementById(i).className.includes("readonly") == false) {
+
+            // delete the value and reset the pencilmarks array at the selected cell
+            document.getElementById(i).value = "";
+            pmArray[i] = [];
+
         }
     }
 
-    // change the background color and set the value for the active element as well
-    document.getElementById(document.activeElement.id).style.backgroundColor = currentColor;
-    colorMap[document.activeElement.id] = currentColor;
-}
+    // ensure grid is in the correct mode
+    changeClassName();
 
+    // reset each cell's background color to the default color and deselect all cells
 
-/**
- * Inputs all possible pencilmarks into each cell in the grid
- */
-function fillAllPms() {
-    
-    changeMode("pencilmarks");
+    // indicate that cells are no longer being selected
+    isSelectMultiple = false;
 
-    // set "isAutoFill" to true and start a new count of "autoFillCount"
-    isAutoFill = true;
-    autoFillCount = 0;
+    // loop through all 81 cells
+    for (var i = 0; i < 81; i++) {
 
-    // indicate in "history" that autofill has started
-    history[historyIndex] = "autofill start";
-    historyIndex++;
-    
-    // loop through all 81 cells and input all possible pencilmarks
-    for (var cell = 0; cell < 81; cell++) {
+        // set each cell's background color to the default
+        document.getElementById(i).style.backgroundColor = root.style.getPropertyValue('--itemBackground');
 
-        // reset pmArray in each cell position to overwrite current pencilmarks
-        pmArray[cell] = [];
-
-        // create an array of all cells that the focused cell "sees"
-        var conflictArray = createConflictArray(cell);
-
-        // create array that houses all the "normal" and starting numbers within the cells inside "conflictArray"
-        var normalList = [];
-
-        // loop through all cells in "conflictArray" and add the number to "normalList" if the cell has a "normal" or starting number
-        for (var i = 0; i < conflictArray.length; i++) {
-            if (document.getElementById(conflictArray[i]).className != "pm-input") {
-                normalList.push(document.getElementById(conflictArray[i]).value)
-            }
-        }
-        
-        // loop through all digits 1-9 and if the digit does not appear in "normalList", input that digit to the cell as a pencilmark
-        for (var num = 1; num < 10; num++) {
-            if (!normalList.includes(num.toString())) {
-                if (document.getElementById(cell).className == "pm-input") {
-                    lastNumEntered = num.toString();
-                    addToArray(cell);
-                }
-
-            }
-        }
+        // deselect each cell
+        selectArray[i] = false;
     }
-    
-    // indicate in "history" that autofill has ended
-    history[historyIndex] = ["autofill end", autoFillCount];
-    historyIndex++;
 
-    // indicate that autofill has finished
-    isAutoFill = false;
+    // reset "history"
+    history = [];
+    historyIndex = 0;
+
+    // reset the shift indicator
+    document.getElementById("shiftIndication").style = "background-color: none";
+
+    // indicate that shift is not pressed
+    isShift = false;
 }

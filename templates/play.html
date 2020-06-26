@@ -115,7 +115,7 @@
                                     <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxlength="1" class="readonly" min="1" value="{{ input_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
                                 </div>
                                 {% else %}
-                                <div class="grid-item move">
+                                <div class="grid-item">
                                     <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
                                 </div>
                                 {% endif %}
@@ -125,11 +125,11 @@
                                     <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" class="readonly" maxlength="1" min="1" value="{{ input_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onmouseover="selectDrag(this.id)" onclick="selectClick(this.id)" readonly>
                                 </div>
                                 {% elif check_array[i][j] %}
-                                <div class="grid-item move">
+                                <div class="grid-item">
                                     <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="txt-input" value="{{ play_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
                                 </div>
                                 {% else %}
-                                <div class="grid-item move">
+                                <div class="grid-item">
                                     <input id="{{ i*9 + j }}" name="{{ i*9 + j }}" type="text" maxLength="1" class="txt-input errors" value="{{ play_array[i][j] }}" autocomplete="off" onfocus="selectFocus(this.id)" onclick="selectClick(this.id)" onmouseover="selectDrag(this.id)" readonly>
                                 </div>
                                 {% endif %}
@@ -186,4 +186,4 @@
         </div>
     </form>
 </body>
-{% endblock %}
+{% endblock %}div
