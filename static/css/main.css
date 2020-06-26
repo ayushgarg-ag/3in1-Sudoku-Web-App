@@ -207,9 +207,6 @@ input.errors {
 input:focus {
     outline: 3px var(--textColor) solid;
 }
-input:invalid {
-    background-color: green;
-}
 input::selection {
     background: transparent;
 }
