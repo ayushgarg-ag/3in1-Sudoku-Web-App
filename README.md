@@ -2,7 +2,7 @@
 ## Solve a Sudoku, Generate and Play a Sudoku of Varying Difficulty, or Input and Play Your Own Sudoku
 
 ## Link
-<a href="https://sudokus.herokuapp.com/"><b>Check out our live Sudoku web application here</b></a>
+<a href="https://sudokus.herokuapp.com/"><b><i>Check out our live Sudoku web application here</i></b></a>
 
 ## Table of Contents
 
