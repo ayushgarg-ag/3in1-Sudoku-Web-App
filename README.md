@@ -37,20 +37,21 @@ This project is a multi-dimensional Sudoku web application, which runs with a Fl
 <a id="about"></a>
 
 ## About Us
-This website was co-created and designed from scratch by Ayush Garg and Suchit Sharma in the summer of 2020.
+This website was co-created and designed from scratch by <b>Ayush Garg</b> and <b>Suchit Sharma</b> in the summer of 2020.
 
 As avid fans of solving Sudokus, we set out on this multi-week project to learn about some new technologies and frameworks, get a glimpse into unifying backend and frontend code, and create a one-stop-shop for all things Sudoku!
 
-<p>Check out some of our other projects on GitHub</p>
-<b><span style="margin-right: 75px;">Ayush Garg: <a href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span>
-Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a></b>
+<p>Check out some of our other projects on GitHub: </p>
+<b><p><span style="margin-right: 75px;">Ayush Garg: <a href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span></p>
+<p>Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a></p></b>
 
-<p>Learn more about us on our Linkedin pages</p>
-<b><span style="margin-right: 66px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
-Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/" target="_blank">LinkedIn</a></b>
 
-<p>&nbsp;</p>
-Having encountered many interesting features across Sudoku mobile and web applications, we sought to combine all of them into one place for the enjoyment of friends and family, as well as any and all Sudoku lovers! We encourage you to give it a try!
+<p>Learn more about us on our Linkedin pages: </p>
+<b><p><span style="margin-right: 66px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span></p>
+
+<p>Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/" target="_blank">LinkedIn</a></p></b>
+
+<p>Having encountered many interesting features across Sudoku mobile and web applications, we sought to combine all of them into one place for the enjoyment of friends and family, as well as any and all Sudoku lovers! We encourage you to give it a try!</p>
 
 For any questions, reporting of bugs, or requests for additional features, email us at ayushgarg.ag@gmail.com and suchitsharma919@gmail.com.
 
@@ -60,7 +61,7 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 ### Themes
 
-![image](/static/css/images/DarkTheme.png)
+<img src="/static/css/images/DarkTheme.png" width="25%"><img src="/static/css/images/TanTheme.png" width="25%"><img src="/static/css/images/LightTheme.png" width="25%"><img src="/static/css/images/RetroTheme.png" width="25%">
 
 
 <a id="technology"></a>
@@ -139,22 +140,22 @@ For any questions, reporting of bugs, or requests for additional features, email
 ### Overall Features
 
 #### Dynamic Themes
-With a goal to create a minimalist yet aesthetic design, we give the user the ability to choose between four themes: dark, tan, light, and retro. Simply click on the “Change Theme” button located on every page to browse through the different choices. Once a theme has been chosen, elements around the document have their styles changed according to the specified CSS variables.
++ With a goal to create a minimalist yet aesthetic design, we give the user the ability to choose between four themes: dark, tan, light, and retro. Simply click on the “Change Theme” button located on every page to browse through the different choices. Once a theme has been chosen, elements around the document have their styles changed according to the specified CSS variables.
 
 #### Home Icon
-After exiting the menu page, an icon will appear on the left-side of each page that can redirect users back to the menu page.
++ After exiting the menu page, an icon will appear on the left-side of each page that can redirect users back to the menu page.
 
 #### Generating and Playing a Sudoku
-The user can choose between 4 levels of difficulty (easy, medium, hard, expert) and the application will automatically preload a random Sudoku with that difficulty into the interactive player interface.
++ The user can choose between 4 levels of difficulty (easy, medium, hard, expert) and the application will automatically preload a random Sudoku with that difficulty into the interactive player interface.
 
 #### Inputting a Sudoku
 + This Sudoku application also allows users to input their own Sudokus to play and/or solve. Under the options on the menu page, users can select to either play or solve a Sudoku. Based on those specifications, users are then able to input their Sudokus. The user can input as many numbers into either inputter (as long as it is valid), and for better navigation, users are able to use arrow keys to traverse the grid. If the inputted Sudoku is invalid, a warning message will appear and allow users to go back to change the inputs. 
 
 #### Solving a Sudoku
-Input any valid Sudoku and the solver will give you a correct solution that follows all Sudoku rules. The solution will return very quickly, even to the world’s hardest Sudoku!
++ Input any valid Sudoku and the solver will give you a correct solution that follows all Sudoku rules. The solution will return very quickly, even to the world’s hardest Sudoku!
 
 #### Interactive Player Interface
-Once the user has chosen a Sudoku to play, they are brought to the player interface, which incorporates many unique features that ease the Sudoku experience.
++ Once the user has chosen a Sudoku to play, they are brought to the player interface, which incorporates many unique features that ease the Sudoku experience.
 
 <a id="interfacefeatures"></a>
 
@@ -213,41 +214,41 @@ The Generate object is initialized with a string that indicates a certain diffic
 
 <a id="app"></a>
 
-### `/app.py`
+#### `/app.py`
 This page controls all of the app routing through Flask. Depending on which route has been called, the defined functions render the appropriate template and send certain variables that will be accessed by Jinja 2 in the HTML document. The file imports the Sudoku and Generate classes from sudopy.py
 
-The app route for `/solution` gathers the form request data from `input_solve.html` and creates the Sudoku object based on the numbers inputted by the user. The `.solve()` method is then called and passed as a variable to solution.html so the completed sudoku can be displayed to the user.
+The app route for `/solution` gathers the form request data from `input_solve.html` and creates the Sudoku object based on the numbers inputted by the user. The `solve()` method is then called and passed as a variable to solution.html so the completed sudoku can be displayed to the user.
 
 The app route for `/play` changes depending on which page created the “POST” request (either `input_play.html`, `menu.html`, or `play.html`). If the call was from `input_play.html`, it builds the Sudoku object based on the inputted numbers and returns the template for `play.html`. If it was called from `menu.html`, then it knows the user has chosen to play a Sudoku of a specified difficulty. It will check which difficulty level, create a Sudoku of that level with the Generate object, and then send that Sudoku to `play.html`. Lastly, if the call was from “play.html” itself, then the user has finished playing the Sudoku and wants to check if their solution is correct. Therefore, it will use the methods in the Sudoku class to send back a boolean of if the Sudoku is solved and which items are wrong, if any.
 
 <a id="menu"></a>
 
-### `/templates/menu.html` and `/static/javascript/menu.js`
+#### `/templates/menu.html` and `/static/javascript/menu.js`
 The menu page can redirect users to three different pages: `solution.html` (if the user wants to solve a Sudoku), `input_play.html` (if the user wants to input and play their own Sudoku), or `play.html` (if the user chooses the difficulty level of the Sudoku they want to play.
 
 <a id="inputplay"></a>
 
-### `/templates/input_play.html` and `/static/javascript/base.js`
+#### `/templates/input_play.html` and `/static/javascript/base.js`
 Upon entering a valid Sudoku and clicking *“Play,”* the user will be redirected to play.html, where the inputted numbers are preloaded as the starting numbers.
 
 <a id="play"></a>
 
-### `/templates/play.html` and `/static/javascript/play.js`
+#### `/templates/play.html` and `/static/javascript/play.js`
 After completing the Sudoku, the user can check the Sudoku to see if the solution is correct. This will redirect the user back to `play.html` with a message. If the solution is incorrect, the errors will be highlighted red.
 
 <a id="inputsolve"></a>
 
-### `/templates/input_solve.html` and `/static/javascript/base.js`
+#### `/templates/input_solve.html` and `/static/javascript/base.js`
 Upon entering a valid Sudoku and clicking *“Solve,”* the user will be redirected to solution.html, where a solution to the inputted Sudoku will be displayed.
 
 <a id="solution"></a>
 
-### `/templates/solution.html` and `/static/javascript/base.js`
+#### `/templates/solution.html` and `/static/javascript/base.js`
 After seeing the solution to the inputted Sudoku, the user can choose to return to menu.html to solve a different Sudoku or utilize a different option.
 
 <a id="main"></a>
 
-### `/static/css/main.css`
+#### `/static/css/main.css`
 This is the main CSS document that is utilized by all of the HTML pages. The initial CSS variables are stored here, so they can be manipulated by the Javascript documents to create different themes.
 
 **For a more in-depth look into the inner-workings of these files, feel free to open them in the repository and look at the documentation provided.**
