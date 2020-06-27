@@ -2,7 +2,7 @@
 ## Solve a Sudoku, Generate and Play a Sudoku of Varying Difficulty, or Input and Play Your Own Sudoku
 
 ## Link
-Check out our Sudoku web application: 
+<a href="https://sudokus.herokuapp.com/"><b>Check out our live Sudoku web application here</b></a>
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ Check out our Sudoku web application:
 <a id="overview"></a>
 
 ## Brief Overview
-This project is a multi-dimensional Sudoku web application, which runs with a Flask API web framework in Python. The application allows users the option to generate and play a random sudoku based on varying difficulty (easy, medium, hard, or expert), input their own Sudokus (e.g. from a newspaper or other website) and play it, or solve any Sudoku of their choosing. The overall goal of this application is to give a seamless user experience by creating an intuitive interface and unique aesthetic, combined with a multitude of features that enhance speed and navigation throughout the Sudoku.
+This project is a multi-dimensional Sudoku web application, which runs with a Flask API web framework in Python. The application allows users the option to generate and play a random Sudoku based on varying difficulty (easy, medium, hard, or expert), input their own Sudokus (e.g. from a newspaper or other website) and play it, or solve any Sudoku of their choosing. The overall goal of this application is to give a seamless user experience by creating an intuitive interface and unique aesthetic, combined with a multitude of features that enhance speed and navigation throughout the Sudoku.
 
 <a id="about"></a>
 
@@ -82,7 +82,7 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 + The *Jinja 2 Templating Engine* is used to build HTML that can be returned to the user through an HTTP request. For our purposes, values are passed in the `render_template()` method in `app.py` to the HTML files, so that the placeholder variables of Jinja 2 can store the dynamic data. Furthermore, Jinja 2’s support for “template inheritance” allows us to utilize the same baseline HTML document while only making specific changes to each additional page.
 
-+ *Object-oriented programming* creates the Sudoku objects and Generate objects. Sudoku objects are used to solve and validate the sudokus while Generate objects are used to generate a random Sudoku based on a specified level of difficulty.
++ *Object-oriented programming* creates the Sudoku objects and Generate objects. Sudoku objects are used to solve and validate the Sudokus while Generate objects are used to generate a random Sudoku based on a specified level of difficulty.
 
 + *Recursion* is the main technique used to implement the solving algorithm. It works by inputting a valid number in each cell and recursively filling all cells until all numbers are valid.
 
@@ -220,7 +220,7 @@ The Generate object is initialized with a string that indicates a certain diffic
 #### `/app.py`
 This page controls all of the app routing through Flask. Depending on which route has been called, the defined functions render the appropriate template and send certain variables that will be accessed by Jinja 2 in the HTML document. The file imports the Sudoku and Generate classes from sudopy.py
 
-The app route for `/solution` gathers the form request data from `input_solve.html` and creates the Sudoku object based on the numbers inputted by the user. The `solve()` method is then called and passed as a variable to solution.html so the completed sudoku can be displayed to the user.
+The app route for `/solution` gathers the form request data from `input_solve.html` and creates the Sudoku object based on the numbers inputted by the user. The `solve()` method is then called and passed as a variable to solution.html so the completed Sudoku can be displayed to the user.
 
 The app route for `/play` changes depending on which page created the “POST” request (either `input_play.html`, `menu.html`, or `play.html`). If the call was from `input_play.html`, it builds the Sudoku object based on the inputted numbers and returns the template for `play.html`. If it was called from `menu.html`, then it knows the user has chosen to play a Sudoku of a specified difficulty. It will check which difficulty level, create a Sudoku of that level with the Generate object, and then send that Sudoku to `play.html`. Lastly, if the call was from “play.html” itself, then the user has finished playing the Sudoku and wants to check if their solution is correct. Therefore, it will use the methods in the Sudoku class to send back a boolean of if the Sudoku is solved and which items are wrong, if any.
 
