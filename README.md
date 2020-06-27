@@ -19,13 +19,6 @@ Check out our Sudoku web application:
 &emsp;&emsp;[Overall Features](#overallfeatures)  
 &emsp;&emsp;[Player Interface Features](#interfacefeatures)  
 [File Descriptions](#files)  
-&emsp;&emsp;[sudopy.py](#sudopy)  
-&emsp;&emsp;[app.py](#app)  
-&emsp;&emsp;[menu.html](#menu)  
-&emsp;&emsp;[input_play.html](#inputplay)  
-&emsp;&emsp;[play.html](#play)  
-&emsp;&emsp;[input_solve.html](#inputsolve)  
-&emsp;&emsp;[solution.html](#solution)  
 [Credits](#credits)    
 
 
@@ -62,6 +55,18 @@ For any questions, reporting of bugs, or requests for additional features, email
 ### Themes
 
 <img src="/static/css/images/DarkTheme.png" width="25%"><img src="/static/css/images/TanTheme.png" width="25%"><img src="/static/css/images/LightTheme.png" width="25%"><img src="/static/css/images/RetroTheme.png" width="25%">
+
+### Menu
+
+<img src="/static/css/images/MenuScreenShot.png" width="50%">
+
+### Play Path
+
+<img src="/static/css/images/InputPlayScreenShot.png" width="50%"><img src="/static/css/images/PlayScreenShot.png" width="50%">
+
+### Solve Path
+
+<img src="/static/css/images/InputSolveScreenShot.png" width="50%"><img src="/static/css/images/SolutionScreenShot.png" width="50%">
 
 
 <a id="technology"></a>
@@ -171,20 +176,20 @@ For any questions, reporting of bugs, or requests for additional features, email
 + Selections appear in a different color to easily distinguish selected cells, and the shift indicator next to the home icon will be on if there are any selected cells in the grid.
 
 #### User Inputs (Normal, Pencilmarks, or Colors)
-+ “Normal” mode allows users to input numbers that they believe exist in the final solution.
-+ “Pencilmarks” mode allows users to keep notes in specific cells if there are multiple possibilities. Users can easily delete specific pencilmarks in a cell by inputting the desired number again as a pencilmark in that cell. Normal numbers will automatically overwrite pencilmarks.
-+ “Colors” mode allows users to input colors into the grid. This allows users to distinguish certain cells from each other.
++ *“Normal”* mode allows users to input numbers that they believe exist in the final solution.
++ *“Pencilmarks”* mode allows users to keep notes in specific cells if there are multiple possibilities. Users can easily delete specific pencilmarks in a cell by inputting the desired number again as a pencilmark in that cell. Normal numbers will automatically overwrite pencilmarks.
++ *“Colors”* mode allows users to input colors into the grid. This allows users to distinguish certain cells from each other.
 + All modes allow for the user to either click on the interactive table containing the numbers/colors or by pressing a number on the keyboard.
-+ Modes can be changed by either clicking on the specific mode or by pressing the *SPACE* bar.
++ Modes can be changed by either clicking on the specific mode or by pressing the SPACE bar.
 
 #### 3 Option Toggles
-+ **“Auto Delete Pencilmarks”** automatically deletes pencilmarks that are in the same row, column, or box as a Normal number that has just been inputted. This eliminates the need to delete pencilmarks if the user inputs a Normal number.
-+ **“Highlight Numbers”** allows users to easily see all instances of a number simply by focusing onto a cell with that number.
-+ **“Highlight Row, Column, and Box”** shows the user all the cells in the grid that exist in the focused cell’s row, column, and box.
++ **“Auto Delete Pencilmarks”**: Automatically deletes pencilmarks that are in the same row, column, or box as a Normal number that has just been inputted. This eliminates the need to delete pencilmarks if the user inputs a Normal number.
++ **“Highlight Numbers”**: Allows users to easily see all instances of a number simply by focusing onto a cell with that number.
++ **“Highlight Row, Column, and Box”**: Shows the user all the cells in the grid that exist in the focused cell’s row, column, and box.
 
 #### Other Options
-+ **Auto Fill Pencilmarks**: Users can automatically input all possible pencilmarks in every cell by clicking this option. To undo this change, simply click “Undo.”
-+ **Undo**: Users can easily undo their previous changes by clicking on the “Undo” button.
++ **Auto Fill Pencilmarks**: Automatically inputs all possible pencilmarks in every cell . To undo this change, simply click *“Undo.”*
++ **Undo**: Users can easily undo their previous changes by clicking the *“Undo”* button.
 
 #### Checking the Sudoku
 + After completing the Sudoku, users can click *“Check”*. Note that only Sudokus that only have Normal numbers in every cell can be checked. Otherwise, a warning will be shown. If the Sudoku is correct, a success message will be shown. If it is incorrect, an incorrect message will be shown and errors will be highlighted in red.
@@ -197,22 +202,18 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 ## File Descriptions
 
-<a id="sudopy"></a>
-
-### `/sudopy.py`
+##### `/sudopy.py`
 This file contains 2 classes: Sudoku and Generate. 
 
-#### Sudoku Object
+#### Sudoku Class
 The Sudoku object is initialized with a passed 2D list. This list is then used to accomplish two main goals of solving the passed list and identifying if the passed list is a valid Sudoku. 
 
 Solving: The solver utilizes a backtracking algorithm. Using the numbers already in the cell, it iterates over every cell and attempts to fill each one with a valid number. If the inputted number results in an invalid Sudoku, then a different valid number takes its place. The grid is then filled recursively until all cells contain a valid number. This algorithm follows depth-first traversing, where it attempts to input as many valid numbers as possible before backtracking.
 
 Validation: The validator checks every row, column, and box, and if there exists more than one instance of a number from 1-9, then the Sudoku is invalid.
 
-#### Generate Object
+#### Generate Class
 The Generate object is initialized with a string that indicates a certain difficulty (easy, medium, hard, or expert). The intention of this class is to return a random Sudoku with a given difficulty.  It achieves this by parsing through a .txt file of 200 Sudokus with the same name as the initialized string, choosing a random line, building that line into a list that can be used to initialize a Sudoku object, and finally returning it. 
-
-<a id="app"></a>
 
 #### `/app.py`
 This page controls all of the app routing through Flask. Depending on which route has been called, the defined functions render the appropriate template and send certain variables that will be accessed by Jinja 2 in the HTML document. The file imports the Sudoku and Generate classes from sudopy.py
@@ -221,32 +222,20 @@ The app route for `/solution` gathers the form request data from `input_solve.ht
 
 The app route for `/play` changes depending on which page created the “POST” request (either `input_play.html`, `menu.html`, or `play.html`). If the call was from `input_play.html`, it builds the Sudoku object based on the inputted numbers and returns the template for `play.html`. If it was called from `menu.html`, then it knows the user has chosen to play a Sudoku of a specified difficulty. It will check which difficulty level, create a Sudoku of that level with the Generate object, and then send that Sudoku to `play.html`. Lastly, if the call was from “play.html” itself, then the user has finished playing the Sudoku and wants to check if their solution is correct. Therefore, it will use the methods in the Sudoku class to send back a boolean of if the Sudoku is solved and which items are wrong, if any.
 
-<a id="menu"></a>
-
 #### `/templates/menu.html` and `/static/javascript/menu.js`
 The menu page can redirect users to three different pages: `solution.html` (if the user wants to solve a Sudoku), `input_play.html` (if the user wants to input and play their own Sudoku), or `play.html` (if the user chooses the difficulty level of the Sudoku they want to play.
-
-<a id="inputplay"></a>
 
 #### `/templates/input_play.html` and `/static/javascript/base.js`
 Upon entering a valid Sudoku and clicking *“Play,”* the user will be redirected to play.html, where the inputted numbers are preloaded as the starting numbers.
 
-<a id="play"></a>
-
 #### `/templates/play.html` and `/static/javascript/play.js`
 After completing the Sudoku, the user can check the Sudoku to see if the solution is correct. This will redirect the user back to `play.html` with a message. If the solution is incorrect, the errors will be highlighted red.
-
-<a id="inputsolve"></a>
 
 #### `/templates/input_solve.html` and `/static/javascript/base.js`
 Upon entering a valid Sudoku and clicking *“Solve,”* the user will be redirected to solution.html, where a solution to the inputted Sudoku will be displayed.
 
-<a id="solution"></a>
-
 #### `/templates/solution.html` and `/static/javascript/base.js`
 After seeing the solution to the inputted Sudoku, the user can choose to return to menu.html to solve a different Sudoku or utilize a different option.
-
-<a id="main"></a>
 
 #### `/static/css/main.css`
 This is the main CSS document that is utilized by all of the HTML pages. The initial CSS variables are stored here, so they can be manipulated by the Javascript documents to create different themes.
