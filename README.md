@@ -58,15 +58,17 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 ### Menu
 
-<img src="/static/css/images/MenuScreenShot.png" width="50%">
+<img src="/static/css/images/MenuScreenShot.png" height="400px">
 
 ### Play Path
 
-<img src="/static/css/images/InputPlayScreenShot.png" width="50%"><img src="/static/css/images/PlayScreenShot.png" width="50%">
+<img src="/static/css/images/InputPlayScreenShot.png" height="400px">
+<img src="/static/css/images/PlayScreenShot.png" height="400px">
 
 ### Solve Path
 
-<img src="/static/css/images/InputSolveScreenShot.png" width="50%"><img src="/static/css/images/SolutionScreenShot.png" width="50%">
+<img src="/static/css/images/InputSolveScreenShot.png" height="400px">
+<img src="/static/css/images/SolutionScreenShot.png" height="400px">
 
 
 <a id="technology"></a>
@@ -145,7 +147,7 @@ For any questions, reporting of bugs, or requests for additional features, email
 ### Overall Features
 
 #### Dynamic Themes
-+ With a goal to create a minimalist yet aesthetic design, we give the user the ability to choose between four themes: dark, tan, light, and retro. Simply click on the “Change Theme” button located on every page to browse through the different choices. Once a theme has been chosen, elements around the document have their styles changed according to the specified CSS variables.
++ With a goal to create a minimalist yet aesthetic design, we give the user the ability to choose between four themes: dark, tan, light, and retro. Simply click on the *“Change Theme”* button located on every page to browse through the different choices. Once a theme has been chosen, elements around the document have their styles changed according to the specified CSS variables.
 
 #### Home Icon
 + After exiting the menu page, an icon will appear on the left-side of each page that can redirect users back to the menu page.
@@ -183,9 +185,9 @@ For any questions, reporting of bugs, or requests for additional features, email
 + Modes can be changed by either clicking on the specific mode or by pressing the SPACE bar.
 
 #### 3 Option Toggles
-+ **“Auto Delete Pencilmarks”**: Automatically deletes pencilmarks that are in the same row, column, or box as a Normal number that has just been inputted. This eliminates the need to delete pencilmarks if the user inputs a Normal number.
-+ **“Highlight Numbers”**: Allows users to easily see all instances of a number simply by focusing onto a cell with that number.
-+ **“Highlight Row, Column, and Box”**: Shows the user all the cells in the grid that exist in the focused cell’s row, column, and box.
++ **Auto Delete Pencilmarks**: Automatically deletes pencilmarks that are in the same row, column, or box as a Normal number that has just been inputted. This eliminates the need to delete pencilmarks if the user inputs a Normal number.
++ **Highlight Numbers**: Allows users to easily see all instances of a number simply by focusing onto a cell with that number.
++ **Highlight Row, Column, and Box**: Shows the user all the cells in the grid that exist in the focused cell’s row, column, and box.
 
 #### Other Options
 + **Auto Fill Pencilmarks**: Automatically inputs all possible pencilmarks in every cell . To undo this change, simply click *“Undo.”*
@@ -202,7 +204,7 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 ## File Descriptions
 
-##### `/sudopy.py`
+#### `/sudopy.py`
 This file contains 2 classes: Sudoku and Generate. 
 
 #### Sudoku Class
