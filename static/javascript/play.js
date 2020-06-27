@@ -117,15 +117,6 @@ var colorsTable = `
     </table>
 `;
 
- 
-$(window).load(
-    /**
-    * Alter the class of the body once the window has finished loading
-    */
-    function () {
-        $("body").addClass('all-loaded');
-    }
-);
 
 $(document).keydown(
     /**

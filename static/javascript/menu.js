@@ -4,14 +4,6 @@ var showMessages = true;
 // global variable (Element) that represents the highest HTML element in the document tree
 var root = document.documentElement;
 
-$(window).load(
-    /**
-    * Alter the class of the body once the window has finished loading
-    */
-    function () {
-        $("body").addClass('all-loaded');
-    }
-);
 
 /**
  * Changes the inner HTML of the "Play a Sudoku" div to display the two options the user can select from

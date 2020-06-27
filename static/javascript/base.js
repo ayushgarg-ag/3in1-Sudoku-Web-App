@@ -7,15 +7,6 @@ var showAbout = true;
 // global variable (Element) that represents the highest HTML element in the document tree
 var root = document.documentElement;
 
-$(window).load(
-    /**
-    * Alter the class of the body once the window has finished loading
-    */
-    function () {
-        $("body").addClass('all-loaded');
-    }
-);
-
 
 $(document).keydown(
     /**
