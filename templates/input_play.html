@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Input a Sudoku</title>
+<title>Sudoku Input</title>
 <script src="static/javascript/base.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
 <body onload="changeTheme()">
-    <h1>Input a Sudoku</h1>
+    <h1>Sudoku Input</h1>
 
     <form action="/play" method="POST" onsubmit="return validate()">
         <div id="content">
