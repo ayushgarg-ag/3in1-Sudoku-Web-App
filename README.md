@@ -63,7 +63,7 @@ For any questions, reporting of bugs, or requests for additional features, email
 ### Play Path
 
 <img src="/static/css/images/InputPlayScreenShot.png" width="50%">
-<img src="/static/css/images/PlayScreenShot.png" width="50%">
+<img src="/static/css/images/PlayerScreenShot.png" width="50%">
 
 ### Solve Path
 
