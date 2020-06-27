@@ -58,17 +58,17 @@ For any questions, reporting of bugs, or requests for additional features, email
 
 ### Menu
 
-<img src="/static/css/images/MenuScreenShot.png" height="400px">
+<img src="/static/css/images/MenuScreenShot.png" width="50%">
 
 ### Play Path
 
-<img src="/static/css/images/InputPlayScreenShot.png" height="400px">
-<img src="/static/css/images/PlayScreenShot.png" height="400px">
+<img src="/static/css/images/InputPlayScreenShot.png" width="50%">
+<img src="/static/css/images/PlayScreenShot.png" width="50%">
 
 ### Solve Path
 
-<img src="/static/css/images/InputSolveScreenShot.png" height="400px">
-<img src="/static/css/images/SolutionScreenShot.png" height="400px">
+<img src="/static/css/images/InputSolveScreenShot.png" width="50%">
+<img src="/static/css/images/SolutionScreenShot.png" width="50%">
 
 
 <a id="technology"></a>
