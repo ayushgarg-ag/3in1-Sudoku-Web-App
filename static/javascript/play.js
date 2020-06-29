@@ -398,6 +398,15 @@ $(document).mouseup(
     }
 );
 
+document.onreadystatechange = function () {
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    if (document.readyState === "complete") {
+        document.getElementById("body").className = "all-loaded";
+    }
+}
+
 /**
  * Initializes global array/map variables during body onload
  */

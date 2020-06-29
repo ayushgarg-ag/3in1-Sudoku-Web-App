@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<body onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()">
+<body id="body" class="" onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()">
     <h1>Sudoku</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">

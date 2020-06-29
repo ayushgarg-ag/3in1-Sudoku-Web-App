@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-<body onload="changeTheme()">
+<body id="body" class="" onload="changeTheme()">
     <h1>Sudoku Solver Input</h1>
     <form action="/solution" method="POST" onsubmit="return validate()">
         <div id="content">

@@ -74,6 +74,14 @@ $(document).keydown(
     }
 );
 
+document.onreadystatechange = function () {
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    if (document.readyState === "complete") {
+        document.getElementById("body").className = "all-loaded";
+    }
+}
 
 /**
  * Changes the inner HTML of the "Change Theme" div to display the theme options the user can select from 

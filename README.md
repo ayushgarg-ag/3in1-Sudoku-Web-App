@@ -2,7 +2,7 @@
 ## Solve a Sudoku, Generate and Play a Sudoku of Varying Difficulty, or Input and Play Your Own Sudoku
 
 ## Link
-<a href="https://sudokus.herokuapp.com/"><b><i>Check out our live Sudoku web application here</i></b></a>
+<a href="https://sudokus.herokuapp.com/"><b><i>Check out the live Sudoku web application here</i></b></a>
 
 ## Table of Contents
 
@@ -46,7 +46,8 @@ As avid fans of solving Sudokus, we set out on this multi-week project to learn 
 
 <p>Having encountered many interesting features across Sudoku mobile and web applications, we sought to combine all of them into one place for the enjoyment of friends and family, as well as any and all Sudoku lovers! We encourage you to give it a try!</p>
 
-For any questions, reporting of bugs, or requests for additional features, email us at ayushgarg.ag@gmail.com and suchitsharma919@gmail.com.
+For any questions, reporting of bugs, or requests for additional features, email us at 
+agss.projects@gmail.com.
 
 <a id="walkthrough"></a>
 

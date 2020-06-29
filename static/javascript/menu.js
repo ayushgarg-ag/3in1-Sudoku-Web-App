@@ -5,6 +5,15 @@ var showMessages = true;
 var root = document.documentElement;
 
 
+document.onreadystatechange = function () {
+    /**
+    * Alter the class of the body once the window has finished loading
+    */
+    if (document.readyState === "complete") {
+        document.getElementById("body").className = "all-loaded";
+    }
+}
+
 /**
  * Changes the inner HTML of the "Play a Sudoku" div to display the two options the user can select from
  */
