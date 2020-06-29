@@ -200,6 +200,9 @@ agss.projects@gmail.com.
 #### Restarting the Sudoku
 + Users can elect to restart the Sudoku by clicking *“Restart.”* This will revert the grid back to its starting state while all options that have been toggled will remain on.
 
+#### Timing
++ A timer will begin upon starting the Sudoku and will end upon either successfully completing it or restarting.
+
 #### Accessibility
 + The entire Sudoku can be completed by just using keys on the keyboard or by just clicking with the mouse.
 

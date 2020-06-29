@@ -16,6 +16,12 @@ var historyIndex = 0;
 // global variable (number) that counts the number of pencilmarks added to the grid when fillAllPms() is called
 var autoFillCount = 0;
 
+// global variable (number) that indicates how many seconds the Sudoku has been played
+var timeElapsed = 0;
+
+// global variable that initializes the timer
+var timer;
+
 // global variable (String) that indicates the most recent focused cell in the grid
 var curId = null;
 
@@ -345,7 +351,7 @@ $(document).keydown(
         }
 
         // if in "Normal" mode, select the active element so a number can be inputted
-        if (isNormal && document.getElementById(document.activeElement.id) != null) {
+        if (isNormal && document.getElementById(document.activeElement.id) != null && document.activeElement.id >= 0 && document.activeElement.id < 81) {
             document.getElementById(document.activeElement.id).select();
         }
     }
@@ -404,6 +410,12 @@ document.onreadystatechange = function () {
     */
     if (document.readyState === "complete") {
         document.getElementById("body").className = "all-loaded";
+
+        // keep the same time if the user clicks "Check"
+        if (window.localStorage.getItem("time") != null) {
+            timeElapsed = window.localStorage.getItem("time");
+            tick();
+        }
     }
 }
 
@@ -1561,7 +1573,50 @@ function aboutDisplay() {
         document.getElementById("about").innerHTML = "About Us";
         showAbout = true;
     }
+}
 
+/**
+ * Increases one second to the timer and rewrites the HTML of the timer
+ */
+function tick() {
+
+    // add one second to the timer
+    timeElapsed++;
+
+    // convert "timeElapsed" to seconds, minutes, and hours
+    var seconds = timeElapsed % 60;
+    var minutes = parseInt(timeElapsed / 60);
+    var hours = 0;
+
+    // if minutes is greater than or equal to 60, add one to hour and reset minutes to 0
+    if (minutes >= 60) {
+        hours++;
+        minutes = 0;
+    }
+
+    // ensure that there is a leading zero if only a single digit
+    seconds = seconds.toString().padStart(2, "0");
+    minutes = minutes.toString().padStart(2, "0");
+
+    // if "hours" is 0, forego the addition of the hour indication in HTML
+    if (hours == 0) {
+        document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+    }
+
+    // else add an hour indication to the timer because the "timeElapsed" exceeds past minutes
+    else {
+        hours = hours.toString();
+        document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+    }
+}
+
+/**
+ * Begins timing the user
+ */
+function startTimer() {
+    if (solved != "True") {
+        timer = setInterval(tick, 1000);
+    }
 }
 
 /**
@@ -1569,6 +1624,9 @@ function aboutDisplay() {
  * @return {boolean}  True if the form passes all validation; false otherwise
  */
 function validateForm() {
+
+    // store the "timeElapsed" in local cache
+    window.localStorage.setItem("time", timeElapsed);
 
     // close "Instructions" message if it is open 
     if (!showInstructions) {
@@ -1665,6 +1723,10 @@ function checkAlert() {
 
         // if the sudoku is correctly solved
         if (solved == "True") {
+            console.log("hello");
+
+            // stop the timer
+            clearInterval(timer);
 
             // change the innerHTML of the grid to display a message of success
             document.getElementById("checkoverlay").innerHTML = `
@@ -1705,6 +1767,10 @@ function checkAlert() {
  * Resets the grid back to its original state with only the starting numbers
  */
 function restart() {
+
+    // reset the timer
+    document.getElementById("timer").innerHTML = "00:00";
+    timeElapsed = 0;
 
     // loop through all 81 cells
     for (var i = 0; i < 81; i++) {

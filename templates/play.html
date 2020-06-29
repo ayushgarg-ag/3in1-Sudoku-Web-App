@@ -8,12 +8,14 @@
 
 {% block body %}
 
-<body id="body" class="" onload="changeTheme(); changeMode('normal'); createArray(); checkAlert()">
+<body id="body" class="" onload="changeTheme(); changeMode('normal'); createArray(); checkAlert(); startTimer()">
     <h1>Sudoku</h1>
     <form action="/play" method="POST" onsubmit="return validateForm()">
         <div id="content">
             <div id="outsideoption" class="inline">
                 <div id="optioncontainer">
+                    <h4>Options</h4>
+
                     <div onclick="toggleDeletePms()" id="deletepms" class="optiondivs">Auto Delete Pencilmarks</div>
 
                     <div onclick="toggleHighlightNums()" id="highlightnums" class="optiondivs">Highlight Same Digits
@@ -25,15 +27,17 @@
                     <div id="optionicons">
                         <div id="homesquare" onclick="location.href='/'"></div>
                         <div id="shiftIndication"></div>
+                        <div id="timer">00:00</div>
                     </div><br>
+
+                    <div onclick="fillAllPms()" class="optiondivs">Auto Fill Pencilmarks</div>
+
+                    <div onclick="undo()" class="optiondivs">Undo</div>
 
                     <div id="changetheme" class="optiondivs">
                         <div id="themebutton" onclick="themeOption()">Change Theme</div>
                     </div>
-
-                    <div onclick="instructionsDisplay()" id="instructions" class="optiondivs">Instructions</div>
-
-                    <div onclick="aboutDisplay()" id="about" class="optiondivs">About Us</div>
+                    
                 </div>
             </div>
 
@@ -97,12 +101,17 @@
                             href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span>
                     Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/"
                         target="_blank">LinkedIn</a>
-                    </p><br>
+                    </p>
+                    <div style="height: 6px;"></div>
 
                     <p>
                         We encourage you to input a Sudoku and try some of the features that will hopefully improve your
                         Sudoku experience as it
                         has for us!
+                    </p>
+
+                    <p>
+                        For any questions, reporting of bugs, or requests for additional features, email us at <a href="mailto: agss.projects@gmail.com?subject=Sudoku App Feedback">agss.projects@gmail.com</a>.
                     </p>
                 </div>
 
@@ -151,6 +160,8 @@
 
             <div id="outsidemode" class="inline">
                 <div id="modecontainer">
+                    <h4>Modes</h4>
+
                     <div onclick="changeMode(this.id)" id="normal" value="normal" class="modedivs">Normal</div>
 
                     <div onclick="changeMode(this.id)" id="pencilmarks" value="pencilmarks" class="modedivs">Pencilmarks</div>
@@ -177,9 +188,9 @@
                         </table>
                     </div>
 
-                    <div onclick="fillAllPms()" class="modedivs">Auto Fill Pencilmarks</div>
+                    <div onclick="instructionsDisplay()" id="instructions" class="modedivs">Instructions</div>
 
-                    <div onclick="undo()" class="modedivs">Undo</div>
+                    <div onclick="aboutDisplay()" id="about" class="modedivs">About Us</div>
 
                 </div>
             </div>

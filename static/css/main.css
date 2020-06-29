@@ -35,13 +35,17 @@ body {
 body.all-loaded {
     opacity: 1;
 }
-h1 {
+h1, h4 {
     text-align: center;
     color: var(--headerColor);
     font-family: 'Roboto', sans-serif;
     font-size: 45px;
     margin: 6px 0px 6px 0px;
     user-select: none;
+}
+h4 {
+    font-size: 20px;
+    text-decoration: underline;
 }
 div#content {
     display: flex;
@@ -291,7 +295,9 @@ div.modedivs {
     margin-top: 1px;
     margin-bottom: 1px;
 }
-
+#instructions {
+    margin-top: 0px;
+}
 
 /* Color Table CSS */
 table {
@@ -299,7 +305,7 @@ table {
     text-align: center;
     padding: 5px;
     background-color: var(--tableColor);
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     border-radius: 15px;
     height: 175px;
 }
@@ -318,7 +324,7 @@ button.colors {
     outline: none;
 }
 div#tablecontainer {
-    margin: 20px;
+    margin: 5px;
 }
 
 /* Themes and Theme Button CSS */
@@ -445,7 +451,6 @@ div#shiftIndication {
     border: 2px solid var(--shiftIndication);
     border-radius: 50%;
     margin-bottom: 4px;
-    
 }
 div#homesquare {
     display: inline-block;
@@ -461,6 +466,13 @@ div#homesquare {
 }
 div#optionicons {
     justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+div#timer {
+    color: var(--shiftIndication);
+    font-size: 20px;
+    margin-top: 6px;
 }
 
 /* Check Overlay */

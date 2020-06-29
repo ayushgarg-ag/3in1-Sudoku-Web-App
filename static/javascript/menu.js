@@ -4,6 +4,9 @@ var showMessages = true;
 // global variable (Element) that represents the highest HTML element in the document tree
 var root = document.documentElement;
 
+// set the time in cache back to 0
+window.localStorage.setItem("time", 0);
+
 
 document.onreadystatechange = function () {
     /**

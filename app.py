@@ -120,4 +120,4 @@ def solution():
 
 
 if __name__ == "__main__":
-    app.run(port=7350)
+    app.run(debug=True, port=7650)
