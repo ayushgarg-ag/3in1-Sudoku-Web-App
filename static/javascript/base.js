@@ -400,7 +400,7 @@ function validate() {
                 listMR = [x, x + 1, x + 2];
             }
             else {
-                list_mr = [x - 1, x, x + 1];
+                listMR = [x - 1, x, x + 1];
             }
 
             if (modC == 0) {
