@@ -1,9 +1,6 @@
 # A 3-in-1 Sudoku Web Application
 ## Solve a Sudoku, Generate and Play a Sudoku of Varying Difficulty, or Input and Play Your Own Sudoku
 
-## Link
-<a href="https://sudokus.herokuapp.com/"><b><i>Check out the live Sudoku web application here</i></b></a>
-
 ## Table of Contents
 
 [Brief Overview](#headers)  
