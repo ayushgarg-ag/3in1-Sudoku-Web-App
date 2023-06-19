@@ -1,6 +1,8 @@
 # A 3-in-1 Sudoku Web Application
 ## Solve a Sudoku, Generate and Play a Sudoku of Varying Difficulty, or Input and Play Your Own Sudoku
 
+### *Currently looking for a new site to host the app*
+
 ## Table of Contents
 
 [Brief Overview](#headers)  
@@ -30,16 +32,6 @@ This project is a multi-dimensional Sudoku web application, which runs with a Fl
 This website was co-created and designed from scratch by <b>Ayush Garg</b> and <b>Suchit Sharma</b> in the summer of 2020.
 
 As avid fans of solving Sudokus, we set out on this multi-week project to learn about some new technologies and frameworks, get a glimpse into unifying backend and frontend code, and create a one-stop-shop for all things Sudoku!
-
-<p>Check out some of our other projects on GitHub: </p>
-<b><p><span style="margin-right: 75px;">Ayush Garg: <a href="https://github.com/ayushgarg-ag" target="_blank">GitHub</a></span></p>
-<p>Suchit Sharma: <a href="https://github.com/ssharma919" target="_blank">GitHub</a></p></b>
-
-
-<p>Learn more about us on our Linkedin pages: </p>
-<b><p><span style="margin-right: 66px;">Ayush Garg: <a href="https://www.linkedin.com/in/ayush-garg-ag/" target="_blank">LinkedIn</a></span></p>
-
-<p>Suchit Sharma: <a href="https://www.linkedin.com/in/suchit-sharma-988247155/" target="_blank">LinkedIn</a></p></b>
 
 <p>Having encountered many interesting features across Sudoku mobile and web applications, we sought to combine all of them into one place for the enjoyment of friends and family, as well as any and all Sudoku lovers! We encourage you to give it a try!</p>
 
@@ -202,6 +194,8 @@ agss.projects@gmail.com.
 
 #### Accessibility
 + The entire Sudoku can be completed by just using keys on the keyboard or by just clicking with the mouse.
+
+<a id="files"></a>
 
 ## File Descriptions
 
