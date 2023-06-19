@@ -17,7 +17,7 @@
 [Features](#features)  
 &emsp;&emsp;[Overall Features](#overallfeatures)  
 &emsp;&emsp;[Player Interface Features](#interfacefeatures)  
-[File Descriptions](#files)  
+[File Descriptions](#filedescriptions)  
 [Credits](#credits)    
 
 
@@ -195,7 +195,7 @@ agss.projects@gmail.com.
 #### Accessibility
 + The entire Sudoku can be completed by just using keys on the keyboard or by just clicking with the mouse.
 
-<a id="files"></a>
+<a id="filedescriptions"></a>
 
 ## File Descriptions
 
@@ -243,5 +243,3 @@ This is the main CSS document that is utilized by all of the HTML pages. The ini
 
 ## Credits
 All Sudokus inside the `/sudokus` folder were generated from https://qqwing.com/generate.html.
-
-This application is hosted by Heroku.
